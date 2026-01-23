@@ -1,0 +1,19 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package org.ohdsi.webapi.conceptset;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+
+public interface ConceptSetGenerationInfoRepository extends CrudRepository<ConceptSetGenerationInfo, ConceptSetGenerationInfoKey> {
+
+    @Query("SELECT c from ConceptSetGenerationInfo c where c.conceptSetId = ?1")
+    List<ConceptSetGenerationInfo> findAllByConceptSetId(Integer conceptSetId);
+
+    void deleteByConceptSetId(Integer conceptSetId);
+}

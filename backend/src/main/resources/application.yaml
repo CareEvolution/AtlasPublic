@@ -1,0 +1,144 @@
+# WebAPI properties.  Define these first, there may be other properties that
+# need to refer to these.  YAML does not support forward references.
+webapi:
+  app-db:
+    flyway-password: admin1
+    flyway-username: ohdsi_admin_user
+    password: app1
+    schemaName: webapi
+    url: jdbc:postgresql://localhost:5432/OHDSI
+    username: ohdsi_app_user
+  audit-trail:
+    enabled: true
+    log-file: /tmp/atlas/audit/audit.log
+    extra-log-file: /tmp/atlas/audit/audit-extra.log
+  cdm-db:
+    jdbc-template-suppress-api-exceptions: true
+    version: 5.4
+  cdm-results:
+    achilles:
+      enable-cache-warming: false
+    enable-cache-warming: true
+    jobs-count: 3
+  characterization:
+    organization-name: @organization.name@
+  generation-cache:
+    invalidate-after-days: 30
+    cleanup-interval-ms: 3600000
+    use-async: false
+  heracles:
+    small-cell-count: 5
+  i18n:
+    enabled: true
+    defaultLocale: en
+  person:
+    view-dates: false
+  security:
+    auth-db:
+      password: app1
+      schemaName: webapi
+      url: jdbc:postgresql://localhost:5432/OHDSI
+      username: ohdsi_app_user
+    cors:
+      enabled: true
+      allowed-origins:
+        - http://localhost
+    # If defaultGlobalReadPermissions is set to true (default), then all users can see every artifact.
+    # If it is set to false, WebAPI will filter out the artifacts that a user does not explicitly have
+    # read permissions to
+    default-global-read-permissions: true
+    encryption-key: ChangeThisEncryptionKeyToASecureRandomValue
+    mode: anonymous
+    origin: "*"
+    token-expiration-seconds: 43200 # 12 hours
+  tag:
+    enabled: true
+    refresh-stat-period-ms: 600000
+  user:
+    defaultRoles:
+      - public
+
+# Actuator observability
+# -------------------------------------------------------------------------------
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+    git:
+      enabled: true
+    java:
+      enabled: true
+
+info:
+  app:
+    name: @project.name@
+    organization.name: @organization.name@
+    description: @description@
+    version: @version@
+    cdm:
+      version: ${webapi.cdm-db.version}
+
+spring:
+  application:
+    name: webapi
+  jpa:
+    hibernate:
+      default_schema: ${webapi.app-db.schemaName}
+      generate_statistics: false
+      jdbc:
+        batch_size: 200
+      order_inserts: true
+    show-sql: false
+    open-in-view: true
+  main:
+    banner-mode: off
+
+  batch:
+    taskExecutor:
+      corePoolSize: 10
+      maxPoolSize: 20
+      queueCapacity: 2147483647
+      threadGroupName:
+      threadNamePrefix:
+
+  flyway:
+    table: schema_version
+    placeholders:
+      ohdsiSchema: ${webapi.app-db.schemaName}
+    validateMigrationNaming: true
+
+# Logging
+# -------------------------------------------------------------------------------
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.jdbc.core: INFO
+    org.springframework.security: DEBUG
+    org.ohdsi.webapi.util.CancelableJdbcTemplate: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: DEBUG
+  format:
+    console: JSONConsole
+
+
+# Server
+# -------------------------------------------------------------------------------
+server:
+  compression:
+    enabled: true
+  forward-headers-strategy: native
+  port: 8080
+  servlet:
+    context-path: "/WebAPI"
+    session:
+      cookie:
+        path: /
+  tomcat:
+    redirect-context-root: false

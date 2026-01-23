@@ -25,7 +25,7 @@ define([], function () {
 
 	configLocal.api = {
 		name: 'Local',
-		url: 'https://localhost:8443/WebAPI/'
+		url: 'http://localhost:8080/WebAPI/'
 	};
 
 	configLocal.authProviders = [{
