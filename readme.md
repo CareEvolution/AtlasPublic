@@ -323,7 +323,7 @@ define([], function () {
 
 	configLocal.authProviders = [
 		{
-			name: 'FHIR CareEvolution',
+			name: 'My Organization',
 			url: 'oauth2/authorization/my-organization',
 			ajax: false,
 			icon: 'fa fa-openid',
