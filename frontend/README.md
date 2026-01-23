@@ -48,13 +48,32 @@ You are now ready to run Atlas through the vite development server.
 
 ```bash
 npm ci
-npm run genversion
+npm run build
 npx vite
 ```
+
+Note that we are using vite as a development web server. This will allow us to make changes to the javascript files and they will be automatically reloaded by the browser.
 
 In your browser, navigate to
 
 `http://localhost:5173/`
+
+### Troubleshooting vite
+
+If you get an error like the following, the symlinks when cloning the repo did not persist correctly. Fix below>
+
+![Symlink error seen after trying to load Atlas from vite](https://slabstatic.com/prod/assets/5jsoecfx/post/dauh9nuf/preimages/aHDKqZw47pNZNqdKEpAYO22F.png?jwt=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL3NsYWJzdGF0aWMuY29tIiwiZXhwIjoxNzcwNDAwMjUyLCJpYXQiOjE3NjkxOTA2NTIsImlzcyI6Imh0dHBzOi8vYXBwLnNsYWIuY29tIiwianRpIjoiMzI2bXIxamwxc2p1bG5vN29iMnZjc2Q0IiwibmJmIjoxNzY5MTkwNjUyLCJwYXRoIjoicHJvZC9hc3NldHMvNWpzb2VjZngvcG9zdC9kYXVoOW51ZiJ9.T_4zhdjCIlenKaDTgOzpbuWfX3VOzc0u6s8Z81HdV3icy8GkHLuYeOosxyhQsM2FaADeHTfFonIWLhp07bWEDdzLI8LnzBTpAuW1GBQmmXMYawwxOVGdO5FOnlSQIoyaEikBSG0dz-gp6pZzcD7sXdPs7sdndx_jua6sQ9_9EsTD6XVXJT-1eGVaULag635RgdXSlZJ4i53KyaSq2ygWb5mOvJs_XQX2lpdCUySF5IaD04DD01pUCzpgfSyOxfJB60UyVAwyV1cm7PJ_W-pn0N8j5Uex5uR-hUwl6xyiombwcE8U7zTJ2mNiriax_qoTKkivgc0OEmiAJLiOEoxS9Q)
+
+in DFGAtlas/frontend, delete the `require.js` file and then run the following in an elevated Command Prompt (*not* Powershell)
+
+`mklink /h require.js .\node_modules\requirejs\require.js`
+
+Then CD to DFGAtlas\frontend\styles\vendor, delete the `font-awesome` and `jquery-ui` files and run the following:
+
+`mklink /d font-awesome ..\..\node_modules\font-awesome`
+
+`mklink /d jquery-ui ..\..\node_modules\jquery-ui`
+
 
 ## Production Build
 
@@ -62,7 +81,7 @@ The `npm run build` script compiles and minifies the javascript, css, and assets
 
 We also have a Docker build process.
 
-Github actions are included in the repository for building Atlas on commits and PRs.
+Github actions are included in the repository for building Atlas when tagged.
 
 ## Resources
 
