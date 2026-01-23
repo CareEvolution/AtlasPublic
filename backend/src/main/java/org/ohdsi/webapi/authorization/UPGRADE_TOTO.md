@@ -1,2 +1,0 @@
-
-* Are the appropriate event listeners created?  Even in old backend it was not clear if there were listeners - for example, see service: `UserService.java`.  While it is using *com.odysseusinc.logging* events, and SB3 has banished odysseusinc logging, the events were still fired - but who is listening?  And looking at the backend root/LogConfiguration.java, which sets up odysseusinc logging, there are no listeners.
