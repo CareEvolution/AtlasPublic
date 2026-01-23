@@ -39,6 +39,11 @@ Then `F5` will start the webapi in Debug mode.
 
 The first time that the backend code runs it will create all of the database tables in the webapi schema the you created above.
 
+You can manually install and build the backend code with:
+
+`mvn package -DskipTests=true -DskipUnitTests=true`
+
+The integration tests require Docker. Make sure it is running if you wish to run tests.
 
 ## Features
 
