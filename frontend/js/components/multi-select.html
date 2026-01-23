@@ -1,0 +1,22 @@
+<div class="multi-select">
+	<!-- ko if: multiple == true -->
+	<select data-bind="attr: disabled, 
+			multiSelect: { 
+				liveSearch: true,
+				closeOnSelect: false,
+				options: options,
+				afterChange: onMultiSelectionComplete
+			}" multiple>
+	</select>
+	<!-- /ko -->
+	<!-- ko if: multiple == false -->
+	<select data-bind="attr: disabled, 
+			multiSelect: { 
+				liveSearch: true, 
+				closeOnSelect: true,
+				options: options,
+				afterChange: onSingleSelectionComplete
+			}">
+	</select>
+	<!-- /ko -->
+</div>

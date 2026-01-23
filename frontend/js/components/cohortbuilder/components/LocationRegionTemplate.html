@@ -1,0 +1,68 @@
+<div class="criteriaSection" data-bind="with: Criteria">
+	<div style="position: relative">
+		<table class="criteriaTable">
+			<colgroup>
+				<col style="width:100%"/>
+				<col />
+			</colgroup>
+			<tr>
+				<td>
+					<span data-bind="text: ko.i18n('components.locationRegion.criteria.of', 'a location region of')"></span>
+					<conceptset-selector params="conceptSetId: CodesetId, conceptSets: $component.expression.ConceptSets, defaultText: ko.i18n('components.locationRegion.anyLocationRegion', 'Any Region')"></conceptset-selector>
+				</td>
+				<td>
+					<div class="d-flex">
+						<div class="dropdown">
+							<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+								<i class="fa fa-plus"></i>
+								<span data-bind="text: ko.i18n('components.common.addAttribute', 'Add attribute...')"></span>
+							</button>
+							<ul class="dropdown-menu" data-bind="foreach:$component.addActions">
+								<li>
+									<a class="dropdown-item" data-bind="click:action" href="#">
+										<div class="d-flex align-items-start">
+											<span class="fa fa-check attribute-list"
+												data-bind="style: { visibility: $component.Criteria[$data.attributeName]() ? 'visible' : 'hidden' }"></span>
+											<div>
+												<div class="optionText" data-bind="text: text"></div>
+												<div class="optionDescription" data-bind="text: description">
+												</div>
+											</div>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<button class="btn btn-sm btn-link"
+							data-bind="if: !$component.hideClose, visible: !$component.hideClose, click: function() { $component.removeCriteria() }, title: ko.i18n('common.remove.criteria', 'Remove criteria')">
+							<i class="fa fa-trash"></i>
+						</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<table class="criteriaTable ms-3">
+			<colgroup>
+				<col />
+			</colgroup>
+			<tr data-bind="if: StartDate() != null, visible: StartDate() != null">
+				<td>
+
+					<span data-bind="text: ko.i18n('components.locationRegion.criteria.startDate.text', 'start is:')"></span>
+					<date-range params="Range: StartDate"></date-range>
+				</td>
+			</tr>
+			<tr data-bind="if: EndDate() != null, visible: EndDate() != null">
+				<td>
+					<span data-bind="text: ko.i18n('components.locationRegion.criteria.endDate.text', 'end is:')"></span>
+					<date-range params="Range: EndDate"></date-range>
+				</td>
+			</tr>
+			<tr data-bind="if: CorrelatedCriteria() != null, visible: CorrelatedCriteria() != null">
+				<td>
+					<criteria-group params="{expression: $component.expression, group: CorrelatedCriteria, indexMessage: $component.indexMessage}"></criteria-group>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

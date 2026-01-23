@@ -1,0 +1,16 @@
+<!-- ko with: InclusionRule -->
+<div class="mb-2">
+	<div class="input-group">
+		<input type="text" class="form-control" maxlength="255" 
+		data-bind="attr: {placeholder: ko.i18n('components.inclusionRuleEditor.unnamedCriteria', 'Unnamed Criteria')}, textInput: name, css: { emptyInput: !(name() && (name().length > 0)) }" />
+		<button class="btn btn-primary copyInclusionRule" data-bind="title: ko.i18n('components.inclusionRuleEditor.copy', 'Copy')">
+			<i class="fa fa-copy"></i>
+		</button>
+		<button class="btn btn-danger deleteInclusionRule" data-bind="title: ko.i18n('components.inclusionRuleEditor.delete', 'Delete')">
+			<i class="fa fa-trash"></i>
+		</button>
+	</div>
+</div>
+<input type="text" class="form-control mb-2" data-bind="textInput: description, placeholder: ko.i18n('components.inclusionRuleEditor.ruleDescriptionPlaceholder', 'enter an inclusion rule description')"></input>
+<!-- /ko -->
+<criteria-group params="{expression: IndexRule, group: InclusionRule().expression, indexMessage: ko.i18n('components.cohortExpressionEditor.indexMessage', 'The index date refers to the event from the Cohort Entry criteria.')}"></criteria-group>

@@ -1,0 +1,52 @@
+.characterizations-tabbed-grid {
+  &__header-container {
+    display: flex;
+    flex-direction: row;
+
+    heading-title {
+      flex: 1 0 auto;
+    }
+
+    .toolbar-btns {
+      flex: 0 0 auto;
+      align-items: center;
+      display: flex;
+      padding: 0 1rem;
+    }
+  }
+
+  &__toolbar {
+    display: flex;
+    overflow: hidden;
+  }
+
+  &__toolbar-nav {
+    background-color: transparent !important;
+    flex-grow: 1;
+    margin-bottom: 0 !important;
+    margin-top: auto;
+    padding-bottom: 0 !important;
+  }
+
+  &__grid {
+    margin: 1.5rem 1rem 1.5rem 0.75rem;
+
+    .feFilter {
+      border: solid 1px #ccc !important;
+      padding-top: 0;
+    }
+
+    .faceted-data-table-wrapper {
+      padding-left: 1rem;
+    }
+  }
+
+  &__tbl-col {
+    &--name {
+      width: 40%;
+    }
+    &--created, &--updated, &--author {
+      width: 20%;
+    }
+  }
+}

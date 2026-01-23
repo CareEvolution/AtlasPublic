@@ -1,0 +1,124 @@
+<ul class="nav nav-tabs">
+	<li role="presentation" class="nav-item"
+		data-bind="click: function() { $component.exportTabMode('printfriendly'); }">
+		<a class="nav-link"
+			data-bind="css: { active: $component.exportTabMode() == 'printfriendly' }, text: ko.i18n('cohortDefinitions.cohortDefinitionManager.panels.textView', 'Text View')"></a>
+	</li>
+
+	<li role="presentation" class="nav-item" data-bind="click: function() { $component.exportTabMode('cartoon'); }">
+		<a class="nav-link"
+			data-bind="css: { active: $component.exportTabMode() == 'cartoon' }, text: ko.i18n('cohortDefinitions.cohortDefinitionManager.panels.graphicalView', 'Graphical View')"></a>
+	</li>
+
+	<li role="presentation" class="nav-item" data-bind="click: function() { $component.exportTabMode('json'); }">
+		<a class="nav-link"
+			data-bind="css: { active: $component.exportTabMode() == 'json' }, text: ko.i18n('cohortDefinitions.cohortDefinitionManager.panels.json', 'JSON')"></a>
+	</li>
+
+	<li role="presentation" class="nav-item" data-bind="click: function() { $component.exportTabMode('sql');}">
+		<a class="nav-link"
+			data-bind="css: { active: $component.exportTabMode() == 'sql' }, text: ko.i18n('cohortDefinitions.cohortDefinitionManager.panels.sql', 'SQL')"></a>
+	</li>
+</ul>
+
+<div class="tab-content">
+	<div role="tabpanel" data-bind="css: {active: $component.exportTabMode() == 'printfriendly'}" class="tab-pane">
+		<div class="paddedWrapper">
+			<button class="btn btn-sm btn-primary" id="btnCopyTextViewClipboard"
+				data-bind="attr: {title: ko.i18n('common.copyToClipboard', 'Copy To Clipboard')}, click: copyTextViewToClipboard"
+				data-clipboard-target="#cohortTextView"><i class="fa fa-clipboard" aria-hidden="true"></i>
+				<span data-bind="text: ko.i18n('common.copyToClipboard', 'Copy To Clipboard')"></span>
+			</button>&nbsp;&nbsp;
+			<span id="copyTextViewMessage" style="display:none" class="alert alert-success" role="alert"><i
+					class="fa fa-check-square-o" aria-hidden="true"></i><strong>
+					<span data-bind="text: ko.i18n('common.copiedToClipboard', 'Copied To Clipboard!')"></span>
+				</strong></span>
+			<div id="cohortTextView" class="pad-10">
+				<h3 data-bind="text:currentCohortDefinition().name"></h3>
+				<div data-bind="text:currentCohortDefinition().description"></div>
+
+				<!-- ko if: currentCohortDefinition().tags().length > 0 -->
+				<h3>Tags</h3>
+				<span data-bind="foreach: getTagGroups()">
+					<b><span data-bind="text: name"></span>:</b> <span data-bind="text: tags"></span><br>
+				</span>
+				<!-- /ko -->
+
+				<div class="cohort-printfriendly" data-bind="html:printFriendlyHtml"></div>
+				<br />
+				<h3
+					data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.panels.appendix_1', 'Appendix 1: Concept Set Definitions')">
+				</h3>
+				<br />
+			</div>
+			<!-- ko foreach: sortedConceptSets -->
+			<div><span data-bind="text: ($index() + 1)"></span>. <span data-bind="text: $data.name"></span></div>
+			<div style="padding-left:20px">
+				<conceptset-viewer params="{conceptSet: $data}"></conceptset-viewer>
+				<br />
+			</div>
+			<!-- /ko -->
+		</div>
+	</div>
+	<div role="tabpanel" data-bind="css: {active: $component.exportTabMode() == 'cartoon'}" class="tab-pane">
+		<div class="paddedWrapper">
+			<!-- ko if: $component.selectedCriteria() -->
+			<div id="cartoon-tooltip" data-bind='with: $component.selectedCriteria()'>
+				<div id="tooltip">
+					<!-- ko ifnot: $data.Criteria -->
+					<div data-bind='component: {
+													name: $component.getCriteriaIndexComponent($data),
+													params: {expression: $component.currentCohortDefinition().expression(),
+																		criteria: $data} }'></div>
+					<!-- /ko -->
+					<!-- ko if: $data.Criteria -->
+					<span data-bind="text: Occurrence.Count"></span> <span
+						data-bind="text: Occurrence.IsDistinct ? 'distinct' : ''"></span> occurrence
+					<span data-bind="text: Occurrence.Count != 1 ? 's' : ''"></span> of
+					<span data-bind="component: {
+																				name: $component.getCriteriaIndexComponent($data.Criteria),
+																				params: {expression: $component.currentCohortDefinition().expression(),
+																				criteria: $data.Criteria }
+																			}"></span> occurring between
+					<window-input-viewer params="Window: StartWindow"></window-input-viewer> index
+					<!-- /ko -->
+				</div>
+			</div>
+			<!-- /ko -->
+			<div data-bind="cohortExpressionCartoon:{expression: $component.currentCohortDefinition().expression,
+														selectedCriteria: $component.selectedCriteria,
+														tabPath: $component.tabPath,
+														delayedCartoonUpdate: $component.delayedCartoonUpdate}"></div>
+		</div>
+	</div>
+	<div role="tabpanel" data-bind="css: { active: $component.exportTabMode() == 'json' }" class="tab-pane">
+		<textarea id="cohortExpressionJSON" class="code" style="width: 100%; height: 300px"
+			data-bind="textInput: $component.expressionJSON"></textarea>
+		<div class="row">
+			<div class="col-sm-6" style="float: left">
+				<button class="btn btn-sm btn-primary" title="Copy to clipboard" id="btnCopyExpressionJSONClipboard"
+					data-bind="attr: {title: ko.i18n('common.copyToClipboard', 'Copy To Clipboard')}, click: copyCohortExpressionJSONToClipboard"
+					data-clipboard-target="#cohortExpressionJSON"><i class="fa fa-clipboard" aria-hidden="true"></i>
+					<span data-bind="text: ko.i18n('common.copyToClipboard', 'Copy To Clipboard')"></span>
+				</button>&nbsp;&nbsp;
+				<span id="copyCohortExpressionJSONMessage" style="display:none" class="alert alert-success"
+					role="alert"><i class="fa fa-check-square-o" aria-hidden="true"></i><strong>
+						<span
+							data-bind="text: ko.i18n('common.copiedToClipboard', 'Copied To Clipboard!')"></span></strong></span>
+			</div>
+			<div class="col-sm-6" style="text-align: right">
+				<button class="btn btn-sm btn-primary"
+					data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.panels.reload', 'Reload'), click: $component.reload"></button>
+			</div>
+		</div>
+	</div>
+	<div role="tabpanel" data-bind="css: { active: $component.exportTabMode() == 'sql'}" class="tab-pane">
+		<export-sql params="
+				analysisId: $component.currentCohortDefinition() && $component.currentCohortDefinition().id(),
+				expression: $component.currentCohortDefinition() && $component.currentCohortDefinition().expression,
+				isPermittedExport: hasAccess,
+				exportSqlService: $component.exportSqlService,
+			">
+		</export-sql>
+	</div>
+</div>

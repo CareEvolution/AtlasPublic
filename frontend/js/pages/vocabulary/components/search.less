@@ -1,0 +1,66 @@
+.vocabulary-search-tab {
+	position: relative;
+	padding-bottom: 80px;
+
+	form {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 7px;
+		position: sticky;
+		left: 0;
+		right: 0;
+		top: 0;
+		padding: 0px 12px;
+
+		&.scrolled {
+			padding-top: 12px;
+			padding-bottom: 12px;
+			background-color: white;
+			border-bottom: var(--bs-border-width) solid var(--bs-border-color);
+			z-index: 20;
+		}
+
+		a {
+			display: flex;
+			flex-direction: row;
+			gap: 4px;
+			align-items: center;
+			text-decoration: none;
+		}
+
+		.search-input-container {
+			flex: 1 0 auto;
+		}
+
+		.atlas-button-group {
+			flex: 0 0 auto;
+		}
+	}
+}
+
+.preview-modal {
+	.modal-body {
+		padding: 0;
+	}
+
+	.modal-footer {
+		display: table;
+		width: 100%;
+		padding: 0;
+		border: 0;
+
+		.modal-buttons {
+			display: table-cell;
+			text-align: right;
+
+			button + button {
+				margin-left: 10px;
+			}
+		}
+
+		&.with-padding {
+			padding: 0 11px 10px 0;
+		}
+	}
+}

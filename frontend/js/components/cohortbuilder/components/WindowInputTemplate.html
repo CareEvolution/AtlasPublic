@@ -1,0 +1,34 @@
+<div class="d-flex align-items-center me-1">
+	<input 
+		type="text"
+		size="4"
+		aria-label="Window start days"
+		data-bind="
+        placeholder: ko.i18n('components.windowInput.windowInputText_1', 'All'),
+        value: Window.Start.Days.numeric(),
+        eventType: 'blur',
+        ko_autocomplete: { value: Window.Start.Days, source: $component.options.windowDayOptions, minLength: 0, maxShowItems: 10, scroll: true },
+        selectOnFocus: {events: ['click']},
+    "></input>
+	<span class="ms-1" data-bind="text:ko.i18n('components.windowInput.windowInputText_2', 'days')"></span>
+	<select
+		aria-label="Window start coefficient"
+		class="ms-1" 
+		data-bind="options: $component.options.windowCoeffOptions, optionsText: 'name', optionsValue: 'value', value: Window.Start.Coeff"></select>
+	<span class="ms-1" data-bind="text:ko.i18n('components.windowInput.windowInputText_3', 'and')"></span>
+	<input
+		type="text" 
+		size="4"
+		class="ms-1"
+		aria-label="Window end days"
+		data-bind="
+        placeholder: ko.i18n('components.windowInput.windowInputText_1', 'All'),
+        value: Window.End.Days.numeric(),
+        eventType: 'blur', ko_autocomplete: { value: Window.End.Days, source: $component.options.windowDayOptions, minLength: 0, maxShowItems: 10, scroll: true },
+        selectOnFocus: {events: ['click']}"></input>
+	<span class="ms-1" data-bind="text:ko.i18n('components.windowInput.windowInputText_2', 'days')"></span>
+	<select
+		aria-label="Window end coefficient"
+		class="ms-1" 
+		data-bind="options: $component.options.windowCoeffOptions, optionsText: 'name', optionsValue: 'value', value: Window.End.Coeff"></select>
+</div>

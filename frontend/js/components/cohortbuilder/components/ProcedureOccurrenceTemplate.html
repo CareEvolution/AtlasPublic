@@ -1,0 +1,115 @@
+<div class="criteriaSection" data-bind="with: Criteria">
+
+	<criterion-header params="criterionTitle: 'Procedure Occurrence of',
+			conceptSetInfo: {
+				conceptSetId: $component.Criteria.CodesetId,
+				conceptSets: $component.expression.ConceptSets,
+				defaultText: ko.i18n('components.conditionProcedureOccurrence.anyProcedure', 'Any Procedure')
+			},
+			hideClose: $component.hideClose,
+			addActions: $component.addActions,
+			removeCriteria: $component.removeCriteria,
+			criteria: $component.Criteria"></criterion-header>
+
+	<div class="criteriaAttributes">
+		<!-- ko if: DateAdjustment() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionProcedureOccurrence.conditionProcedureOccurrenceText_15', 'with date adjustment:')"></span>
+			<date-adjustment params="DateAdjustment: DateAdjustment"></date-adjustment>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: First() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span
+				data-bind="text: ko.i18n('components.conditionProcedureOccurrence.conditionProcedureOccurrenceText_2', 'for the first time in the person\'s history')">
+			</span>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: OccurrenceStartDate() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionProcedureOccurrence.conditionProcedureOccurrenceText_3', 'occurrence start is:')"></span>
+			<date-range params="Range: OccurrenceStartDate"></date-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: ProcedureType() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionProcedureOccurrence.procedureType', 'Procedure Type')"></span>
+			<cycle-toggle-input class="me-1"
+				params="{value: ProcedureTypeExclude, options: $component.options.DomainTypeExcludeOptions}"></cycle-toggle-input>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Type Concept', DefaultQuery: ''}, ConceptList: ProcedureType()"></concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: Modifier() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionProcedureOccurrence.conditionProcedureOccurrenceText_4', 'Modifier is:')">
+			</span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Spec Anatomic Site', DefaultQuery: ''}, ConceptList: Modifier()"></concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: Quantity() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionProcedureOccurrence.conditionProcedureOccurrenceText_5', 'with quantity')">
+			</span>
+			<numeric-range params="Range: Quantity"></numeric-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: ProcedureSourceConcept() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionProcedureOccurrence.conditionProcedureOccurrenceText_6', 'Procedure Source Concept is:')">
+			</span>
+			<conceptset-selector params="conceptSetId: ProcedureSourceConcept(), conceptSets: $component.expression.ConceptSets, defaultText: 
+									ko.i18n('components.conditionProcedureOccurrence.anyProcedure', 'Any Procedure')"></conceptset-selector>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: Age() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionProcedureOccurrence.conditionProcedureOccurrenceText_7', 'with age:')">
+			</span>
+			<numeric-range params="Range: Age"></numeric-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: Gender() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionProcedureOccurrence.conditionProcedureOccurrenceText_8', 'with a gender of:')">
+			</span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Gender', DefaultQuery: ''}, ConceptList: Gender()"></concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: ProviderSpecialty() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionProcedureOccurrence.conditionProcedureOccurrenceText_9', 'with a Provider Specialty of:')">
+			</span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Provider', DefaultQuery: ''}, ConceptList: ProviderSpecialty()"></concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: VisitType() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionProcedureOccurrence.conditionProcedureOccurrenceText_10', 'with a Visit occurrence of:')">
+			</span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Visit', DefaultQuery: ''}, ConceptList: VisitType()"></concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: CorrelatedCriteria() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<criteria-group
+				class="w-100"
+				params="{expression: $component.expression, group: CorrelatedCriteria, indexMessage: $component.indexMessage}"></criteria-group>
+		</div>
+		<!-- /ko -->
+	</div>
+</div>

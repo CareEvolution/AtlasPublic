@@ -1,0 +1,31 @@
+define([
+	'text!./treemap.html',
+	'components/reports/classes/Treemap',
+	'components/reports/const',
+	'utils/CommonUtils',
+	'knockout',
+	'components/heading',
+	'components/charts/treemap',
+	'components/reports/reportDrilldown',
+], function (
+	view,
+	TreemapReport,
+	constants,
+	commonUtils
+) {
+	class Condition extends TreemapReport {
+		constructor(params) {
+			super(params);
+
+			this.name = 'Condition'; // header
+
+			this.byType = true;
+		}
+
+		get aggProperty() {
+			return constants.aggProperties.byPerson;
+		}
+	}
+
+	return commonUtils.build('report-condition', Condition, view);
+});

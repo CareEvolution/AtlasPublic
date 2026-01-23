@@ -1,0 +1,235 @@
+<div class="p-3 criteriaGroup">
+
+	<div class="d-flex align-items-center mb-3">
+
+		<!-- ko if: parentGroup -->
+		<div>
+			<div
+				data-bind="	if: (parentGroup().CriteriaList().length > 0) || (parentGroup().DemographicCriteriaList().length > 0) || parentGroup().Groups().indexOf(group()) > 0">
+				<span class="me-1" data-bind="text: parentGroup().Type() == 'ALL'
+								? ko.i18n('common.and', 'and')
+								: ko.i18n('common.or', 'or')"></span>
+				<span class="me-1" data-bind="text:ko.i18n('components.criteriaGroup.having','having')"></span>
+			</div>
+			<div
+				data-bind="	ifnot: (parentGroup().CriteriaList().length > 0) || (parentGroup().DemographicCriteriaList().length > 0) || parentGroup().Groups().indexOf(group()) > 0">
+				<span class="me-1" data-bind="text:ko.i18n('components.criteriaGroup.having','having')"></span>
+			</div>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko ifnot: parentGroup -->
+		<span class="me-1" data-bind="text: ko.i18n('components.criteriaGroup.having','having')"></span>
+		<!-- /ko -->
+		
+		<select
+			class="me-1"
+			data-bind="options: $component.options.groupTypeOptions, optionsText: 'name', optionsValue: 'id', value: group().Type"></select>
+
+		<!-- ko if: group().Type().startsWith("AT_") -->
+		<div contenteditable="true" class="numericInputField dropdown me-1"
+			data-bind="htmlValue: group().Count.numeric(),
+								 eventType:'blur',
+								 ko_autocomplete: { value: group().Count, source: $component.groupCountOptions(), minLength: 0, maxShowItems: 10, scroll: true }"></div>
+		<!-- /ko -->
+
+		<div data-bind="text: ko.i18n('components.criteriaGroup.followingCriteria', 'of the following criteria:')"></div>
+
+		<!-- ko if: $component.deleteCriteriaGroup -->
+		<button class="btn btn-outline-secondary ms-auto"
+			data-bind="click: function() { $component.deleteCriteriaGroup() }, title: ko.i18n('common.remove.criteria', 'Remove criteria')">
+			<i class="fa fa-trash"></i>
+		</button>
+		<!-- /ko -->
+
+	</div>
+
+	<div class="dropdown mb-3">
+		<button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+			<i class="fa fa-plus"></i>
+			<span data-bind="text: ko.i18n('components.criteriaGroup.addCriteria', 'Add Criteria to Group')"></span>
+		</button>
+		<ul class="dropdown-menu" data-bind="foreach:$component.addActions">
+			<li>
+				<a class="dropdown-item" data-bind="click:action" href="#">
+					<div class="optionText" data-bind="text: ko.i18n($data.title, $data.defaultTitle)"></div>
+					<div class="optionDescription" data-bind="text: ko.i18n($data.description, $data.defaultDescription)">
+					</div>
+				</a>
+			</li>
+		</ul>
+	</div>
+
+
+	<div class="demographicCriteria"
+		data-bind="sortable: {data: group().DemographicCriteriaList, connectClass: 'demographicCriteria', options: {cancel: ':input, button, [contenteditable]'}}">
+		<div class="criteria-content mb-2">
+			<div class="d-flex align-items-center">
+				<span class="grabber">
+					<svg width="24" height="24" viewBox="0 0 24 24" role="presentation">
+						<g fill="currentcolor" fill-rule="evenodd">
+							<circle cx="10" cy="8" r="1"></circle>
+							<circle cx="14" cy="8" r="1"></circle>
+							<circle cx="10" cy="16" r="1"></circle>
+							<circle cx="14" cy="16" r="1"></circle>
+							<circle cx="10" cy="12" r="1"></circle>
+							<circle cx="14" cy="12" r="1"></circle>
+						</g>
+					</svg>
+				</span>
+			
+				<div class="flex-grow-1 pe-3 py-3">
+					<div class="mb-3">
+						<span data-bind="if: ($index() > 0)">
+							<span class="me-1" data-bind="text: $component.group().Type() == 'ALL'
+																							? ko.i18n('common.and', 'and')
+																							: ko.i18n('common.or', 'or')">
+							</span>
+						</span>
+						<span
+							data-bind="text: ko.i18n('components.criteriaGroup.withFollowingCriteria', 'with the following event criteria:')">
+						</span>
+					</div>
+
+					<div class="d-flex align-items-start w-100">
+						<demographic-criteria class="flex-grow-1" params="criteria: $data"></demographic-criteria>
+						<button class="btn btn-outline-secondary ms-auto"
+							data-bind="click: function (data, event) { $component.removeCriteria($parent.group().DemographicCriteriaList, data) }, title: ko.i18n('common.remove', 'Remove')">
+							<i class="fa fa-trash"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="additionalCriteria"
+		data-bind="sortable: {data: group().CriteriaList, connectClass: 'additionalCriteria', options: {cancel: ':input, button, [contenteditable]'}}">
+		<div class="criteria-content mb-2">
+			<div class="d-flex align-items-center">
+				<span class="grabber">
+					<svg width="24" height="24" viewBox="0 0 24 24" role="presentation">
+						<g fill="currentcolor" fill-rule="evenodd">
+							<circle cx="10" cy="8" r="1"></circle>
+							<circle cx="14" cy="8" r="1"></circle>
+							<circle cx="10" cy="16" r="1"></circle>
+							<circle cx="14" cy="16" r="1"></circle>
+							<circle cx="10" cy="12" r="1"></circle>
+							<circle cx="14" cy="12" r="1"></circle>
+						</g>
+					</svg>
+				</span>
+			
+				<div class="flex-grow-1 pe-3 py-3">
+
+					<!-- Top row-->
+					<div class="d-flex align-items-center mb-3">
+						<div data-bind="if: ($parent.group().DemographicCriteriaList().length > 0 || $index() > 0)">
+							<span class="me-1" data-bind="text: $component.group().Type() == 'ALL'
+																		? ko.i18n('common.and', 'and')
+																		: ko.i18n('common.or', 'or')"></span>
+						</div>
+					
+						<span class="me-1" data-bind="text: ko.i18n('components.criteriaGroup.with','with')"></span>
+						<select class="me-1"
+							data-bind="options: $component.options.occurrenceTypeOptions, optionsText: 'name', optionsValue: 'id', value: Occurrence.Type"></select>
+						<span contenteditable="true" class="numericInputField dropdown me-1"
+							data-bind="htmlValue: Occurrence.Count.numeric(), 
+									eventType: 'blur', 
+									ko_autocomplete: { value: Occurrence.Count, source: $component.options.occurrenceCountOptions, minLength: 0, maxShowItems: 10, scroll: true }"></span>
+						<button class="btn btn-outline-dark btn-sm me-1" data-bind="click: function() { Occurrence.IsDistinct(!Occurrence.IsDistinct())}, text: Occurrence.IsDistinct() ?
+																					ko.i18n('components.criteriaGroup.usingDistinct','using distinct') :
+																					ko.i18n('components.criteriaGroup.usingAll','using all')"></button>
+						<!-- ko if: !$data.Occurrence.IsDistinct() --> 
+						 <span class="me-1"
+							data-bind="text: ko.i18n('components.criteriaGroup.occurrencesOf','occurrences of:')"></span>
+						<!-- /ko -->
+						<!-- ko if: $data.Occurrence.IsDistinct() --> 
+						 <select class="me-1"
+							data-bind="options: $component.getDistinctOptions($data.Criteria), optionsText: 'name', optionsValue: 'id', value: $data.Occurrence.CountColumn"></select>
+						<!-- /ko -->
+					</div>
+	
+					<!-- Criterion -->
+					<div class="d-flex align-items-start w-100 mb-3">
+						<div class="flex-grow-1" data-bind="component: {
+														name: $component.getCriteriaComponent($data.Criteria),
+														params: {expression: $component.expression, criteria: $data.Criteria, hideClose: true } }">
+						</div>
+						<button class="btn btn-outline-secondary"
+							data-bind="click: function (data, event) { $component.removeCriteria($parent.group().CriteriaList, data) }, title: ko.i18n('common.remove', 'Remove')">
+							<i class="fa fa-trash"></i>
+						</button>
+					</div>
+
+					<!-- Below the criterion-->
+					<div class="mb-2">
+						<span class="me-1" data-bind="text:ko.i18n('components.criteriaGroup.where', 'where')"></span>
+						<cycle-toggle-input class="me-1" params="{value: StartWindow.UseEventEnd, options: $component.options.EventDateOptions}">
+						</cycle-toggle-input>
+						<span class="me-1" data-bind="text:ko.i18n('components.criteriaGroup.between','between')"></span>
+					</div>
+	
+					<div class="mb-2 d-flex">
+						<window-input params="Window: StartWindow"></window-input>
+						<cycle-toggle-input params="{value: StartWindow.UseIndexEnd, options: $component.options.IndexDateOptions}">
+						</cycle-toggle-input>
+						<!-- ko ifnot: EndWindow -->
+						<button class="btn btn-link btn-sm" data-bind="click: $component.addEndWindow">
+							<span
+								data-bind="text:ko.i18n('components.criteriaGroup.addAdditionalConstraint', 'add additional constraint')"></span>
+						</button>
+						<!-- /ko -->
+					</div>
+	
+					<!-- ko if: EndWindow -->
+					<div class="mb-2">
+						<span data-bind="text:ko.i18n('components.criteriaGroup.and', 'and')"></span>
+						<cycle-toggle-input
+							params="{value: EndWindow().UseEventEnd, options: $component.options.EventDateOptions}"></cycle-toggle-input>
+						<span data-bind="text:ko.i18n('components.criteriaGroup.between', 'between')"></span>
+						<window-input params="Window: EndWindow"></window-input>
+						<cycle-toggle-input
+							params="{value: EndWindow().UseIndexEnd, options: $component.options.IndexDateOptions}"></cycle-toggle-input>
+						<button class="btn btn-link btn-sm"
+							data-bind="click: $component.removeEndWindow, title: ko.i18n('common.remove', 'Remove')">
+							<i class="fa fa-trash"></i>
+						</button>
+					</div>
+					<!-- /ko -->
+	
+					<div class="mb-2">
+						<span class="fst-italic" data-bind="text: $component.indexMessage"></span>
+					</div>
+	
+					<!-- ko if: $component.hasVO($data.Criteria) -->
+					<div class="mb-2 d-flex align-items-center">
+						<input type="checkbox" data-bind="checked: RestrictVisit">
+						<span class="ms-1"
+							data-bind="text:ko.i18n('components.criteriaGroup.criteriaGroupText_1','restrict to the same visit occurrence')"></span>
+					</div>
+					<!-- /ko -->
+	
+					<div class="mb-2 d-flex align-items-center">
+						<input type="checkbox" data-bind="checked: IgnoreObservationPeriod">
+						<span class="ms-1"
+							data-bind="text:ko.i18n('components.criteriaGroup.criteriaGroupText_2','allow events from outside observation period')"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- ko foreach: group().Groups -->
+	<div class="criteria-group-container" style="position:relative">
+		<criteria-group params="{expression: $component.expression,
+									group: ko.observable($data),
+									parentGroup: $parent.group(),
+									indexMessage: $component.indexMessage,
+									deleteCallback: function() { $component.removeCriteria($parent.group().Groups, $data); }
+								}"></criteria-group>
+	</div>
+	<!-- /ko -->
+
+	<from-reusables-modal params="{isModalShown: $component.showReusablesModal, type: 'CRITERIA_GROUP', parentExpression: $component.expression, callback: $component.insertFromReusable}"></from-reusables-modal>
+</div>

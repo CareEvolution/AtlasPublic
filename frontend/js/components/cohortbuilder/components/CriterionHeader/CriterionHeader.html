@@ -1,0 +1,41 @@
+<div class="d-flex align-items-center mb-4">
+	<div class="h5 mb-0 me-1" data-bind="text: $component.criterionTitle"></div>
+	<!-- ko if: $component.conceptSetInfo-->
+	<conceptset-selector params="conceptSetId: $component.conceptSetInfo.conceptSetId,
+			conceptSets: $component.conceptSetInfo.conceptSets,
+			defaultText: $component.conceptSetInfo.defaultText,
+			buttonClass: 'btn-secondary'">
+	</conceptset-selector>
+	<!-- /ko -->
+
+	<div class="dropdown ms-auto me-2">
+		<button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown"
+			data-bs-auto-close="outside">
+			<span data-bind="text: ko.i18n('components.common.addAttribute', 'Select Attributes')"></span>
+		</button>
+		<ul class="dropdown-menu" data-bind="foreach:$component.addActions">
+			<li>
+				<a class="dropdown-item" data-bind="click:action" href="#">
+					<div class="d-flex align-items-start">
+						<span class="fa fa-check attribute-list"
+							data-bind="style: { visibility: $component.criteria[$data.attributeName]() ? 'visible' : 'hidden' }"></span>
+						<div>
+							<div class="optionText" data-bind="text: ko.i18n($data.title, $data.defaultTitle)"></div>
+							<div class="optionDescription"
+								data-bind="text: ko.i18n($data.description, $data.defaultDescription)">
+							</div>
+						</div>
+					</div>
+				</a>
+			</li>
+		</ul>
+	</div>	
+
+	<!-- ko if: !$component.hideClose -->
+	<button class="btn btn-outline-secondary"
+		data-bind="click: function() { $component.removeCriteria() }, title: ko.i18n('common.remove.criteria', 'Remove criteria')">
+		<i class="fa fa-trash"></i>
+	</button>
+	<!-- /ko -->
+</div>
+

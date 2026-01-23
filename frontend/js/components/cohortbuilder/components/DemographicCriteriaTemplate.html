@@ -1,0 +1,62 @@
+<div class="criteriaSection" data-bind="with: Criteria">
+
+	<criterion-header params="criterionTitle: 'Demographics',
+		hideClose: true,
+		addActions: $component.addActions,
+		removeCriteria: $component.removeCriterion,
+		criteria: $component.Criteria"></criterion-header>
+
+	<div class="criteriaAttributes">
+	
+		<!-- ko if: Age() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1" data-bind="text: ko.i18n('components.demographicCriteria.withAge', 'with age')"></span>
+			<numeric-range params="Range: Age"></numeric-range>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: Gender() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.demographicCriteria.withGenderOf', 'with a gender of:')"></span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Gender', DefaultQuery: ''}, ConceptList: Gender()"></concept-list>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: Race() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.demographicCriteria.withRaceOf', 'with a race of:')"></span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Race', DefaultQuery: ''}, ConceptList: Race()"></concept-list>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: Ethnicity() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.demographicCriteria.withEthnicity', 'with a ethnicity of:')"></span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Ethnicity', DefaultQuery: ''}, ConceptList: Ethnicity()"></concept-list>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: OccurrenceStartDate() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.demographicCriteria.occurrenceStart', 'occurrence start is:')"></span>
+			<date-range params="Range: OccurrenceStartDate"></date-range>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: OccurrenceEndDate() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.demographicCriteria.occurrenceEnd', 'occurrence end is:')"></span>
+			<date-range params="Range: OccurrenceEndDate"></date-range>
+		</div>
+		<!-- /ko -->
+
+	</div>
+</div>

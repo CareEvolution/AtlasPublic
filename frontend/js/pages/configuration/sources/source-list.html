@@ -1,0 +1,149 @@
+<!-- ko if: !$component.initializationCompleted() || loading() -->
+<loading></loading>
+<!-- /ko -->
+
+<!-- ko if: $component.initializationCompleted() && !loading() -->
+<div class="m-3">
+	<div data-bind="with: config.api">
+		<div class="configureHeader">
+			<div class="left">
+				<div data-bind="if: available == true">
+					<div class="serviceStatus serviceAvailable fa fa-check-circle"></div>
+				</div>
+
+				<div data-bind="if: available == false">
+					<div class="serviceStatus serviceUnavailable fa fa-exclamation-circle"></div>
+				</div>
+
+				<span class="serviceName" data-bind="text:name"></span> (
+				<span class="serviceUrl" data-bind="text:url"></span>)
+			</div>
+			<div class="right">
+				<div class="priority" data-bind="if:$component.canChangePriority">
+					<div class="priority-label"
+						data-bind="text:ko.i18n('configuration.changeSourcePriorities', 'Change source priorities in:')">
+					</div>
+					<select class="form-select"
+						data-bind="options: $component.priorityOptions, optionsText:'name', optionsValue:'id', value: $component.sharedState.priorityScope"></select>
+				</div>
+				<span class="btn btn-primary"
+					data-bind="text:ko.i18n('configuration.newSource', 'New Source'), click: $component.newSource, visible: $component.config.userAuthenticationEnabled, css: {disabled: !$component.canCreateSource()}">
+				</span>
+			</div>
+		</div>
+		<div data-bind="if: $component.config.useExecutionEngine" class="configureHeader">
+			<div class="left">
+				<div data-bind="if: isExecutionEngineAvailable()==true">
+					<div class="serviceStatus serviceAvailable fa fa-check-circle"></div>
+				</div>
+
+				<div data-bind="if:isExecutionEngineAvailable()==false">
+					<div class="serviceStatus serviceUnavailable fa fa-exclamation-circle"></div>
+				</div>
+
+				<span class="serviceName"
+					data-bind="text:ko.i18n('configuration.executionEngine', 'Execution engine')"></span>
+			</div>
+		</div>
+		<div data-bind="if:available==false">
+			<div class="error" data-bind="text:xhr.statusText"></div>
+		</div>
+
+		<!-- ko if: $component.sources().length > 0 -->
+		<table class="table">
+			<thead>
+				<th></th>
+				<th data-bind="text:ko.i18n('columns.sourceNameSourceKey', 'Source Name [Source Key]')"></th>
+				<th data-bind="text:ko.i18n('columns.tableQualifiers', 'Table Qualifiers')"></th>
+				<th data-bind="text:ko.i18n('columns.dialect', 'Dialect')"></th>
+				<th data-bind="text:ko.i18n('columns.vocabularyVersion', 'Vocabulary Version')"></th>
+				<th data-bind="text:ko.i18n('columns.evidence', 'Evidence')"></th>
+				<th data-bind="text:ko.i18n('columns.recordCounts', 'Record Counts (RC / DRC)')"></th>
+				<th data-bind="text:ko.i18n('columns.incidence', 'Incidence')"></th>
+				<th>
+					<span data-bind="text: 'Check Connection'"></span>
+				</th>
+				<th data-bind="if: $component.canClearAnyCache()">
+					<span data-bind="text: 'Clear Cache'"></span>
+				</th>
+			</thead>
+			<tbody data-bind="foreach: $component.sources()">
+				<tr>
+					<td><i class="fa"
+							data-bind="if:!initialized, attr: { title : error }, css: { 'fa-check-circle': initialized, 'fa-exclamation-circle': !initialized }"></i>
+						<span data-bind="text:error"></span>
+					</td>
+					<td>
+						<div data-bind="if: $component.canReadSource($data)"><button class="btn btn-link p-0"
+								data-bind="text:sourceName + ' [' + sourceKey + ']', click: $component.selectSource"></button>
+						</div>
+						<div data-bind="ifnot: $component.canReadSource($data)"><span
+								data-bind="text:sourceName + ' [' + sourceKey + ']'"></span></div>
+					</td>
+					<td>
+						<div data-bind="foreach: daimons">
+							<div data-bind="text: daimonType + ': ' + tableQualifier"></div>
+						</div>
+					</td>
+					<td data-bind="text: sourceDialect"></td>
+					<td class="configureRadio">
+						<input type="radio" name="radioSource"
+							data-bind="disable:!hasVocabulary, checkedValue:vocabularyUrl, checked:$component.sharedState.vocabularyUrl, click: $component.updateVocabPriority.bind($component)">
+						<span data-bind="text:version"></span>
+					</td>
+					<td class="configureRadio">
+						<input type="radio" name="radioEvidence"
+							data-bind="disable:!hasEvidence, checkedValue:evidenceUrl, checked:$component.sharedState.evidenceUrl, click: $component.updateEvidencePriority.bind($component)">
+					</td>
+					<td class="configureRadio">
+						<input type="radio" name="radioDensity"
+							data-bind="disable:!hasResults, checkedValue:resultsUrl, checked:$component.sharedState.resultsUrl, click: $component.updateResultsPriority.bind($component)">
+					</td>
+					<td class="configureCheckbox">
+						<input type="checkbox" name="checkResults" data-bind="disable:!hasResults, checked:hasResults">
+					</td>
+					<td data-bind="if: $component.canCheckConnection($data)">
+						<button
+							data-bind="css: $component.getCheckButtonStyles($data).buttonClass, 
+								click: function(){$component.checkSourceConnection($data);},
+								title: 'Check that the connection to the source is working.'"
+							class="btn btn-sm">
+							<i data-bind="css : $component.getCheckButtonStyles($data).iconClass" class="fa fa-fw"></i>
+							<span data-bind="text:'Check'"> </span>
+						</button>
+					</td>
+					<td data-bind="if: $component.canRefreshSourceCache($data)">
+						<button
+							data-bind="css: $component.getRefreshCacheButtonStyles($data).buttonClass, 
+								click: function(){$component.clearSourceCache($data);},
+								title: 'Clear the Achilles and results caches for this source.'"
+							class="btn btn-sm">
+							<i data-bind="css : $component.getRefreshCacheButtonStyles($data).iconClass" class="fa fa-fw"></i>
+							<span data-bind="text:'Clear'"> </span>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- /ko -->
+	</div>
+	<div data-bind="if: isInProgress()" class="text-center">
+		<loading params="theme: 'light'"></loading>
+	</div>
+	<div>
+		<div class="d-flex gap-3">
+			<!-- ko if: $component.canClearServerCache -->
+			<button class="btn btn-outline-secondary" 
+				data-bind="click: clearServerCache, 
+					text: ko.i18n('configuration.buttons.clearServerCache', 'Clear Server Cache'),
+					tooltip: 'Clear the Achilles and results caches for all data sources.'">
+			</button>
+			<!-- /ko -->
+			<button class="btn btn-outline-secondary" data-bind="click: function(){ $component.refreshSources(); }, 
+								text: 'Refresh Sources',
+								tooltip: 'Reload the list of sources from the database.'">
+			</button>
+		</div>
+	</div>
+</div>
+<!-- /ko -->

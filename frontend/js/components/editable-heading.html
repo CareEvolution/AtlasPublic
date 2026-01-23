@@ -1,0 +1,35 @@
+<div class="editable-heading">
+	<!-- ko if: !editing() -->
+		<!-- ko if: hasIcon() -->
+			<i data-bind="attr: { class: `fa fa-${icon}` }"></i>
+		<!-- /ko -->
+		<span data-bind="text: name"></span>
+		<!-- ko if: canEdit -->
+		<button class="btn btn-light edit-button" data-bind="click:startEdit; title: 'Edit name'"><i class="fa fa-edit"></i></button>
+		<!-- /ko -->
+		<i class="fa fa-info-circle" data-bind="popover: {template: document.querySelector('#editable-header-meta-popover').content, viewModel: $component, customClass:'editable-header-meta-popover' }"></i>
+		<tags-badges-list params="{tags: tags}"></tags-badges-list>
+	<!-- /ko -->
+	<!-- ko if: editing -->
+		<input class="form-control" type="text"
+			data-bind="
+				attr: { disabled: !canEdit, id: fieldId }, 
+				textInput: name, 
+				css: { emptyInput: !nonEmptyName() }, 
+				placeholder: ko.i18n('const.newEntityNames.conceptSet', 'New Concept Set')" />
+		<button class="btn btn-light" data-bind="click:commitEdit"><i class="fa fa-check-square"></i> Done</button>
+	<!-- /ko -->
+
+	<template id="editable-header-meta-popover">
+		<!-- ko if: !!meta -->
+			<span class="description" data-bind="text: meta"></span>
+		<!-- /ko -->
+		<!-- ko if: !!description -->
+			<span class="description" data-bind="text: description"></span>
+		<!-- /ko -->
+		<!-- ko if: !!authorship  -->
+			<!-- ko component: {name: 'authorship', params: authorship} -->
+			<!-- /ko -->
+		<!-- /ko -->
+	</template>
+</div>

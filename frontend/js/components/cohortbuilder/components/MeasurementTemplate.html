@@ -1,0 +1,178 @@
+<div class="criteriaSection" data-bind="with: Criteria">
+
+	<criterion-header params="criterionTitle: 'Measurement of',
+			conceptSetInfo: {
+				conceptSetId: $component.Criteria.CodesetId,
+				conceptSets: $component.expression.ConceptSets,
+				defaultText: ko.i18n('components.conditionMeasurement.anyMeasurement', 'Any Measurement')
+			},
+			hideClose: $component.hideClose,
+			addActions: $component.addActions,
+			removeCriteria: $component.removeCriteria,
+			criteria: $component.Criteria"></criterion-header>
+
+
+	<div class="criteriaAttributes">
+	
+		<!-- ko if:  DateAdjustment() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionMeasurement.conditionMeasurementText_29', 'with date adjustment:')"></span>
+			<date-adjustment params="DateAdjustment: DateAdjustment"></date-adjustment>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:  First() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionMeasurement.conditionMeasurementText_2', 'for the first time in the person\'s history')"></span>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:  OccurrenceStartDate() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionMeasurement.conditionMeasurementText_3', 'occurrence start is:')"></span>
+			<date-range params="Range: OccurrenceStartDate"></date-range>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:  MeasurementType() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionMeasurement.measurementType', 'Measurement Type')"></span>
+			<cycle-toggle-input class="me-1" 
+				params="{value:  MeasurementTypeExclude, options: $component.options.DomainTypeExcludeOptions}"></cycle-toggle-input>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Type Concept', DefaultQuery: ''}, ConceptList: MeasurementType()"></concept-list>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:  Operator() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionMeasurement.conditionMeasurementText_5', 'Measurement Value Operator is:')"></span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Meas Value Operator', DefaultQuery: ''}, ConceptList: Operator()"></concept-list>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:  ValueAsNumber() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionMeasurement.conditionMeasurementText_6', 'with value as number')"></span>
+			<numeric-range params="Range: ValueAsNumber"></numeric-range>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:  ValueAsConcept() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionMeasurement.conditionMeasurementText_7', 'Value as Concept is:')"></span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Meas Value', DefaultQuery: ''}, ConceptList: ValueAsConcept()"></concept-list>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:  Unit() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionMeasurement.conditionMeasurementText_8', 'Unit is:')"></span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Unit', DefaultQuery: ''}, ConceptList: Unit()"></concept-list>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:  RangeLow() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionMeasurement.conditionMeasurementText_9', 'with Range Low')"></span>
+			<numeric-range params="Range: RangeLow"></numeric-range>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:  RangeLowRatio() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionMeasurement.conditionMeasurementText_10', 'with Range Low Ratio')"></span>
+			<numeric-range params="Range: RangeLowRatio"></numeric-range>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:  RangeHigh() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionMeasurement.conditionMeasurementText_11', 'with Range High')"></span>
+			<numeric-range params="Range: RangeHigh"></numeric-range>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:  RangeHighRatio() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionMeasurement.conditionMeasurementText_12', 'with Range High Ratio')"></span>
+			<numeric-range params="Range: RangeHighRatio"></numeric-range>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:  Abnormal() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionMeasurement.conditionMeasurementText_13', 'with an abnormal result')"></span>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:  MeasurementSourceConcept() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionMeasurement.conditionMeasurementText_14', 'Measurement Source Concept is')"></span>
+			<conceptset-selector
+				params="conceptSetId: MeasurementSourceConcept(), conceptSets: $component.expression.ConceptSets, 
+					defaultText: ko.i18n('components.conditionMeasurement.anyMeasurement', 'Any Measurement')"></conceptset-selector>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:  Age() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionMeasurement.conditionMeasurementText_15', 'with age')"></span>
+			<numeric-range params="Range: Age"></numeric-range>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:  Gender() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionMeasurement.conditionMeasurementText_16', 'with a gender of:')"></span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Gender', DefaultQuery: ''}, ConceptList: Gender()"></concept-list>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:  ProviderSpecialty() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionMeasurement.conditionMeasurementText_17', 'with a Provider Specialty of:')"></span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Provider', DefaultQuery: ''}, ConceptList: ProviderSpecialty()"></concept-list>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:  VisitType() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionMeasurement.conditionMeasurementText_18', 'with a Visit of:')"></span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Visit', DefaultQuery: ''}, ConceptList: VisitType()"></concept-list>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:  CorrelatedCriteria() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<criteria-group class="w-100"
+				params="{expression: $component.expression, group: CorrelatedCriteria, indexMessage: $component.indexMessage}"></criteria-group>
+		</div>
+		<!-- /ko -->
+
+	</div>
+</div>

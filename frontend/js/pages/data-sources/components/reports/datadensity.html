@@ -1,0 +1,28 @@
+<!-- ko if: !isLoading() -->
+<h3 class="mb-3" data-bind="text: title"></h3>
+
+<div class="mb-3">
+	<div class="card">
+		<div class="card-header h5 mb-0" data-bind="text: ko.i18n('dataSources.datadensityReport.totalRows', 'Total Rows')"></div>
+		<div class="card-body">
+			<atlasline class="evidenceVisualization" params="data: totalLineData, format: chartFormats.totalLine, reportName: name, chartName: 'Total Rows'"></atlasline>
+		</div>
+	</div>
+</div>
+<div class="mb-3">
+	<div class="card">
+		<div class="card-header h5 mb-0" data-bind="text: ko.i18n('dataSources.datadensityReport.recordsPerPerson', 'Records Per Person')"></div>
+		<div class="card-body">
+			<atlasline class="evidenceVisualization" params="data: recordsperpersonLineData, format: chartFormats.recordsperpersonLine, reportName: name, chartName: 'Records Per Person'"></atlasline>
+		</div>
+	</div>
+</div>
+<div class="mb-3">
+	<div class="card">
+		<div class="card-header h5 mb-0" data-bind="text: ko.i18n('dataSources.datadensityReport.conceptsPerPerson', 'Concepts Per Person')"></div>
+		<div class="card-body">
+			<boxplot class="evidenceVisualization" params="data: conceptsPerPersonData, format: chartFormats.conceptsPerPerson, reportName: name, chartName: 'Concepts Per Person'"></boxplot>
+		</div>
+	</div>
+</div>
+<!--/ko-->

@@ -1,0 +1,33 @@
+.linkLegend {
+	display: flex;
+	justify-content: flex-end;
+
+	.linkLegendItem {
+		display: flex;
+		align-items: center;
+		margin-left: 10px;
+
+		.swatch {
+			width: 15px;
+			height: 15px;
+			border: solid 1px #ccc;
+
+			&.classification {
+				background-color: #a335ee;
+			}
+
+			&.standard {
+				background-color: #0070dd;
+			}
+
+			&.nonStandard {
+				background-color: #a71a19;
+			}
+		}
+
+		.linkLegendTitle {
+			padding-left: 3px;
+			font-size: 11px;
+		}
+	}
+}

@@ -1,0 +1,73 @@
+<div data-bind="css: classes({extra: ['card', 'card-primary']})">
+	<div
+		data-bind="css: classes({extra: ['card-header']}), text: ko.i18n('configuration.userImport.scheduler.schedule', 'Schedule')">
+	</div>
+	<div data-bind="css: classes({ extra: 'card-body' })">
+		<form>
+			<div class="row mb-3">
+				<div class="col-auto">
+					<div class="form-check">
+						<input class="form-check-input" data-bind="checked: job().enabled" type="checkbox" id="enabled" />
+						<label class="form-check-label" for="enabled" data-bind="text: ko.i18n('configuration.userImport.scheduler.enabled', 'Enabled')"></label>
+					</div>
+				</div>
+				<div class="col-auto">
+					<div class="form-check">
+						<input class="form-check-input" data-bind="checked: job().preserveRoles" type="checkbox" id="preserveRoles" />
+						<label class="form-check-label" for="preserveRoles" data-bind="text: ko.i18n('configuration.userImport.scheduler.preserveAssignedRoles', 'Preserve assigned roles')"></label>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-3" data-bind="css: classes({ element: 'schedule' })">
+				<div class="col">
+					<label class="form-label"
+						data-bind="css: classes({extra: 'btn'}), text: ko.i18n('configuration.userImport.scheduler.startOn', 'Start on:')"></label>
+					<div data-bind="css: classes({extra: ['input-group', 'date']})">
+						<input placeholder="YYYY-MM-DD"
+							data-bind="dateTimePicker: job().startDate, css: classes({extra: ['form-control']})" />
+						<span data-bind="css: classes({extra: ['input-group-text']})">
+							<span data-bind="css: classes({extra: ['fa', 'fa-calendar']})"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-3" data-bind="css: classes({ element: 'schedule' })">
+				<div class="col">
+					<label class="form-label"
+						data-bind="css: classes({extra: 'btn'}), text: ko.i18n('configuration.userImport.scheduler.execute', 'Execute:')"></label>
+					<select
+						data-bind="css: classes({ extra: 'form-control' }), options: executionOptions, optionsText: 'label', optionsValue: 'value', value: job().frequency"></select>
+				</div>
+			</div>
+			<div data-bind="css: classes({ element: 'schedule', extra: 'row mb-3'}), visible: weeklyVisible">
+				<label class="form-label"
+					data-bind="css: classes({extra: 'btn'}), text: ko.i18n('configuration.userImport.scheduler.repeat', 'Repeat on:')"></label>
+				<weekdays params="weekdays: weekdays"></weekdays>
+			</div>
+			<div data-bind="css: classes({ extra: ['card', 'card-primary'] }), visible: notOnceVisible">
+				<div
+					data-bind="css: classes({ extra: 'card-header' }), text: ko.i18n('configuration.userImport.scheduler.ends', 'Ends')">
+				</div>
+				<div data-bind="css: classes({ element: 'ends', extra: 'card-body' })">
+					<div class="form-check" data-bind="css: classes('ends-label')">
+						<input class="form-check-input" name="ends" value="never" type="radio" data-bind="checked: jobEnds" />
+						<label class="form-check-label" data-bind="text: ko.i18n('configuration.userImport.scheduler.never', 'Never')"></label>
+					</div>
+					<div class="form-check" data-bind="css: classes('ends-label')">
+						<input class="form-check-input" data-bind="value: job().recurringTimes, css: classes('ends-after'), enable: jobEnds() === jobEndOptions.AFTER" />
+						<label class="form-check-label" data-bind="text: ko.i18n('configuration.userImport.scheduler.after', 'After')"></label>
+						<input name="ends" value="after" data-bind="checked: jobEnds" type="radio" />
+					</div>
+					<div data-bind="css: classes('ends-label')">
+						<label data-bind="css: classes({ extra: 'btn'})"><input name="ends" value="on"
+								data-bind="checked: jobEnds" type="radio" />
+							<span data-bind="text: ko.i18n('configuration.userImport.scheduler.on', 'On')"></span>
+							<input placeholder="YYYY-MM-DD"
+								data-bind="enable: jobEnds() === jobEndOptions.ON, dateTimePicker: job().recurringUntilDate, css: classes({element: 'ends-on', extra: 'form-control'}) " />
+						</label>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,47 @@
+<div id="dataSourcesTop"></div>
+<heading-title params="name: ko.i18n('dataSources.headingTitle', 'Data Sources'), icon: 'database'"></heading-title>
+
+<access-denied params="isAuthenticated: $component.isAuthenticated, isPermitted: canViewCdmResults"></access-denied>
+
+<div data-bind="if: canViewCdmResults, css:classes()">
+	<div class="p-3">
+		<form class="row g-3">
+			<div class="col-md-6">
+				<label for="selectSource" class="form-label">Data Source</label>
+				<select class="form-select" aria-label="Select a Source" id="selectSource"
+					data-bind="options: sources, optionsText: 'sourceName', value: currentSource, optionsCaption: ko.i18n('dataSources.selectASource', 'Select a Source')">
+				</select>
+			</div>
+			<div class="col-md-6">
+				<label for="selectReport" class="form-label">Report</label>
+				<select class="form-select" aria-label="Select a Report" id="selectReport"
+					data-bind="options: reports, optionsCaption: ko.i18n('dataSources.selectAReport', 'Select a Report'), optionsText: 'name', value: currentReport, disable: !currentSource()">
+				</select>
+			</div>
+		</form>
+	</div>
+
+	<loading params="status: ko.i18n('dataSources.loadingReport', 'Loading report')" data-bind="visible: isReportLoading()">
+	</loading>
+
+	<!-- ko if: hasError() -->
+	<div class="p-3 text-center error">
+		<div>
+			<i class="fa fa-exclamation-circle"></i>
+		</div>
+		<div data-bind="text: errorMessage() || ko.i18n('dataSources.errorLoadingReport', 'Error loading report')"></div>
+	</div>
+	<!-- /ko -->
+
+	<!-- ko if: currentSource() && currentReport() && !hasError() -->
+	<div id="report">
+		<div class="p-3">
+			<!-- ko component: {
+				name: $component.currentReport().component,
+				params: { context: $component, report: currentReport }
+			} -->
+			<!-- /ko -->
+		</div>
+	</div>
+	<!-- /ko -->
+</div>

@@ -1,0 +1,53 @@
+<heading-title params="name: ko.i18n('home.title', 'Home'), icon: 'home', theme: 'dark'"></heading-title>
+
+<div class="mx-3 my-3">
+	<div class="mb-3">
+		<div class="h4" data-bind="text: ko.i18n('home.welcome', 'Welcome to ATLAS.')"></div>
+		<div class="fs-5" data-bind="html: ko.i18n('home.description', 'ATLAS is an open source application developed as a part of <a href=\'http://www.ohdsi.org\' target=\'_new\'>OHDSI</a> intended to provide a unified interface to patient level data and analytics.')"></div>
+	</div>
+
+	<div class="mb-3">
+		<div class="h4" data-bind="text: ko.i18n('home.documentation.title', 'Documentation')"></div>
+		<div class="fs-5">
+			<a target="_new" href="https://commondatamodel.docs.careevolution.com/atlas/"><i class="fa fa-book" aria-hidden="true"></i>
+			Atlas User Guide</a>
+		</div>
+	</div>
+
+	<div class="mb-3">
+		<div class="h4" data-bind="text: ko.i18n('home.gettingStarted.title', 'Getting Started')"></div>
+
+		<div class="fs-5 mb-3"
+			data-bind="text: ko.i18n('home.gettingStarted.description', 'ATLAS is designed to help you perform research using patient level data. The following steps will help you get started:')">
+		</div>
+
+		<!-- ko if: currentCohortDefinition() == undefined && canCreateCohort() -->
+		<div class="mb-3">
+			<button class="btn btn-success me-2" data-bind="click:$component.newCohortDefinition, 
+							text: ko.i18n('home.gettingStarted.newCohort.button', 'Define a New Cohort')">
+			</button>
+			<div class="fs-5"
+				data-bind="text: ko.i18n('home.gettingStarted.newCohort.description', 'Begin performing research by defining the group of people you intend to study')">
+			</div>
+		</div>
+		<!-- /ko -->
+
+		<div class="mb-3">
+			<button class="btn btn-success me-2" data-bind="click:$component.browseVocabulary, 
+							css: {disabled: !canSearch()}, 
+							text: ko.i18n('home.gettingStarted.vocabulary.button', 'Search the Vocabulary')">
+			</button>
+			<div class="fs-5"
+				data-bind="text: ko.i18n('home.gettingStarted.vocabulary.description', 'Search the different ontologies used to describe patient level data around the world')">
+			</div>
+		</div>
+	</div>
+
+	<div class="mb-3">
+		<div class="h4">Version</div>
+		<div>ATLAS Version <span data-bind="text: atlasVersion"></span></div>
+		<div>Copyright <span data-bind="text: currentYear"></span> <a href="https://www.ohdsi.org">OHDSI</a></div>
+	</div>
+
+	<loading data-bind="visible: loading" params="status: ko.i18n('home.releaseNotes.loadingReleaseInfo', 'Loading release info')"></loading>
+</div>

@@ -1,0 +1,46 @@
+.editable-heading {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #000;
+  font-weight: 500;
+
+  button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  button.edit-button {
+    height: 24px;
+    width: 24px;
+  }
+
+  input {
+    max-width: 50vw;
+  }
+
+  button.btn-light {
+    --bs-btn-border-color: rgb(223, 225, 231);
+    --bs-btn-disabled-border-color: rgb(223, 225, 231);
+  }
+
+}
+
+.editable-header-meta-popover {
+  font-size: 14px;
+  --bs-popover-max-width: 600px;
+
+  .description {
+    font-weight: normal;
+    font-style: italic;
+  }
+
+  .authorship__container {
+    font-size: 12px;
+    padding: 0;
+  }
+}

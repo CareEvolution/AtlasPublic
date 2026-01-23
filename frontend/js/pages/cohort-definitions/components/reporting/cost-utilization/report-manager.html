@@ -1,0 +1,1533 @@
+<!-- ko if: $component.currentReport() == 'Heracles Heel' && !$component.loadingReport() -->
+<div id="reportHeel">
+	<div>
+		<faceted-datatable params="{columns: $component.heelDataColumns, reference:$component.reference, options:$component.heelOptions }"></faceted-datatable>
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == 'Data Completeness' && !$component.loadingReport() -->
+<div id="reportDataCompleteness" class="d-flex flex-column gap-3">
+	<div class="card">
+		<div class="card-header">
+			<div class="d-flex align-items-center gap-1">
+				<i class="fa fa-area-chart fs-5"></i>
+				<span class="h5 mb-0"
+					data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_3', 'Data Completeness')"></span>
+				(<span class="h5 mb-0" data-bind="text:$component.reportSourceKey()"></span>)
+			</div>
+		</div>
+		<div class="card-body">
+			<faceted-datatable
+				params="{columns: $component.dataCompletColumns, reference:$component.dataCompleteReference, options:$component.dataCompleteOptions, rowClick:$component.dataCompleteRowClick }"></faceted-datatable>
+		</div>
+	</div>
+	<div class="card">
+		<div class="card-header">
+			<span class="h5 mb-0" data-bind="text:$component.currentAgeGroup()"></span>
+		</div>
+		<div class="card-body" id="dataCompletenessSvgDiv">
+		</div>
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == 'Entropy' && !$component.loadingReport() -->
+<div id="reportEntropy" class="d-flex flex-column gap-3">
+	<div class="card">
+		<div class="card-header">
+			<div class="d-flex align-items-center gap-1">
+				<span class="h5 mb-0"
+					data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_5', 'Entropy by Date')"></span>
+			</div>
+		</div>
+		<div class="card-body d-flex flex-column gap-3">
+
+			<div id="care_site_div">
+				<table id="care_site_table" class="table table-sm table-hover table-borderless">
+					<thead>
+						<tr>
+							<th>
+								<span
+									data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_4', 'Care Site')"></span>
+							</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			
+			<div>
+				<div class="chartContainer" data-bind="css: classes('chartContainer')">
+					<button title="Export image" data-bind="css: classes('export-button'), click: $component.export"><i
+							class="far fa-file-image"></i></button>
+					<button title="Export SVG" data-bind="css: classes('exportSvg-button'), click: $component.exportSvg"><i
+							class="fas fa-file-download"></i></button>
+					<div class="evidenceVisualization" id="entropyByDate"></div>
+				</div>
+			</div>
+		
+		</div>
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == 'Person' && !$component.loadingReport() -->
+<div id="reportPerson">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_6', 'Year of Birth')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="chartContainer" data-bind="css: classes('chartContainer')">
+					<div class="evidenceVisualization" id="hist"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="d-flex align-items-stretch gap-3">
+			<div class="card flex-grow-1 flex-basis-equal">
+				<div class="card-header">
+					<div class="d-flex align-items-center gap-2">
+						<span class="h5 mb-0"
+							data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_9', 'Gender')"></span>
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="gender"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card flex-grow-1 flex-basis-equal">
+				<div class="card-header">
+					<div class="d-flex align-items-center gap-2">
+						<span class="h5 mb-0"
+							data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_10', 'Race')"></span>
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="race"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card flex-grow-1 flex-basis-equal">
+				<div class="card-header">
+					<div class="d-flex align-items-center gap-2">
+						<span class="h5 mb-0"
+							data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_11', 'Ethnicity')"></span>
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="ethnicity"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == 'Measurement' && !$component.loadingReport() -->
+<div id="reportMeasurement">
+	<div class="card card-danger">
+		<div class="card-header">
+			<span
+				data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_12', 'Report Not implemented')"></span>
+		</div>
+		<div class="card-body">
+			<span
+				data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_13', 'This report has not been implemented.')"></span>
+		</div>
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if:  $component.currentReport() == 'Cohort Specific' && !$component.loadingReport()-->
+<div id="reportCohortSpecific">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_14', 'Prevalence by Month')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="chartContainer" data-bind="css: classes('chartContainer')">
+					<div class="evidenceVisualization" id="prevalenceByMonth"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_15', 'Cohort Start')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="chartContainer" data-bind="css: classes('chartContainer')">
+					<div class="evidenceVisualization trellisLinePlot" id="cohort_trellisLinePlot"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_16', 'Persons in Cohort from Start to End')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="chartContainer" data-bind="css: classes('chartContainer')">
+					<div class="evidenceVisualization" id="personinCohortFromStartToEnd"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_17', 'Number of Persons by Duration from Cohort Start to Cohort End')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="chartContainer" data-bind="css: classes('chartContainer')">
+					<div class="evidenceVisualization" id="personsByDurationFromStartToEnd"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="d-flex align-items-stretch gap-3">
+
+			<div class="card flex-grow-1 flex-basis-equal">
+				<div class="card-header">
+					<div class="d-flex align-items-center gap-2">
+						<span class="h5 mb-0"
+							data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_18', 'Distribution of Age at Cohort Start by Cohort Start Year')">
+						</span>
+					</div>
+				</div>
+				<div class="card-body p-3">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="distributionAgeCohortStartByCohortStartYear"></div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="d-flex align-items-stretch gap-3">
+
+			<div class="card flex-grow-1 flex-basis-equal">
+				<div class="card-header">
+					<div class="d-flex align-items-center gap-2">
+						<span class="h5 mb-0"
+							data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_20', 'Distribution of Age at Cohort Start by Gender')">
+						</span>
+					</div>
+				</div>
+				<div class="card-body p-3">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="distributionAgeCohortStartByGender"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card flex-grow-1 flex-basis-equal">
+				<div class="card-header">
+					<div class="d-flex align-items-center gap-2">
+						<span class="h5 mb-0"
+							data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_21', 'Age at Index')">
+						</span>
+					</div>
+				</div>
+				<div class="card-body p-3">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="ageAtIndex"></div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == 'Tornado' && !$component.loadingReport() -->
+<div id="reportTornado">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_22', 'Tornado')"></span>
+				</div>
+			</div>
+			<div class="card-body p-2">
+				<div class="chartContainer" data-bind="css: classes('chartContainer')">
+					<div id="tornadoPlot" class="text-center evidenceVisualization"><svg width="1000" height="300" preserveAspectRatio></svg></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_23', 'Sample Profiles')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<div id="tornadoProfiles" class="d-flex justify-content-around align-items-center">
+					<!-- ko if: $component.tornadoProfiles().length == 0 -->
+					<div>
+						<span
+							data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_24', 'Select a Bar from the Tornado Plot to view Sample Profiles for that Strata.')"></span>
+					</div>
+					<!-- /ko -->
+					<!-- ko foreach:$component.tornadoProfiles -->
+					<div class="text-center">
+						<a target="_new" data-bind="attr: {href: $component.buildProfileLink($data)}">
+							<i data-bind="css: $component.genderIcon($data)" class="fa"></i>
+							<div data-bind="html:personId"></div>
+						</a>
+					</div>
+					<!-- /ko -->
+				</div>
+			</div>
+		</div>
+		</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == 'Conditions by Index' && !$component.loadingReport()-->
+<div id="reportConditionsByIndex" class="d-flex flex-column gap-3">
+	<div class="card">
+		<div class="card-header">
+			<div class="d-flex align-items-center gap-2">
+				<span class="h5 mb-0"
+					data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_25', 'Condition Prevalence')"></span>
+			</div>
+		</div>
+		<div class="card-body">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" href="#condition-table-panel" role="tab" data-bs-toggle="tab">
+						<span
+							data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_26', 'Table')"></span>
+					</a>
+				</li>
+				<li class="nav-item" id="treemap-tab">
+					<a class="nav-link" href="#condition-treemap-panel" role="tab" data-bs-toggle="tab">
+						<span
+							data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_27', 'Treemap')"></span>
+					</a>
+				</li>
+			</ul>
+			<div id='content' class="tab-content">
+				<div role="tabpanel" class="tab-pane" id="condition-treemap-panel">
+					<div class="report-manager__chartContainer chartContainer evidenceVisualization" id="condition_treemap_container">
+						<div class="treemap_zoomtarget"></div>
+					</div>
+					<div class="treemap_legend">
+						<span
+							data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_28', 'Box Size: Prevalence, Color: Log of Relative Risk (Red to Green = Negative to Positive), Use Ctrl-Click to Zoom, Alt-Click to Reset Zoom')"></span>
+					</div>
+				</div>
+				<div role="tabpanel" class="tab-pane active" id="condition-table-panel"
+					data-bind="eventListener: { event: 'click', selector: 'tr', callback: (d,c,e) => handleGenericRowClick(e, 'condition', 'condition_table')}">
+					<table id="condition_table" class="table table-sm table-hover table-borderless" type="condition">
+						<thead>
+							<tr>
+								<th>
+									<span data-bind="text: ko.i18n('columns.conceptId', 'Concept Id')"></span>
+								</th>
+								<th>SOC</th>
+								<th>HLGT</th>
+								<th>HLT</th>
+								<th>PT</th>
+								<th>SNOMED</th>
+								<th>Person Count</th>
+								<th>Prevalence</th>
+								<th>Relative Risk per Person</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ko if:$component.loadingReportDrilldown -->
+	<div class="loader">
+		<i class="fa fa-circle-o-notch fa-spin"></i> <span data-bind="text: ko.i18n('common.loading', 'Loading')"></span>
+	</div>
+	<!-- /ko -->
+
+	<!-- ko if: $component.activeReportDrilldown -->
+	<div class="card">
+		<div class="card-header">
+			<div class="d-flex align-items-center gap-1">
+				<span class="h5 mb-0"
+					data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_29', 'Drilldown Report')"></span>
+				<span>-</span>
+				<span id="conditionDrilldownScatterplotHeading" class="h5 mb-0"></span>
+			</div>
+		</div>
+		<div class="card-body">
+			<div class="chartContainer" data-bind="css: classes('chartContainer')">
+				<div class="evidenceVisualization" id="conditionDrilldownScatterplot"></div>
+			</div>
+		</div>
+	</div>
+	<!-- /ko -->
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == 'Drugs by Index' && !$component.loadingReport() -->
+<div id="reportDrugErasByIndex">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_30', 'Drugs by Index Date')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" href="#drugs-by-index-table-panel" role="tab" data-bs-toggle="tab">
+							<span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_26', 'Table')"></span>
+						</a>
+					</li>
+					<li class="nav-item" id="treemap-tab">
+						<a class="nav-link" href="#drugs-by-index-treemap-panel" role="tab" data-bs-toggle="tab">
+							<span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_27', 'Treemap')"></span>
+						</a>
+					</li>
+				</ul>
+				<div id='content' class="tab-content">
+					<div role="tabpanel" class="tab-pane" id="drugs-by-index-treemap-panel">
+						<div class="report-manager__chartContainer chartContainer evidenceVisualization" id="drugindex_treemap_container">
+							<div class="treemap_zoomtarget"></div>
+						</div>
+						<div class="treemap_legend">
+							<span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_28', 'Box Size: Prevalence, Color: Log of Relative Risk (Red to Green = Negative to Positive), Use Ctrl-Click to Zoom, Alt-Click to Reset Zoom')"></span>
+						</div>
+					</div>
+					<div role="tabpanel" class="tab-pane active" id="drugs-by-index-table-panel" data-bind="eventListener: { event: 'click', selector: 'tr', callback: (d,c,e) => handleGenericRowClick(e, 'drug', 'drugs-by-index-table')}">
+						<table id="drugs-by-index-table" class="table table-sm table-hover table-borderless" type="drug">
+							<thead>
+								<tr>
+									<th>Concept Id</th>
+									<th>ATC 1</th>
+									<th>ATC 3</th>
+									<th>ATC 4</th>
+									<th>Ingredient</th>
+									<th>Person Count</th>
+									<th>Prevalence</th>
+									<th>Relative Risk per Person</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- ko if: $component.loadingReportDrilldown -->
+		<div class="loader">
+			<i class="fa fa-circle-o-notch fa-spin"></i> <span data-bind="text: ko.i18n('common.loading', 'Loading')"></span>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: $component.activeReportDrilldown -->
+		<div>
+			<div id="drugDrilldownScatterplotHeading" class="h5"></div>
+			<div class="chartContainer" data-bind="css: classes('chartContainer')">
+				<div class="evidenceVisualization" id="drugDrilldownScatterplot"></div>
+			</div>
+		</div>
+		<!-- /ko -->
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == 'Observation Periods' && !$component.loadingReport() -->
+<div id="reportObservationPeriods" >
+	<div class="d-flex flex-column gap-3">
+
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_31', 'Age at First Observation')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="chartContainer" data-bind="css: classes('chartContainer')">
+					<div class="evidenceVisualization" id="ageatfirstobservation"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_33', 'Age by Gender')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="chartContainer" data-bind="css: classes('chartContainer')">
+					<div class="evidenceVisualization" id="agebygender"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_35', 'Observation Length')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="chartContainer" data-bind="css: classes('chartContainer')">
+					<div class="evidenceVisualization" id="observationlength"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_37', 'Observation Length by Gender')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="chartContainer" data-bind="css: classes('chartContainer')">
+					<div class="evidenceVisualization" id="opbygender"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_39', 'Observation Length by Age Decile')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="chartContainer" data-bind="css: classes('chartContainer')">
+					<div class="evidenceVisualization" id="opbyage"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_40', 'Observation Periods per Person')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="chartContainer" data-bind="css: classes('chartContainer')">
+					<div class="evidenceVisualization" id="opperperson"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_41', 'Persons With Continuous Observation By Month')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="chartContainer" data-bind="css: classes('chartContainer')">
+					<div class="evidenceVisualization" id="oppeoplebymonthsingle"></div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == 'Condition Eras' && !$component.loadingReport() -->
+<div id="reportConditionEras">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex justify-content-between align-items-center">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_42', 'Condition Era Prevalence')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" href="#conditionera-table-panel" role="tab" data-bs-toggle="tab">
+							<span
+								data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_26', 'Table')"></span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#conditionera-treemap-panel" role="tab" data-bs-toggle="tab">
+							<span
+								data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_27', 'Treemap')"></span>
+						</a>
+					</li>
+				</ul>
+				<div id='content' class="tab-content">
+					<div role="tabpanel" class="tab-pane" id="conditionera-treemap-panel">
+						<div class="report-manager__chartContainer chartContainer evidenceVisualization" id="conditionera_treemap_container">
+							<div class="treemap_zoomtarget"></div>
+						</div>
+						<div class="treemap_legend">
+							<span
+								data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_28', 'Box Size: Prevalence, Color: Log of Relative Risk (Red to Green = Negative to Positive), Use Ctrl-Click to Zoom, Alt-Click to Reset Zoom')"></span>
+						</div>
+					</div>
+					<div role="tabpanel" class="tab-pane active" id="conditionera-table-panel"
+						data-bind="eventListener: { event: 'click', selector: '.conditionera_table_selector', callback: handleConditionEraTableClick}">
+						<table id="conditionera_table" class="table table-sm table-hover table-borderless">
+							<thead>
+								<tr>
+									<th>Concept Id</th>
+									<th>SOC</th>
+									<th>HLGT</th>
+									<th>HLT</th>
+									<th>PT</th>
+									<th>SNOMED</th>
+									<th>Person Count</th>
+									<th>Prevalence</th>
+									<th>Length of Era</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ko if: $component.loadingReportDrilldown -->
+		<div class="loader">
+			<i class="fa fa-circle-o-notch fa-spin"></i> <span data-bind="text: ko.i18n('common.loading', 'Loading')"></span>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: $component.activeReportDrilldown -->
+		<div class="d-flex flex-column gap-3">
+		
+			<div class="h5 d-flex align-items-center gap-1">
+				<span
+					data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_29', 'Drilldown Report')"></span>
+				<span>-</span>
+				<span id="conditionEraDrilldown"></span>
+			</div>
+
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_42', 'Condition Era Prevalence')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization trellisLinePlot" id="conditionera_trellisLinePlot"></div>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_43', 'Condition Era Prevalence by Month')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="conditioneraPrevalenceByMonth"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_44', 'Age at First Diagnosis')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="conditioneras_age_at_first_diagnosis"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_45', 'Length of Condition Era')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="conditioneras_length_of_era"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /ko -->
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == 'Procedures by Index' && !$component.loadingReport() -->
+<div id="reportProceduresByIndex">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_46', 'Procedure Prevalence')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item" id="treemap-tab">
+						<a class="nav-link" href="#procedure-treemap-panel" role="tab" data-bs-toggle="tab">
+							<span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_27', 'Treemap')"></span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="#procedure-table-panel" role="tab" data-bs-toggle="tab">
+							<span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_26', 'Table')"></span>
+						</a>
+					</li>
+				</ul>
+				<div id='content' class="tab-content">
+					<div role="tabpanel" class="tab-pane" id="procedure-treemap-panel">
+						<div class="report-manager__chartContainer chartContainer evidenceVisualization" id="procedureindex_treemap_container">
+							<div class="treemap_zoomtarget"></div>
+						</div>
+						<div class="treemap_legend">
+							<span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_28', 'Box Size: Prevalence, Color: Log of Relative Risk (Red to Green = Negative to Positive), Use Ctrl-Click to Zoom, Alt-Click to Reset Zoom')"></span>
+						</div>
+					</div>	
+					<div role="tabpanel" class="tab-pane active" id="procedure-table-panel" data-bind="eventListener: { event: 'click', selector: 'tr', callback: (d,c,e) => handleGenericRowClick(e, 'procedure', 'procedure_table')}">
+						<table id="procedure_table" class="table table-sm table-hover table-borderless" type="procedure">
+							<thead>
+								<tr>
+									<th>Concept Id</th>
+									<th>Level 4</th>
+									<th>Level 3</th>
+									<th>Level 2</th>
+									<th>Procedure</th>
+									<th>Person Count</th>
+									<th>Prevalence</th>
+									<th>Relative Risk per Person</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ko if: $component.loadingReportDrilldown -->
+		<div class="loader">
+			<i class="fa fa-circle-o-notch fa-spin"></i> <span data-bind="text: ko.i18n('common.loading', 'Loading')"></span>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: $component.activeReportDrilldown -->
+		<div>
+			<div id="procedureDrilldownScatterplotHeading" class="h5">
+			</div>
+			<div class="chartContainer" data-bind="css: classes('chartContainer')">
+				<div class="evidenceVisualization" id="procedureDrilldownScatterplot"></div>
+			</div>
+		</div>
+		<!-- /ko -->
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == 'Condition' && !$component.loadingReport() -->
+<div id="reportCondition">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_47', 'Condition Prevalence')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" href="#condition-table-panel" role="tab" data-bs-toggle="tab">
+							<span
+								data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_26', 'Table')"></span>
+						</a>
+					</li>
+					<li class="nav-item" id="treemap-tab">
+						<a class="nav-link" href="#condition-treemap-panel" role="tab" data-bs-toggle="tab">
+							<span
+								data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_27', 'Treemap')"></span>
+						</a>
+					</li>
+				</ul>
+				<div id='content' class="tab-content">
+					<div role="tabpanel" class="tab-pane" id="condition-treemap-panel">
+						<div class="report-manager__chartContainer chartContainer evidenceVisualization" id="condition_treemap_container">
+							<div class="treemap_zoomtarget"></div>
+						</div>
+						<div class="treemap_legend">
+							<span
+								data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_28', 'Box Size: Prevalence, Color: Log of Relative Risk (Red to Green = Negative to Positive), Use Ctrl-Click to Zoom, Alt-Click to Reset Zoom')"></span>
+						</div>
+					</div>
+					<div role="tabpanel" class="tab-pane active" id="condition-table-panel"
+						data-bind="eventListener: { event: 'click', selector: '.condition_table_selector', callback: handleConditionTableClick}">
+						<table id="condition_table" class="table table-sm table-hover table-borderless">
+							<thead>
+								<tr>
+									<th>Concept Id</th>
+									<th>SOC</th>
+									<th>HLGT</th>
+									<th>HLT</th>
+									<th>PT</th>
+									<th>SNOMED</th>
+									<th>Person Count</th>
+									<th>Prevalence</th>
+									<th>Records per Person</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ko if: $component.loadingReportDrilldown -->
+		<div class="loader">
+			<i class="fa fa-circle-o-notch fa-spin"></i> <span
+				data-bind="text: ko.i18n('common.loading', 'Loading')"></span>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: $component.activeReportDrilldown -->
+		<div class="d-flex flex-column gap-3">
+			<div class="h4" id="conditionDrilldown"></div>
+
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_47', 'Condition Prevalence')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization trellisLinePlot" id="condition_trellisLinePlot"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_48', 'Condition Prevalence by Month')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="conditionPrevalenceByMonth"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_49', 'Condition Type')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="conditionsByType"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_44', 'Age at First Diagnosis')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="ageAtFirstDiagnosis"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /ko -->
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == 'Drug Eras' && !$component.loadingReport() -->
+<div id="reportDrugEras">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_50', 'Drug Era Prevalence')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" href="#drugera-table-panel" role="tab" data-bs-toggle="tab">
+							<span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_26', 'Table')"></span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#drugera-treemap-panel" role="tab" data-bs-toggle="tab">
+							<span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_27', 'Treemap')"></span>
+						</a>
+					</li>
+				</ul>
+				<div id='content' class="tab-content">
+					<div role="tabpanel" class="tab-pane" id="drugera-treemap-panel">
+						<div class="report-manager__chartContainer chartContainer evidenceVisualization" id="drugera_treemap_container">
+							<div class="treemap_zoomtarget"></div>
+						</div>
+						<div class="treemap_legend">
+							<span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_28', 'Box Size: Prevalence, Color: Log of Relative Risk (Red to Green = Negative to Positive), Use Ctrl-Click to Zoom, Alt-Click to Reset Zoom')"></span>
+						</div>
+					</div>
+					<div role="tabpanel" class="tab-pane active" id="drugera-table-panel" data-bind="eventListener: { event: 'click', selector: '.drugera_table_selector', callback: handleDrugEraTableClick}">
+						<table id="drugera_table" class="table table-sm table-hover table-borderless">
+							<thead>
+								<tr>
+									<th>Concept Id</th>
+									<th>ATC 1</th>
+									<th>ATC 3</th>
+									<th>ATC 4</th>
+									<th>Ingredient</th>
+									<th>Person Count</th>
+									<th>Prevalence</th>
+									<th>Length of Era</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ko if: $component.loadingReportDrilldown -->
+		<div class="loader">
+			<i class="fa fa-circle-o-notch fa-spin"></i> <span data-bind="text: ko.i18n('common.loading', 'Loading')"></span>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: $component.activeReportDrilldown -->
+		<div class="d-flex flex-column gap-3">
+
+			<div class="h5" id="drugeraDrilldown"></div>
+
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0" data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_50', 'Drug Era Prevalence')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization trellisLinePlot" id="drugera_trellisLinePlot"></div>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0" data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_51', 'Drug Era Prevalence by Month')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="drugeraPrevalenceByMonth"></div>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0" data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_52', 'Age at First Exposure by Gender')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="drugeras_age_at_first_exposure"></div>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0" data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_53', 'Length of Era Distribution')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="drugeras_length_of_era"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /ko -->
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == 'Drug Exposure' && !$component.loadingReport() -->
+<div id="reportDrugExposure">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_54', 'Drug Exposure')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" href="#drug_table_panel" role="tab" data-bs-toggle="tab">
+							<span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_26', 'Table')"></span>
+						</a>
+					</li>
+					<li class="nav-item" id="treemap-tab">
+						<a class="nav-link" href="#drug_treemap_panel" role="tab" data-bs-toggle="tab">
+							<span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_27', 'Treemap')"></span>
+						</a>
+					</li>
+				</ul>
+				<div id='content' class="tab-content">
+					<div class="tab-pane" id="drug_treemap_panel">
+						<div class="report-manager__chartContainer chartContainer evidenceVisualization" id="drug_treemap_container">
+							<div class="treemap_zoomtarget"></div>
+						</div>
+						<div class="treemap_legend">
+							<span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_28', 'Box Size: Prevalence, Color: Log of Relative Risk (Red to Green = Negative to Positive), Use Ctrl-Click to Zoom, Alt-Click to Reset Zoom')"></span>
+						</div>
+					</div>
+					<div class="tab-pane active" id="drug_table_panel" data-bind="eventListener: { event: 'click', selector: '.drug_table_selector', callback: handleDrugTableClick}">
+						<table id="drug_table" class="table table-sm table-hover table-borderless">
+							<thead>
+								<tr>
+									<th>Concept Id</th>
+									<th>ATC 1</th>
+									<th>ATC 3</th>
+									<th>ATC 4</th>
+									<th>Ingredient</th>
+									<th>RxNorm</th>
+									<th>Person Count</th>
+									<th>Prevalence</th>
+									<th>Records per Person</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ko if: $component.loadingReportDrilldown -->
+		<div class="loader">
+			<i class="fa fa-circle-o-notch fa-spin"></i> <span data-bind="text: ko.i18n('common.loading', 'Loading')"></span>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: $component.activeReportDrilldown -->
+		<div class="d-flex flex-column gap-3">
+
+			<div class="h5" id="drugExposureDrilldown"></div>
+
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0" data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_55', 'Drug Exposure Prevalence')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization trellisLinePlot" id="drug_trellisLinePlot"></div>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0" data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_56', 'Drug Exposure Prevalence by Month')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="drugPrevalenceByMonth"></div>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0" data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_57', 'Age at First Exposure')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="ageAtFirstExposure"></div>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0" data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_58', 'Days Supply Distribution')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="daysSupplyDistribution"></div>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0" data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_59', 'Quantity Distribution')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="quantityDistribution"></div>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0" data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_60', 'Refills Distribution')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="refillsDistribution"></div>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0" data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_61', 'Drugs by Type')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="drugsByType"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /ko -->
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == 'Procedure' && !$component.loadingReport() -->
+<div id="reportProcedure">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_62', 'Procedure Prevalence')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" href="#procedure-table-panel" role="tab" data-bs-toggle="tab">
+							<span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_26', 'Table')"></span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#procedure-treemap-panel" role="tab" data-bs-toggle="tab">
+							<span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_27', 'Treemap')"></span>
+						</a>
+					</li>
+				</ul>
+				<div id='content' class="tab-content">
+					<div class="tab-pane" role="tabpanel" id="procedure-treemap-panel">
+						<div class="report-manager__chartContainer chartContainer evidenceVisualization" id="procedure_treemap_container">
+							<div class="treemap_zoomtarget"></div>
+						</div>
+						<div class="treemap_legend">
+							<span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_28', 'Box Size: Prevalence, Color: Log of Relative Risk (Red to Green = Negative to Positive), Use Ctrl-Click to Zoom, Alt-Click to Reset Zoom')"></span>
+						</div>
+					</div>
+					<div class="tab-pane active" role="tabpanel" id="procedure-table-panel" data-bind="eventListener: { event: 'click', selector: '.procedure_table_selector', callback: handleProcedureTableClick}">
+						<table id="procedure_table" class="table table-sm table-hover table-borderless">
+							<thead>
+								<tr>
+									<th>Concept Id</th>
+									<th>Level 3</th>
+									<th>Level 2</th>
+									<th>Level 1</th>
+									<th>Procedure</th>
+									<th>Person Count</th>
+									<th>Prevalence</th>
+									<th>Records per Person</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ko if: $component.loadingReportDrilldown -->
+		<div class="loader">
+			<i class="fa fa-circle-o-notch fa-spin"></i> <span data-bind="text: ko.i18n('common.loading', 'Loading')"></span>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: $component.activeReportDrilldown -->
+		<div class="d-flex flex-column gap-3">
+			<div class="h5" id="procedureDrilldown"></div>
+
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0" data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_62', 'Procedure Prevalence')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization trellisLinePlot" id="procedure_trellisLinePlot"></div>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0" data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_63', 'Procedure Prevalence by Month')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="procedurePrevalenceByMonth"></div>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0" data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_64', 'Procedures by Type')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="proceduresByType"></div>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<span class="h5 mb-0" data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_65', 'Age at First Occurrence')"></span>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="ageAtFirstOccurrence"></div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!-- /ko -->
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == 'Death' && !$component.loadingReport() -->
+<div id="reportDeath">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_66', 'Death Prevalence by Age, Gender, Year')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="chartContainer" data-bind="css: classes('chartContainer')">
+					<div class="evidenceVisualization trellisLinePlot" id="death_trellisLinePlot"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_67', 'Death Prevalence by Month')"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="chartContainer" data-bind="css: classes('chartContainer')">
+					<div class="evidenceVisualization" id="deathPrevalenceByMonth"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="d-flex align-items-stretch gap-3">
+
+			<div class="card flex-grow-1 flex-basis-equal">
+				<div class="card-header">
+					<div class="d-flex align-items-center gap-2">
+						<span class="h5 mb-0"
+							data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_69', 'Age at Death')"></span>
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="ageAtDeath"></div>
+					</div>
+				</div>
+			</div>
+	
+			<div class="card flex-grow-1 flex-basis-equal">
+				<div class="card-header">
+					<div class="d-flex align-items-center gap-2">
+						<span class="h5 mb-0"
+							data-bind="text: ko.i18n('cohortDefinitions.costUtilization.reportManager.reportManagerText_70', 'Death by Type')"></span>
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="chartContainer" data-bind="css: classes('chartContainer')">
+						<div class="evidenceVisualization" id="deathByType"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == ko.unwrap(visualizationPacks.healthcareUtilPersonAndExposureBaseline.name) && !$component.loadingReport() -->
+<div id="reportHealthcareUtilPersonAndExposureBaseline">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0"
+						data-bind="text: visualizationPacks.healthcareUtilPersonAndExposureBaseline.name"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<cost-utilization-persons-exposure params="{
+					window: costUtilConst.windowType.baseline,
+					source: $component.reportSourceKey(),
+					cohortId: $component.reportCohortDefinitionId(),
+				}"></cost-utilization-persons-exposure>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == ko.unwrap(visualizationPacks.healthcareUtilPersonAndExposureCohort.name) && !$component.loadingReport() -->
+<div id="reportHealthcareUtilPersonAndExposureCohort">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0" data-bind="text: visualizationPacks.healthcareUtilPersonAndExposureCohort.name"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<cost-utilization-persons-exposure params="{
+					window: costUtilConst.windowType.atrisk,
+					source: $component.reportSourceKey(),
+					cohortId: $component.reportCohortDefinitionId(),
+				}"></cost-utilization-persons-exposure>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == ko.unwrap(visualizationPacks.healthcareUtilVisitRecordsBaseline.name) && !$component.loadingReport() -->
+<div id="reportHealthcareUtilVisitRecordsBaseline">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0" data-bind="text: visualizationPacks.healthcareUtilVisitRecordsBaseline.name"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<cost-utilization-visit-util params="{
+					source: $component.reportSourceKey(),
+					cohortId: $component.reportCohortDefinitionId(),
+					window: costUtilConst.windowType.baseline,
+					visitStat: costUtilConst.visitStat.occurrence,
+				}"></cost-utilization-visit-util>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == ko.unwrap(visualizationPacks.healthcareUtilVisitDatesBaseline.name) && !$component.loadingReport() -->
+<div id="reportHealthcareUtilVisitDatesBaseline">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0" data-bind="text: visualizationPacks.healthcareUtilVisitDatesBaseline.name"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<cost-utilization-visit-util params="{
+					source: $component.reportSourceKey(),
+					cohortId: $component.reportCohortDefinitionId(),
+					window: costUtilConst.windowType.baseline,
+					visitStat: costUtilConst.visitStat.visitdate,
+				}"></cost-utilization-visit-util>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == ko.unwrap(visualizationPacks.healthcareUtilCareSiteDatesBaseline.name) && !$component.loadingReport() -->
+<div id="reportHealthcareUtilCareSiteDatesBaseline">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0" data-bind="text: visualizationPacks.healthcareUtilCareSiteDatesBaseline.name"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<cost-utilization-visit-util params="{
+					source: $component.reportSourceKey(),
+					cohortId: $component.reportCohortDefinitionId(),
+					window: costUtilConst.windowType.baseline,
+					visitStat: costUtilConst.visitStat.caresitedate,
+				}"></cost-utilization-visit-util>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == ko.unwrap(visualizationPacks.healthcareUtilVisitRecordsCohort.name) && !$component.loadingReport() -->
+<div id="reportHealthcareUtilVisitRecordsCohort">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0" data-bind="text: visualizationPacks.healthcareUtilVisitRecordsCohort.name"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<cost-utilization-visit-util params="{
+					source: $component.reportSourceKey(),
+					cohortId: $component.reportCohortDefinitionId(),
+					window: costUtilConst.windowType.atrisk,
+					visitStat: costUtilConst.visitStat.occurrence,
+				}"></cost-utilization-visit-util>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == ko.unwrap(visualizationPacks.healthcareUtilVisitDatesCohort.name) && !$component.loadingReport() -->
+<div id="reportHealthcareUtilVisitDatesCohort">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0" data-bind="text: visualizationPacks.healthcareUtilVisitDatesCohort.name"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<cost-utilization-visit-util params="{
+					source: $component.reportSourceKey(),
+					cohortId: $component.reportCohortDefinitionId(),
+					window: costUtilConst.windowType.atrisk,
+					visitStat: costUtilConst.visitStat.visitdate,
+				}"></cost-utilization-visit-util>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == ko.unwrap(visualizationPacks.healthcareUtilCareSiteDatesCohort.name) && !$component.loadingReport() -->
+<div id="reportHealthcareUtilCareSiteDatesCohort">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0" data-bind="text: visualizationPacks.healthcareUtilCareSiteDatesCohort.name"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<cost-utilization-visit-util params="{
+					source: $component.reportSourceKey(),
+					cohortId: $component.reportCohortDefinitionId(),
+					window: costUtilConst.windowType.atrisk,
+					visitStat: costUtilConst.visitStat.caresitedate,
+				}"></cost-utilization-visit-util>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == ko.unwrap(visualizationPacks.healthcareUtilDrugBaseline.name) && !$component.loadingReport() -->
+<div id="reportHealthcareUtilDrugBaseline">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0" data-bind="text: visualizationPacks.healthcareUtilDrugBaseline.name"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<cost-utilization-drug-util params="{
+					source: $component.reportSourceKey(),
+					cohortId: $component.reportCohortDefinitionId(),
+					window: costUtilConst.windowType.baseline,
+				}"></cost-utilization-drug-util>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: $component.currentReport() == ko.unwrap(visualizationPacks.healthcareUtilDrugCohort.name) && !$component.loadingReport() -->
+<div id="reportHealthcareUtilDrugCohort">
+	<div class="d-flex flex-column gap-3">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex align-items-center gap-2">
+					<span class="h5 mb-0" data-bind="text: visualizationPacks.healthcareUtilDrugCohort.name"></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<cost-utilization-drug-util params="{
+					source: $component.reportSourceKey(),
+					cohortId: $component.reportCohortDefinitionId(),
+					window: costUtilConst.windowType.atrisk,
+				}"></cost-utilization-drug-util>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /ko -->

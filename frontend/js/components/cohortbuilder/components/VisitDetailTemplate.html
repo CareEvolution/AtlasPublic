@@ -1,0 +1,137 @@
+<div class="criteriaSection" data-bind="with: Criteria">
+
+	<criterion-header params="criterionTitle: 'Visit Detail of',
+							conceptSetInfo: {
+								conceptSetId: $component.Criteria.CodesetId,
+								conceptSets: $component.expression.ConceptSets,
+								defaultText: ko.i18n('components.conditionVisitDetail.anyVisitDetail', 'Any Visit Detail')
+							},
+							hideClose: $component.hideClose,
+							addActions: $component.addActions,
+							removeCriteria: $component.removeCriteria,
+							criteria: $component.Criteria"></criterion-header>
+
+
+	<div class="criteriaAttributes">
+		<!-- ko if: DateAdjustment() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionVisitDetail.conditionVisitDetailText_13', 'with date adjustment:')"></span>
+			<date-adjustment params="DateAdjustment: DateAdjustment"></date-adjustment>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: First() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionVisitDetail.conditionVisitDetailText_2', 'for the first time in the person\'s history')">
+			</span>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: VisitDetailStartDate() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionVisitDetail.conditionVisitDetailText_3', 'visit detail start is:')"></span>
+			<date-range params="Range: VisitDetailStartDate"></date-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: VisitDetailEndDate() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionVisitDetail.conditionVisitDetailText_4', 'visit detail end is:')"></span>
+			<date-range params="Range: VisitDetailEndDate"></date-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: VisitDetailTypeCS() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionVisitDetail.visitDetailType', 'visit detail type')"></span>
+			<cycle-toggle-input class="me-1" 
+				params="{value: VisitDetailTypeCS().IsExclusion, options: $component.options.DomainTypeExcludeOptions}">
+			</cycle-toggle-input>
+			<conceptset-selector params="conceptSetId: VisitDetailTypeCS().CodesetId, conceptSets: $component.expression.ConceptSets, defaultText:
+												ko.i18n('components.conditionVisitDetail.anyType', 'Any Visit Detail Type')"></conceptset-selector>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: VisitDetailSourceConcept() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionVisitDetail.conditionVisitDetailText_5', 'visit detail Source Concept is')"></span>
+	
+			<conceptset-selector
+				params="conceptSetId: VisitDetailSourceConcept(), conceptSets: $component.expression.ConceptSets, defaultText:
+												ko.i18n('components.conditionVisitDetail.anySourceConcept', 'Any Visit Detail Source Concept')"></conceptset-selector>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: VisitDetailLength() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionVisitDetail.conditionVisitDetailText_6', 'with visit detail duration')"></span>
+			<numeric-range params="Range: VisitDetailLength"></numeric-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: Age() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionVisitDetail.conditionVisitDetailText_7', 'with age')"></span>
+			<numeric-range params="Range: Age"></numeric-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: GenderCS() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionVisitDetail.conditionVisitDetailText_8', 'with a gender ')"></span>
+			<cycle-toggle-input class="me-1" 
+				params="{value: GenderCS().IsExclusion, options: $component.options.DomainTypeExcludeOptions}">
+			</cycle-toggle-input>
+			<conceptset-selector params="conceptSetId: GenderCS().CodesetId, conceptSets: $component.expression.ConceptSets, defaultText:
+												ko.i18n('components.conditionVisitDetail.anyGender', 'Any Gender')"></conceptset-selector>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: ProviderSpecialtyCS() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionVisitDetail.conditionVisitDetailText_9', 'with a Provider Specialty ')"></span>
+			<cycle-toggle-input class="me-1" 
+				params="{value: ProviderSpecialtyCS().IsExclusion, options: $component.options.DomainTypeExcludeOptions}">
+			</cycle-toggle-input>
+			<conceptset-selector
+				params="conceptSetId: ProviderSpecialtyCS().CodesetId, conceptSets: $component.expression.ConceptSets, defaultText:
+												ko.i18n('components.conditionVisitDetail.anyProviderSpeciality', 'Any Provider Specialty')"></conceptset-selector>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: PlaceOfServiceCS() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionVisitDetail.conditionVisitDetailText_10', 'with a Place of Service ')"></span>
+			<cycle-toggle-input class="me-1" 
+				params="{value: PlaceOfServiceCS().IsExclusion, options: $component.options.DomainTypeExcludeOptions}"></cycle-toggle-input>
+			<conceptset-selector params="conceptSetId: PlaceOfServiceCS().CodesetId, conceptSets: $component.expression.ConceptSets, defaultText:
+												ko.i18n('components.conditionVisitDetail.anyPlaceService', 'Any Place of Service')"></conceptset-selector>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: PlaceOfServiceLocation() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionVisitDetail.conditionVisitDetailText_11', 'with a Place of Service located in:')"></span>
+	
+			<conceptset-selector params="conceptSetId: PlaceOfServiceLocation(), conceptSets: $component.expression.ConceptSets, defaultText:
+												ko.i18n('components.conditionVisitDetail.anyLocation', 'Any Location')"></conceptset-selector>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: PlaceOfServiceDistance() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionVisitDetail.conditionVisitDetailText_12', 'with distance from a Place of Service to Patient')"></span>
+	
+			<numeric-range params="Range: PlaceOfServiceDistance"></numeric-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: CorrelatedCriteria() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<criteria-group class="w-100"
+				params="{expression: $component.expression, group: CorrelatedCriteria, indexMessage: $component.indexMessage}">
+			</criteria-group>
+		</div>
+		<!-- /ko -->
+	</div>
+</div>

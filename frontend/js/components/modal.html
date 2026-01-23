@@ -1,0 +1,32 @@
+<div
+	data-bind="modal: $component.showModal, css: classes({ extra: ['modal', fade() ? 'fade' : ''], modifiers: $component.modifiers })"
+	tabindex="-1" role="dialog">
+	<div class="modal-dialog"
+		data-bind="css: classes({ element: 'modal-dialog', extra: [ 'modal-dialog', ...dialogExtraClasses ] })">
+		<div data-bind="css: 'modal-content'">
+			<div class="modal-header" data-bs-theme="dark">
+				<div class="modal-title">
+					<i data-bind="css: $component.iconClass"></i>
+					<span data-bind="text: $component.title"></span>
+				</div>
+				<!-- ko if: backdropClosable -->
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				<!-- /ko -->
+			</div>
+			<div data-bind="if: $component.showModal, css: classes(templateWrapperClass)">
+				<!-- ko if: $component.template -->
+				<div data-bind="
+						template: {
+							name: $component.template,
+							data: $component.data
+						}
+					"></div>
+				<!-- /ko -->
+				<!-- ko if: $componentTemplateNodes -->
+				<!-- ko template: { nodes: $componentTemplateNodes, data: $component.data } -->
+				<!-- /ko -->
+				<!-- /ko -->
+			</div>
+		</div>
+	</div>
+</div>

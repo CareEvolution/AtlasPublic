@@ -1,0 +1,71 @@
+.report-manager {
+
+  &__chartContainer {
+    position:relative;
+  }
+
+  &__export-button {
+    display:none;
+    position:absolute;
+    top:0px;
+    right:37px;
+  }
+  &__exportSvg-button {
+    display:none;
+    position:absolute;
+    top:0px;
+    right:0px;
+  }
+  &__chartContainer:hover > &__export-button, &__chartContainer:hover > &__exportSvg-button {
+    display:block;
+  }
+}
+
+#tornadoPlot .bar {
+	stroke: #fff;
+	stroke-width: 1px;
+	cursor: pointer;
+}
+
+#tornadoPlot .bar:hover {
+	stroke: orange;
+	stroke-width: 2px;
+}
+
+#tornadoPlot .bar--positive {
+	fill: #aec7e8;
+}
+
+#tornadoPlot .bar--negative {
+	fill: #1f77b4;
+}
+
+#tornadoPlot .y.axis .tick text {
+	fill: #000;
+}
+
+#tornadoPlot .x.axis .tick text {
+	fill: #000;
+}
+
+#tornadoPlot text {
+	font-size: 11px;
+	fill: #000;
+	user-select: none;
+	pointer-events: none;
+}
+
+#tornadoProfiles i.fa-female {
+	font-size: 50px;
+	color: #1f77b4;
+}
+
+#tornadoProfiles i.fa-male {
+	font-size: 50px;
+	color: #aec7e8;
+}
+
+.treemap_zoomtarget {
+	height: 20px;
+	font-size: 12px;
+}

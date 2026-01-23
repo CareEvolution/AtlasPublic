@@ -1,0 +1,28 @@
+.tabs {
+
+	& ul li a {
+		cursor: pointer;
+	}
+
+	.tabs-content {
+		padding: 1rem;
+	}
+
+	.tabs-content.with-border {
+		border-left: var(--bs-border-width) solid var(--bs-border-color);
+		border-right: var(--bs-border-width) solid var(--bs-border-color);
+		border-bottom: var(--bs-border-width) solid var(--bs-border-color);
+	}
+
+	&.tabs--no-body-padding>.tabs__tab {
+		padding: 0;
+	}
+
+	&.tabs--header-sm>.nav.nav-tabs>li {
+		font-size: 1.2rem;
+	}
+
+	&.tabs--header-right>.nav.nav-tabs {
+		justify-content: flex-end;
+	}
+}

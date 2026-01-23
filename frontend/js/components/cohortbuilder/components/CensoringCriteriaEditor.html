@@ -1,0 +1,55 @@
+<div class="p-3">
+
+	<div class="mb-2" data-bind="text: ko.i18n('components.cohortExpressionEditor.cohortExitText_4', 'Exit Cohort based on the following criteria:')">
+	</div>
+
+	<div class="dropdown mb-2">
+		<button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+			<i class="fa fa-plus"></i>
+			<span
+				data-bind="text: ko.i18n('components.cohortExpressionEditor.addCensoringEvent', 'Add Censoring Event')"></span>
+		</button>
+		<ul class="dropdown-menu" data-bind="foreach:$component.censorCriteriaOptions">
+			<li>
+				<a class="dropdown-item" data-bind="click:action" href="#">
+					<div class="optionText" data-bind="text: ko.i18n($data.title, $data.defaultTitle)"></div>
+					<div class="optionDescription" data-bind="text: ko.i18n($data.description, $data.defaultDescription)">
+					</div>
+				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="criteria"
+		data-bind="sortable: {data: ko.unwrap(expression).CensoringCriteria, connectClass : 'censoringCriteria', options: {cancel: ':input, button, [contenteditable]'}}">
+		<div class="criteria-content mb-2">
+			<div class="d-flex align-items-center">
+				<span class="grabber">
+					<svg width="24" height="24" viewBox="0 0 24 24" role="presentation">
+						<g fill="currentcolor" fill-rule="evenodd">
+							<circle cx="10" cy="8" r="1"></circle>
+							<circle cx="14" cy="8" r="1"></circle>
+							<circle cx="10" cy="16" r="1"></circle>
+							<circle cx="14" cy="16" r="1"></circle>
+							<circle cx="10" cy="12" r="1"></circle>
+							<circle cx="14" cy="12" r="1"></circle>
+						</g>
+					</svg>
+				</span>
+				<div class="flex-grow-1 pe-3 py-3" data-bind='component: {
+						name: $component.getCriteriaIndexComponent($data),
+						params: {
+							expression: ko.unwrap($component.expression), 
+							criteria: $data, 
+							deleteCallback: function() { $component.removeCensoringCriteria($data); }
+						}
+					}'>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+
+<!-- <from-reusables-modal params="{isModalShown: $component.showReusablesModal, type: 'INITIAL_EVENT', parentExpression: $component.expression, callback: $component.insertFromReusable}"></from-reusables-modal> -->

@@ -1,0 +1,83 @@
+<div class="criteriaSection" data-bind="with: Criteria">
+
+	<criterion-header params="criterionTitle: 'Condition Era of',
+		conceptSetInfo: {
+			conceptSetId: $component.Criteria.CodesetId,
+			conceptSets: $component.expression.ConceptSets,
+			defaultText: ko.i18n('components.conditionEra.anyConditionButton', 'Any Condition')
+		},
+		hideClose: $component.hideClose,
+		addActions: $component.addActions,
+		removeCriteria: $component.removeCriteria,
+		criteria: $component.Criteria"></criterion-header>
+
+	<div class="criteriaAttributes">
+		<!-- ko if: DateAdjustment() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1" data-bind="text: ko.i18n('components.conditionEra.attributeText_10', 'with date adjustment:')"></span>
+			<date-adjustment params="DateAdjustment: DateAdjustment"></date-adjustment>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: First() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionEra.attributeText_1', 'for the first time in the person\'s history')">
+			</span>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: EraStartDate() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1" data-bind="text: ko.i18n('components.conditionEra.attributeText_2', 'era start is:')"></span>
+			<date-range params="Range: EraStartDate"></date-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: EraEndDate() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1" data-bind="text: ko.i18n('components.conditionEra.attributeText_3', 'era end is:')"></span>
+			<date-range params="Range: EraEndDate"></date-range>
+		</div>
+		<!-- /ko -->
+		 <!-- ko if: OccurrenceCount() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1" data-bind="text: ko.i18n('components.conditionEra.attributeText_4', 'with occurrence count')"></span>
+			<numeric-range params="Range: OccurrenceCount"></numeric-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: EraLength() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1" data-bind="text: ko.i18n('components.conditionEra.attributeText_5', 'with era length')"></span>
+			<numeric-range params="Range: EraLength"></numeric-range>
+			<span data-bind="text: ko.i18n('components.conditionEra.attributeText_9', 'days')"></span>
+		</div>
+		<!-- /ko -->
+		 <!-- ko if: AgeAtStart() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionEra.attributeText_6', 'with age in years at era start')"></span>
+			<numeric-range params="Range: AgeAtStart"></numeric-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: AgeAtEnd() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionEra.attributeText_7', 'with age in years at era end')"></span>
+			<numeric-range params="Range: AgeAtEnd"></numeric-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: Gender() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1" data-bind="text: ko.i18n('components.conditionEra.attributeText_8', 'with a gender of:')"></span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Gender', DefaultQuery: ''}, ConceptList: Gender()"></concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: CorrelatedCriteria() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<criteria-group
+				class="w-100"
+				params="{expression: $component.expression, group: CorrelatedCriteria, indexMessage: $component.indexMessage}">
+			</criteria-group>
+		</div>
+		<!-- /ko -->
+	</div>
+</div>

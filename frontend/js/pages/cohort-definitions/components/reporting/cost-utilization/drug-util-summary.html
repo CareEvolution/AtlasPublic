@@ -1,0 +1,35 @@
+<div data-bind="css: classes()">
+    <div data-bind="css: classes('filters-block')">
+        <visualizations-filter-panel params="{ filterList: $component.filterList, apply: $component.applyFilters, live: true }"/>
+        <div data-bind="visible: filtersLoading()">
+            <loading params="status:'loading'" />
+        </div>
+    </div>
+    <div data-bind="css: classes('loader'), visible: loading()">
+        <loading params="status:'loading'" />
+    </div>
+    <div data-bind="visible: !loading()">
+        <div data-bind="css: classes('toolbar')">
+            <div data-bind="css: classes('descr')">
+                <span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.drugUtilSummaryText_1', 'Click on a drug to get detailed statistics:')"></span>
+            </div>
+        </div>
+        <div data-bind="css: classes('table-block')">
+            <table data-bind="
+                css: classes({ element: 'drugs-table', extra: ['table', 'table-bordered', 'table-hover'] }),
+                dataTable:{
+                    data: $component.dataList,
+                    options: {
+                        layout: $component.layout,
+                        columns: $component.drugsTableColumns,
+                        buttons: [ 'colvis', 'copyHtml5', { extend: 'csvHtml5', filename: 'Drug Utilization Summary' } ],
+                        pageLength: $component.tableOptions.pageLength,
+                        lengthMenu: $component.tableOptions.lengthMenu,
+                    },
+                    onRowClick: $component.onDrugSelect
+                }
+                "
+            />
+        </div>
+    </div>
+</div>

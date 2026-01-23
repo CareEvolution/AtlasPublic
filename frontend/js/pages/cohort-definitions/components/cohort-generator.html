@@ -1,0 +1,51 @@
+<div class="mb-3">
+	<div class="generation-heading"
+		data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.panels.generation', 'Generation')">
+	</div>
+	<label class="only-results-checkbox"><input type="checkbox" data-bind="checked: showOnlySourcesWithResults"> Show
+		only sources with results</label>
+
+	<table class="sources-table table table-borderless table-hover" data-bind="
+						dataTable: {
+							data: showOnlySourcesWithResults() ? cohortDefinitionSourceInfo().filter(c => c.isValid()) : cohortDefinitionSourceInfo,
+							options: {
+								columns: sourcesColumns,
+								order: [[ 0, 'asc' ]],
+								pageLength: sourcesTableOptions.pageLength,
+								language: ko.i18n('datatable.language')
+							}
+						}
+					"></table>
+</div>
+
+<!-- ko if: selectedReportSource() -->
+<cohort-reports params="cohort: currentCohortDefinition, source: selectedReportSource"></cohort-reports>
+<!-- /ko -->
+
+<script type="text/html" id="generation-buttons">
+	<div class="generation-buttons">
+		<span data-bind="tooltip: $component.isNew() ? 'You must save the current cohort definition before you can perform generation' : !$component.hasAccessToGenerate(sourceKey) ? 'Not enough permissions to generate' : null" data-placement="left">
+			<span data-bind="tooltip: !$component.canGenerate() ? $component.generateDisabledReason() : null" data-placement="left">
+				<button class="btn btn-sm btn-primary"
+						data-bind="attr: {'disabled': !$component.canGenerate() || !$component.hasAccessToGenerate(sourceKey)},
+												visible: !$component.isSourceRunning($data),
+												click: $component.generateCohort">
+						<i class="fa fa-play me-1"></i><span data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.panels.generate', 'Generate')"></span>
+				</button>
+			</span>
+		</span>
+		<button role="button" class="btn btn-sm btn-danger"
+				data-bind="click: $component.cancelGenerate,
+					visible: $component.isSourceRunning($data),
+					attr: {disabled: $component.isCancelDisabled($data)}">
+			<i class="fa fa-spinner fa-spin me-1"></i><span data-bind="text: ko.i18n('common.cancel', 'Cancel')"></span>
+		</button>
+		<button class="btn btn-sm btn-primary"
+			 data-bind="attr: {disabled: $component.isSourceRunning($data) || !isValid()}, click: $component.toggleCohortReport">
+			<i class="fa fa-eye"></i>
+			<span data-bind="text: (($component.selectedReportSource() && $component.selectedReportSource().sourceKey === sourceKey)
+											? ko.i18n('cohortDefinitions.cohortDefinitionManager.panels.hideReports', 'Hide Reports')
+											: ko.i18n('cohortDefinitions.cohortDefinitionManager.panels.viewReports', 'View Reports'))"></span>
+		</button>
+	</div>
+</script>

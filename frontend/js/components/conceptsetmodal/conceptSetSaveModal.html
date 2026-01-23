@@ -1,0 +1,29 @@
+<atlas-modal params="{
+		showModal: $component.show,
+		iconClass: 'fa fa-save',
+		title: ko.i18n('components.conceptSetSaveModal.saveNewConceptSet', 'Save New Concept Set'),
+		fade: $component.fade,
+		modifiers: ['sm'],
+		data: $component
+	}">
+	<div class="modal-body">
+		<form>
+			<div class="mb-3">
+				<label class="form-label" for="conceptSetName" data-bind="text: ko.i18n('components.conceptSetSaveModal.conceptSetNameLabel', 'Concept Set Name:')"></label>
+				<input
+					id="conceptSetName"
+					class="form-control"
+					type="text"
+					data-bind="textInput: conceptSetName, placeholder: ko.i18n('components.conceptSetSaveModal.conceptSetNamePlaceholder', 'Concept Set Name')" />
+				<div class="form-text" data-bind="hidden: isNameUnique">
+					<i class="fa fa-exclamation-triangle"></i> <span
+						data-bind="text: ko.i18n('components.conceptSetSaveModal.conceptSetAlreadyExists', 'Concept Set already exists')"></span>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" data-bind="click: onSave, enable: canSave, text: ko.i18n('common.save', 'Save')"
+			class="btn btn-success"></button>
+	</div>
+</atlas-modal>

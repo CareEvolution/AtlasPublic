@@ -1,0 +1,6 @@
+<!-- ko if: !countLoading() -->
+<span class="badge"><span data-bind="text:inclusionCount()"></span></span>
+<!-- /ko -->
+ <!-- ko if: countLoading() -->
+<span><i class="fa fa-circle-o-notch fa-spin"></i></span>
+<!-- /ko -->

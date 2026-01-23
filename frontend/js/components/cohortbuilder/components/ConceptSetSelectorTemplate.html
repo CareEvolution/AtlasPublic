@@ -1,0 +1,60 @@
+<div class="undraggable" style="position: relative; display: inline">
+	<div style="position:relative" 
+		class="dropdown btn-group thumb-dropdown" 
+		data-bind="dropup, eventListener: [
+			{ event: 'mouseenter', selector: '.conceptset', callback: showConceptSetPreview},
+			{ event: 'hidden.bs.dropdown', callback: hideConceptSetPreview}]">
+
+		<button type="button" class="btn conceptset_edit"
+			style="max-width:200px; overflow-x: hidden; text-overflow:ellipsis; white-space:nowrap"
+			data-bind="text:conceptSetName, attr:{'title': conceptSetName}, class: $component.buttonClass">
+		</button>
+		<button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" data-bind="class: $component.buttonClass">
+			<span class="sr-only" data-bind="text:conceptSetName"></span>
+		</button>
+
+		<ul class="dropdown-menu dropdown-menu-right"
+			style="height: auto; max-height:200px; width:200px; overflow-x: hidden; padding:4px" role="menu">
+			<li onclick="event.stopPropagation();">
+				<input class="dropdown-item" type="text" style="width:100%; border: solid 1px #9bc1fd; border-radius: 3px"
+					data-bind="attr: {placeholder: ko.i18n('components.conceptSetSelector.searchWithTripleDots', 'Search...')}, textInput: filterText">
+			</li>
+			<!-- ko foreach: filteredConceptSets -->
+			<li class="conceptset">
+				<button class="dropdown-item" type="button">
+					<div style="max-width:195px; overflow-x: hidden; text-overflow:ellipsis;"
+						data-bind="text: name, attr:{'title': name}, click: $component.itemClicked"></div>
+				</button>
+			</li>
+			<!-- ko if: $component.conceptSetId() != null && $index() == 0  -->
+			<li class="dropdown-divider"></li>
+			<!-- /ko -->
+			<!-- /ko -->
+			<!-- ko if: filteredConceptSets().length > 1 -->
+			<li class="drowndown-divider"></li>
+			<!-- /ko -->
+			<li>
+				<button class="dropdown-item conceptset_import" type="button">
+					<span data-bind="text:ko.i18n('components.conceptSetSelector.importConcept','Import Concept Set')"></span>
+				</button>
+			</li>
+			<li>
+				<button class="dropdown-item" type="button" data-bind="click: clear">
+					<span data-bind="text:ko.i18n('components.conceptSetSelector.clearConceptSet','Clear Concept Set')"></span>
+				</button>
+			</li>
+		</ul>
+		<ul>
+			<!-- ko if: previewVisible -->
+			<div onclick="event.stopPropagation();" class="undraggable"
+				style="border: solid 1px black;padding:5px; z-index: 999; background-color:white; position: absolute; max-height:200px; overflow-y:auto"
+				data-bind="style: { top: `${previewTop()}px`, left: `${previewLeft()}px`}">
+				<div style="background-color:#aaa; font-weight: bold" data-bind="text: previewConceptSet().name"></div>
+				<conceptset-quickview params="conceptSet: previewConceptSet"></conceptset-quickview>
+			</div>
+			<!-- /ko -->
+		</ul>
+
+	</div>
+
+</div>

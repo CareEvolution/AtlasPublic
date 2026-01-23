@@ -1,0 +1,48 @@
+<div class="flexed">
+	<div class="d-flex flex-row align-items-center gap-1 me-3">
+		<div class="flex-grow-1">
+			<heading-title params="name: ko.i18n('cohortDefinitions.title', 'Cohort Definitions'), icon: 'users'"></heading-title>
+		</div>
+		<!-- ko if: currentCohortDefinition -->
+		<span class="alert alert-warning mb-0" data-bind="text: ko.i18n('cohortDefinitions.warning', 'You have unsaved changes to the current cohort definition.')">
+		</span>
+		<!-- /ko -->
+		<button class="btn btn-primary"
+			 data-bind="
+			 	title: ko.i18n('cohortDefinitions.newDefinitionTitle','Create a new cohort definition'),
+				text: ko.i18n('cohortDefinitions.newDefinition', 'New Cohort'), 
+				click: $component.newDefinition, 
+				css: {disabled: currentCohortDefinition() != undefined || !canCreateCohort()}">
+		</button>
+		<button class="btn btn-primary" 
+			data-bind="
+				title: 'Import a cohort definition',
+				text: 'Import Definition', 
+				click: $component.import, 
+				css: {disabled: currentCohortDefinition() != undefined || !canCreateCohort()}">
+		</button>
+	</div>
+	<div data-bind="if:$component.canReadCohorts, css: `${canReadCohorts() ? 'flexed' : ''}`">
+		<div data-bind="css: classes('grid')">
+			<cohort-definition-browser params="{
+				onSelect: data => cohortDefinitionId(data.id),
+				pageLength: tableOptions.pageLength,
+				lengthMenu: tableOptions.lengthMenu,
+			}"></cohort-definition-browser>
+		</div>
+	</div>
+	<access-denied params="isAuthenticated: isAuthenticated, isPermitted: canReadCohorts"></access-denied>
+	<atlas-modal params="{
+		showModal: showImportDialog,
+		title: ko.i18n('cohortDefinitions.importCohortDefinition', 'Import Cohort Definition'),
+		data: {
+			cohortDefinitionId: $component.cohortDefinitionId,
+			dialogIsOpen: $component.showImportDialog,
+		},
+	}">
+		<cohort-definition-importer params="{
+			cohortDefinitionId: cohortDefinitionId,
+			dialogIsOpen: dialogIsOpen,
+		}"></cohort-definition-importer>
+	</atlas-modal>
+</div>

@@ -1,0 +1,55 @@
+<!-- ko if: !isLoading() -->
+<h3 class="mb-3" data-bind="text: title"></h3>
+
+<div class="d-flex flex-wrap flex-md-nowrap gap-3 mb-3">
+	<div class="card flex-md-grow-1 flex-md-basis-even">
+		<div class="card-header h5 mb-0">
+			Number of Persons
+		</div>
+		<div class="card-body kpi">
+			<!-- ko if: personCount() === null || personCount() === undefined -->
+			<empty-state></empty-state>
+			<!--/ko -->
+			<!-- ko if: personCount() !== null && personCount() !== undefined -->
+			<div data-bind="text: personCount"></div>
+			<!--/ko -->
+		</div>
+	</div>
+
+	<div class="card flex-md-grow-1 flex-md-basis-even">
+		<div class="card-header h5 mb-0"
+			data-bind="text: ko.i18n('dataSources.dashboardReport.populationByGender', 'Population by Gender')">
+		</div>
+		<div class="card-body">
+			<donut params="data: genderConceptData, reportName: name, chartName: 'Population by Gender'"></donut>
+		</div>
+	</div>
+</div>
+
+<div class="mb-3">
+	<div class="card">
+		<div class="card-header h5 mb-0" data-bind="text: ko.i18n('dataSources.dashboardReport.ageAtFirstObservation', 'Age at First Observation')"></div>
+		<div class="card-body">
+			<histogram class="evidenceVisualization" params="data: ageAtFirstObservationData, format: chartFormats.ageAtFirstObservation, reportName: name, chartName: 'Age at First Observation'"></histogram>
+		</div>
+	</div>
+</div>
+
+<div class="mb-3">
+	<div class="card">
+		<div class="card-header h5 mb-0" data-bind="text: ko.i18n('dataSources.dashboardReport.cumulativeObservation', 'Cumulative Observation')"></div>
+		<div class="card-body">
+			<atlasline class="evidenceVisualization" params="data: observationLineData, format: chartFormats.observationLine, reportName: name, chartName: 'Cumulative Observation'"></atlasline>
+		</div>
+	</div>
+</div>
+
+<div class="mb-3">
+	<div class="card">
+		<div class="card-header h5 mb-0" data-bind="text: ko.i18n('dataSources.dashboardReport.personsWithContinuousObservationByMonth', 'Persons With Continuous Observation By Month')"></div>
+		<div class="card-body">
+			<atlasline class="evidenceVisualization" params="data: byMonthSeriesData, format: chartFormats.byMonthSeries, reportName: name, chartName: 'Persons With Continuous Observation By Month'"></atlasline>
+		</div>
+	</div>
+</div>
+<!-- /ko -->

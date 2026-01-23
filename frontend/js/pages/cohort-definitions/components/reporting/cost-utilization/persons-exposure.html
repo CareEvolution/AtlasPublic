@@ -1,0 +1,108 @@
+<div data-bind="css: classes()">
+    <div data-bind="css: classes('block')">
+        <visualizations-filter-panel params="{ filterList: $component.filterList, apply: $component.applyFilters, live: true }"/>
+    </div>
+    <div data-bind="visible: loading()">
+        <loading params="status:'loading'" />
+    </div>
+    <div data-bind="visible: !loading()">
+        <div data-bind="css: classes('block')">
+            <table data-bind="css: classes({ element: 'summary-table', extra: ['table', 'table-bordered', 'table-hover'] })">
+                <thead data-bind="css: classes('summary-table-head')">
+                    <tr>
+                        <th data-bind="css: classes('summary-table-cell')">
+                            <span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.personExposureText_1', 'Person Count')"></span>
+                        </th>
+                        <th data-bind="css: classes('summary-table-cell')">
+                            <span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.personExposureText_2', 'Total Exposure in Years')"></span>
+                        </th>
+                        <th data-bind="css: classes('summary-table-cell')">
+                            <span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.personExposureText_3', 'Average Exposure Years per 1,000 persons')"></span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-bind="text: summary.personsCount"/>
+                        <td data-bind="text: summary.exposureTotal"/>
+                        <td data-bind="text: summary.exposureAvg"/>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div data-bind="if: $component.dataList().length <= 0">
+            <span data-bind="text: ko.i18n('cohortDefinitions.costUtilization.personExposureText_4', 'Detailed statistics are not available')"></span>
+        </div>
+        <div data-bind="if: $component.dataList().length > 0">
+            <ul class="nav nav-tabs">
+                <!-- ko foreach: Object.keys(tabLabels) -->
+                <li class="nav-tab" role="presentation" data-bind="click: function() { $component.currentTab($data); }">
+                    <a class="nav-link" data-bind="text: $component.tabLabels[$data], css: { 'active' : $component.currentTab() == $data }"></a>
+                </li>
+                <!-- /ko -->
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" data-bind="if: $component.currentTab() == $component.visualizationTab && !loading()">
+					<div class="mb-3">
+						<div class="card">
+							<div class="card-header h5 mb-0" data-bind="text: ko.i18n('cohortDefinitions.costUtilization.persons', 'Persons')"></div>
+							<div class="card-body">
+								<atlasline params="
+								data: $component.personsChartData,
+								format: { 
+									xLabel: '',
+									xFormat: $component.formatDate,
+									yLabel: ko.i18n('cohortDefinitions.costUtilization.persons', 'Persons'),
+									yFormat: $component.formatRounded,
+									tickFormat: $component.dateTickFormat,
+									height: 250,
+									showLegend: false,
+									getTooltipBuilder: $component.getTooltipBuilder
+								}"/>
+							</div>
+						</div>
+					</div>
+
+					<div class="mb-3">
+						<div class="card">
+							<div class="card-header h5 mb-0" data-bind="text: ko.i18n('cohortDefinitions.costUtilization.totalExposure', 'Total Exposure in years')"></div>
+							<div class="card-body">
+								<atlasline class="evidenceVisualization" params="data: $component.totalExposureChartData,
+								format: {
+									xLabel: '',
+									xFormat: $component.formatDate,
+									yLabel: ko.i18n('cohortDefinitions.costUtilization.totalExposure', 'Total Exposure in years'),
+									yFormat: $component.formatRounded,
+									tickFormat: $component.dateTickFormat,
+									height: 250,
+									showLegend: false,
+									getTooltipBuilder: $component.getTooltipBuilder
+								}"></atlasline>
+							</div>
+						</div>
+					</div>
+
+					<div class="mb-3">
+						<div class="card">
+							<div class="card-header h5 mb-0" data-bind="text: ko.i18n('cohortDefinitions.costUtilization.exposure1kYear', 'Exposure/p 1k/year')"></div>
+							<div class="card-body">
+								<atlasline class="evidenceVisualization" params="data: $component.avgExposurePerPersonChartData,
+								format: {
+									xLabel: ko.i18n('cohortDefinitions.costUtilization.periodStart', 'Period start'),
+									xFormat: $component.formatDate,
+									yLabel: ko.i18n('cohortDefinitions.costUtilization.exposure1kYear', 'Exposure/p 1k/year'),
+									height: 250,
+									showLegend: false,
+									getTooltipBuilder: $component.getTooltipBuilder
+								}"></atlasline>
+							</div>
+						</div>
+					</div>
+                </div>
+                <div role="tabpanel" data-bind="if: $component.currentTab() == $component.rawDataTab && !loading()">
+                    <table-baseline-exposure params="{ dataList: dataList, layout: layout }"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

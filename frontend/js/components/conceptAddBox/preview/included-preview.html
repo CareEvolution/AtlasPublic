@@ -1,0 +1,20 @@
+<loading params="status: ko.i18n('components.conceptSet.loadingIncludedConcepts', 'Loading Included Concepts')" data-bind="visible: loading"></loading>
+<div class="included-preview" data-bind="hidden: loading">
+    <faceted-datatable params="{
+      orderColumn:7,
+      columns: $component.includedConceptsColumns,
+      options: $component.includedConceptsOptions,
+      reference: $component.includedConcepts,
+      drawCallback: $component.includedDrawCallback,
+      rowCallback: commonUtils.contextSensitiveLinkColor,
+      pageLength: tableOptions.pageLength,
+      lengthMenu: tableOptions.lengthMenu,
+      language: ko.i18n('datatable.language')
+    }"></faceted-datatable>
+    <template id="ancestors-popover" style="display:none">
+      <conceptset-table 
+        params="conceptSetList:ancestors"
+        data-bind="eventListener: { event: 'click', selector: 'a', callback: onNavigate}"
+      ></conceptset-table>
+    </template>
+</div>

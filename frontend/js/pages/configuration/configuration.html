@@ -1,0 +1,35 @@
+<heading-title
+	params="name: ko.i18n('configuration.title', 'Configuration'), icon: 'cogs'">
+</heading-title>
+
+<!-- ko if: $component.hasPageAccess() -->
+<div>
+	<ul class="nav nav-tabs">
+		<li class="nav-item">
+			<a class="nav-link" href="#/configure/sources"
+				data-bind="class: $component.activeTab() === 'sources' ? 'active' : ''">
+				Sources
+			</a>
+		</li>
+		<!-- ko if: $component.permissionsAccess() -->
+		<li class="nav-item">
+			<a class="nav-link" href="#/configure/roles"
+				data-bind="class: $component.activeTab() === 'roles' ? 'active' : ''">
+				Permissions
+			</a>
+		</li>
+		<!-- /ko -->
+		<li class="nav-item">
+			<a class="nav-link" href="#/configure/tag-management"
+				data-bind="class: $component.activeTab() === 'tag-management' ? 'active' : ''">
+				Tags
+			</a>
+		</li>
+	</ul>
+
+	<div data-bind="component: { name: $component.activeComponent(), params: $component.params }"></div>
+
+</div>
+<!-- /ko -->
+
+<access-denied params="isAuthenticated: isAuthenticated, isPermitted: $component.hasPageAccess"></access-denied>

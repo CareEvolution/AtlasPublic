@@ -1,0 +1,10 @@
+<table data-bind="
+    css: classes({ extra: ['table', 'table-bordered', 'table-hover'] }),
+    dataTable:{ 
+		data: $component.dataList, 
+		options: {
+			columns: $component.columns, 
+			layout: $component.layout, 
+			buttons:  [ 'colvis', 'copyHtml5', {extend: 'csvHtml5', filename: 'Persons and Exposure Detail'} ]
+		} 
+	} " />

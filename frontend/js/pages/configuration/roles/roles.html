@@ -1,0 +1,42 @@
+<!-- ko if:loading -->
+<div class="m-3">
+	<i class="fa fa-circle-o-notch fa-spin"></i> <span
+		data-bind="text: ko.i18n('common.loadingWithDots', 'Loading...')"></span>
+</div>
+<!-- /ko -->
+<!-- ko ifnot:loading -->
+<div data-bind="if:$component.canRead" class="m-3">
+	<div class="d-flex justify-content-end">
+		<span class="btn btn-primary new-role"
+			data-bind="click:newRole, css: { disabled: !canCreate() }, text: ko.i18n('configuration.roles.newRole', 'New role')">
+		</span>
+		<span class="btn btn-primary new-role"
+			data-bind="click: importRoles, css: { disabled: !canCreate() }, text: ko.i18n('configuration.roles.importRoles', 'Import roles')"></span>
+	</div>
+	<div data-bind="eventListener: [{event: 'click', selector: '.roleItem', callback: $component.selectRole}]">
+		<table width="100%" class="table table-sm table-hover table-borderless" data-bind="dataTable:{
+					data: roles,
+					options: {
+					layout: layout,
+					pageLength: tableOptions.pageLength,
+					lengthMenu: tableOptions.lengthMenu,
+					orderClasses: false,
+					deferRender: true,
+					autoWidth: true,
+					ordering: true,
+					order: [[ 0, 'asc' ]],
+					columns: [
+						{ title: ko.i18n('columns.role', 'Role'), data: 'name' }
+					],
+					language: ko.i18n('datatable.language'),
+					createdRow: function (row, data, index) {
+							$(row).addClass('roleItem');
+					},
+				}
+			}">
+		</table>
+	</div>
+</div>
+<!-- /ko -->
+
+<access-denied params="isAuthenticated: isAuthenticated, isPermitted: canRead"></access-denied>

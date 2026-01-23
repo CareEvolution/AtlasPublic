@@ -1,0 +1,57 @@
+<!-- ko if: !isLoading() -->
+<h3 class="mb-3" data-bind="text: title"></h3>
+<div class="treemap card">
+	<div class="card-header h5 mb-0">
+		<span data-bind="name"></span> <span data-bind="text: ko.i18n('dataSources.prevalence', 'Prevalence')"></span>
+	</div>
+	<div class="card-body p-0">
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+			<li class="nav-item" id="treemap-tab">
+				<a class="nav-link active" href="#treemap-panel" role="tab" data-bs-toggle="tab" data-bind="click: selectTab('tree'), text: ko.i18n('dataSources.treemap.treemapTab', 'Treemap')"></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#table-panel" role="tab" data-bs-toggle="tab" data-bind="click: selectTab('table'), text: ko.i18n('dataSources.table.tableTab', 'Table')"></a>
+			</li>
+		</ul>
+		<div id='content' class="tab-content">
+			<div role="tabpanel" class="tab-pane active drilldown-enabled" id="treemap-panel">
+				<treemap params="data: treeData, format: chartFormats.treemap, aggProperty: aggProperty, reportName: name, chartName: 'Treemap'"></treemap>
+				<div class="treemap_legend">
+					<span data-bind="text: ko.i18n('dataSources.treemap.legend.boxSize', 'Box Size:')"></span>
+					<span data-bind="text: ko.i18n('dataSources.prevalence', 'Prevalence')"></span>,
+					<span data-bind="text: ko.i18n('dataSources.treemap.legend.color', 'Color:')"></span> <span data-bind="text: aggProperty.description"></span>
+					<span data-bind="text: ko.i18n('dataSources.treemap.legend.colorExplanation', '(Light to Dark = Low to High), Use Ctrl-Click to Zoom, Alt-Click to Reset Zoom')"></span>
+				</div>
+			</div>
+			<div role="tabpanel" class="tab-pane drilldown-enabled" id="table-panel">
+				<faceted-datatable params="
+					columns: chartFormats.table.columns,
+					reference: tableData,
+					rowClick: chartFormats.table.onclick,
+					buttons: chartFormats.table.buttons,
+					rowCallback: chartFormats.table.rowCallback,
+					order: chartFormats.table.order,
+					autoWidth: chartFormats.table.autoWidth,
+					pageLength: chartFormats.table.pageLength,
+					lengthMenu: chartFormats.table.lengthMenu,
+					language: ko.i18n('datatable.language')
+				"></faceted-datatable>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- ko if: currentConcept() -->
+<report-drilldown params="
+	context: context,
+	currentReport: currentReport,
+	currentConcept: currentConcept,
+	byFrequency: byFrequency,
+	byUnit: byUnit,
+	byType: byType,
+	byValueAsConcept: byValueAsConcept,
+	byQualifier: byQualifier,
+	byOperator: byOperator,
+	byLengthOfEra: byLengthOfEra">
+</report-drilldown>
+<!-- /ko -->
+<!--/ko-->

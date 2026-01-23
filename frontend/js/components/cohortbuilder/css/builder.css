@@ -1,0 +1,186 @@
+div.criteriaGroup {
+	border: 1px solid #ccc;
+	background-color: white;
+}
+
+div.criteria-content {
+	background-color: #eee;
+	border: solid 1px #ccc;
+}
+
+div.additionalCriteria div.criteria-content {
+	border: solid 1px #00a031;
+}
+
+div.demographicCriteria div.criteria-content {
+	border: solid 1px #2749ff;
+}
+
+input.dateField {
+	width: 90px;
+	padding: 0px;
+	line-height: .9em;
+}
+input.codeInput {
+	width: 100px;
+}
+div.ui-datepicker {
+	font-size: 12px;
+}
+img.criteriaType {
+	width: 16px;
+	height: 16px;
+	margin-right: 3px;
+}
+.emptyInput {
+	background-color: #FFF;
+	border: solid 1px #f00 !important;
+}
+.criteriaAddLink {
+	font-size: 10px;
+	color: blue;
+	text-decoration: underline;
+	text-align: right;
+	cursor: pointer;
+	padding-left: 10px;
+}
+img.deleteIcon {
+	padding-bottom: 3px;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.showOnHover {
+	visibility: hidden;
+	margin-left: 20px;
+	display: inline;
+	cursor: pointer;
+}
+
+tr:hover > td > .showOnHover {
+	visibility: visible;
+}
+
+.smallInputField {
+	width: 100px;
+}
+.mediumInputField {
+	width: 250px;
+}
+.inputField {
+	background-color: #eee;
+	border-bottom: solid 1px #ccc;
+	border-left: none;
+	border-top: none;
+	border-right: none;
+	padding: 3px;
+	padding-left: 10px;
+	outline: none;
+}
+button.icon {
+	padding: 0px 2px;
+	padding-top: 3px;
+}
+button.icon img {
+	width: 20px;
+	height: 20px;
+}
+
+button.addConceptSet
+{
+	font-size: 10px;
+	color: #000;
+	height: 21px;
+	padding: 0px 4px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 3px;
+	margin-left: -1px;
+	border-bottom-left-radius: 0;
+	border-top-left-radius: 0;
+}
+
+span.conceptList {
+	line-height: 2em;
+}
+.conceptList span.conceptItem {
+	white-space: nowrap;
+	border: solid 1px black;
+	padding: 3px;
+	margin-bottom: 2px;
+	margin-top: 2px;
+	border-radius: 2px 2px 10px 2px;
+	background-color: white;
+}
+.codesetLink {
+	color: blue;
+	cursor: pointer;
+}
+img.codesetLink {
+	vertical-align: sub;
+}
+col.rule {} col.options {
+	width: 90%;
+}
+col.delete {
+	width: 10%;
+}
+.ui-menu {
+	border: solid 1px gray;
+}
+.ui-autocomplete li.ui-menu-item {
+	font-family: arial;
+	font-size: 12px;
+}
+
+.ui-widget {
+	font-family: Verdana, Arial, sans-serif;
+	font-size: .9em;
+}
+
+.thumb-dropdown .dropdown-menu > li {
+    position: relative;
+}
+.thumb-dropdown .dropdown-menu > li > a .thumbnail {
+    position: absolute; 
+    left: 100%;
+    top: -10px;
+    display: none;    
+    width: 350px;
+    height: auto;
+    margin-left: 5px;
+}
+.thumb-dropdown .dropdown-menu > li > a:hover .thumbnail  {
+    display: block;    
+}
+
+.btn.btn-cycle {
+	vertical-align:baseline;
+}
+
+div.no-inclusion-message__container {
+	padding-top: 20px;
+	text-align: center;
+}
+
+div.no-inclusion-message__container > div {
+	display: inline-block;
+	font-size:2em;
+	font-weight:bold;
+}
+
+.grabber {
+	cursor: grab;
+}
+
+.grabber circle {
+	fill: black;
+}
+
+.criteriaAttributes .btn-outline-dark {
+	background-color: white;
+}
+
+.criteriaAttributes .btn-outline-dark:hover {
+	background-color: black;
+}

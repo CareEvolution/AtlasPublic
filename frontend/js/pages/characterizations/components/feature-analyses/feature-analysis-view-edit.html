@@ -1,0 +1,89 @@
+<access-denied params="isAuthenticated: isAuthenticated, isPermitted: isViewPermitted"></access-denied>
+<div data-bind="html: $component.template"></div>
+
+<!-- ko if:data -->
+<div data-bind="css: classes()">
+	<div class="atlas-closeable-heading">
+		<editable-heading params="
+			name: $component.data().name,
+			canEdit: canEdit(),
+			fieldId: 'txtFeatureName',
+			meta: featureCaption(),
+			authorship: getAuthorship(),
+			description: canEdit() ? '' : ko.i18n('common.readOnly', '(Read only)'),
+			icon: 'shopping-cart'">
+		</editable-heading>
+		<button class="btn btn-primary"
+			data-bind="click: closeAnalysis, enable: !isProcessing(), title: ko.i18n('common.close', 'Close')">
+			<i class="fa fa-times"></i>
+		</button>
+	</div>
+	<div class="asset-heading">
+		<name-validation params="
+			hasEmptyName: !isNameFilled(),
+			hasInvalidCharacters: isNameFilled() && !isNameCharactersValid(),
+			hasInvalidLength: isNameFilled() && !isNameLengthValid(),
+			hasDefaultName: isDefaultName(),
+			analysisName: ko.i18n('components.nameValidation.featureAnalysis', 'feature analysis')">
+		</name-validation>
+	</div>
+	<div class="asset-heading">
+		<div class="atlas-button-group">
+			<div class="fe-save-btn" data-bind="tooltip: saveTooltipText">
+				<button 
+					class="btn btn-success" 
+					data-bind="
+						click: save, 
+						enable: canSave() && !isProcessing(),
+						css: { 'btn-light': !canSave() || isProcessing(), 'btn-success': canSave() && !isProcessing()}
+						">
+					<i class="fa fa-save"></i>
+					<span data-bind="text:ko.i18n('common.save', 'Save')"></span>
+				</button>
+			</div>
+
+			<!-- ko ifnot: isNewEntity -->
+			<button type="button" class="btn btn-light"
+				data-bind="click: copyFeatureAnalysis, css: {disabled: !canCopy() || isProcessing() }, title: ko.i18n('common.createACopy', 'Create a copy')">
+				<i class="fa fa-copy"></i>
+				<span data-bind="text: ko.i18n('common.copy', 'Copy')"></span>
+			</button>
+			
+			<!-- ko if: enablePermissionManagement -->
+			<button class="btn btn-light"
+				data-bind="visible: isOwner, enable: !isProcessing(), click: () => isAccessModalShown(!isAccessModalShown()), title: ko.i18n('common.configureAccess', 'Configure access')">
+				<i class="fa fa-lock"></i>
+				<span data-bind="text: ko.i18n('common.configureAccess', 'Configure access')"></span>
+			</button>
+			<!-- /ko -->
+			
+			<button class="btn btn-light"
+				data-bind="click: deleteFeature, enable: canDelete() && !isProcessing(), title: ko.i18n('common.delete', 'Delete')">
+				<i class="fa fa-trash"></i>
+				<span data-bind="text:ko.i18n('common.delete', 'Delete')"></span>
+				</button>
+			<!-- /ko -->
+		</div>
+
+	</div>
+
+	<!-- ko if: selectedTabKey -->
+	<tabs data-bind="visible: !$component.loading()" params="selectedTabKey: $component.selectedTabKey,
+		selectTab: $component.selectTab, tabs: $component.tabs">
+	</tabs>
+	<!-- /ko -->
+</div>
+
+<!-- /ko -->
+
+<loading data-bind="css: classes('loading-panel'), visible: $component.loading()"
+	params="status: isCopying() ? 'Copying Feature Analysis...' : 'Loading Feature Analysis...'"></loading>
+
+<configure-access-modal params="
+	isModalShown: $component.isAccessModalShown,
+	isOwnerFn: $component.isOwnerFn,
+	loadAccessListFn: $component.loadAccessList,
+	grantAccessFn: $component.grantAccess,
+	revokeAccessFn: $component.revokeAccess,
+	loadRoleSuggestionsFn: $component.loadAccessRoleSuggestions
+"></configure-access-modal>

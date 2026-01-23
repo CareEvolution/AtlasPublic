@@ -1,0 +1,48 @@
+<div data-bind="css: classes({ modifiers: $component.componentModifiers })">
+	<ul class="nav nav-tabs" data-bind="css: $component.headerModifiers">
+		<!-- ko foreach: $component.tabs -->
+		<!-- ko if: ko.unwrap($data.title) && ko.unwrap($data.title).length > 0 -->
+		<li role="presentation" class="nav-tab" data-bind="hidden: $component.isTabHidden($data),
+					click: () => $component.selectTab($index(), $data)">
+			<a class="nav-link" data-bind="css: { active: $component.selectedTab() == $index() }">
+				<span data-bind="text: $data.title"></span>
+				<!-- ko if: $data.hasBadge -->
+				<span class="ms-2" data-bind="component: {
+					name: `${$data.componentName}-badge`,
+					params: $data.componentParams
+				}"></span>
+				<!-- /ko -->
+			</a>
+		</li>
+		<!-- /ko -->
+		<!-- /ko -->
+		<!-- ko if: controlsComponent -->
+		<li class="ms-auto" data-bind="component: {
+					name: controlsComponent.componentName,
+					params: {
+						selectedTab: () => $component.tabs()[$component.selectedTab()],
+						...controlsComponent.componentParams
+					},
+				}
+			">
+		</li>
+		<!-- /ko -->
+	</ul>
+	<div data-bind="css: { 'tabs-content': true, 'with-border': $component.withBorder }">
+		<!-- ko foreach: $component.previouslyLoadedTabs -->
+		<div data-bind="visible: $component.selectedTab() == $data">
+			<!-- ko if: $component.tabs()[$data] && $component.tabs()[$data].html -->
+			<div
+				data-bind="with: Object.assign({}, $component.tabs()[$data].componentParams, { html: $component.tabs()[$data].html })">
+				<div data-bind="template: {nodes: ko.utils.parseHtmlFragment(html)}"></div>
+			</div>
+			<!-- /ko -->
+			<!-- ko if: $component.tabs()[$data] && $component.tabs()[$data].componentName -->
+			<div
+				data-bind='component: { name: $component.tabs()[$data].componentName, params: $component.tabs()[$data].componentParams }'>
+			</div>
+			<!-- /ko -->
+		</div>
+		<!-- /ko -->
+	</div>
+</div>

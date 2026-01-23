@@ -1,0 +1,9 @@
+*~
+.idea
+/web.config
+/node_modules/
+/dist
+js/config-local.js
+js/version.js
+.vscode
+undefinedrequire-dummy.js

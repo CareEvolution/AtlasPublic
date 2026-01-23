@@ -1,0 +1,106 @@
+<div class="criteriaSection" data-bind="with: Criteria">
+
+	<criterion-header params="criterionTitle: 'Specimen of',
+					conceptSetInfo: {
+						conceptSetId: $component.Criteria.CodesetId,
+						conceptSets: $component.expression.ConceptSets,
+						defaultText: ko.i18n('components.conditionSpecimen.anySpecimen', 'Any Specimen')
+					},
+					hideClose: $component.hideClose,
+					addActions: $component.addActions,
+					removeCriteria: $component.removeCriteria,
+					criteria: $component.Criteria"></criterion-header>
+
+	<div class="criteriaAttributes">
+	
+		<!-- ko if: DateAdjustment() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionSpecimen.conditionSpecimeText_15', 'with date adjustment:')"></span>
+			<date-adjustment params="DateAdjustment: DateAdjustment"></date-adjustment>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: First() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionSpecimen.conditionSpecimeText_2', 'for the first time in the person\'s history')"></span>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: OccurrenceStartDate() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionSpecimen.conditionSpecimeText_3', 'occurrence start is:')"></span>
+			<date-range params="Range: OccurrenceStartDate"></date-range>
+		</div>
+		<!-- /ko -->
+	
+		<!-- ko if: SpecimenType() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionSpecimen.specimenType', 'Specimen Type')"></span>
+			<cycle-toggle-input class="me-1" 
+				params="{value: SpecimenTypeExclude, options: $component.options.DomainTypeExcludeOptions}"></cycle-toggle-input>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Type Concept', DefaultQuery: ''}, ConceptList: SpecimenType()"></concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: Quantity() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionSpecimen.conditionSpecimeText_4', 'with Quantity')"></span>
+			<numeric-range params="Range: Quantity"></numeric-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: Unit() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionSpecimen.conditionSpecimeText_5', 'with Unit:')"></span>
+			<concept-list params="PickerParams: { DefaultDomain: 'Unit'}, ConceptList: Unit()"></concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: AnatomicSite() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionSpecimen.conditionSpecimeText_6', 'with Anatomic Site:')"></span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Spec Anatomic Site'}, ConceptList: AnatomicSite()"></concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: DiseaseStatus() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionSpecimen.conditionSpecimeText_7', 'with Disease Status:')"></span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Spec Disease Status'}, ConceptList: DiseaseStatus()"></concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: SourceId() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionSpecimen.conditionSpecimeText_8', 'with Source ID')"></span>
+			<text-filter-input params="Filter: SourceId"></text-filter-input>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: Age() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionSpecimen.conditionSpecimeText_9', 'with age')"></span>
+			<numeric-range params="Range: Age"></numeric-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: Gender() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionSpecimen.conditionSpecimeText_10', 'with a gender of:')"></span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Gender', DefaultQuery: ''}, ConceptList: Gender()"></concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: CorrelatedCriteria() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<criteria-group class="w-100"
+				params="{expression: $component.expression, group: CorrelatedCriteria, indexMessage: $component.indexMessage}"></criteria-group>
+		</div>
+		<!-- /ko -->
+	</div>
+</div>

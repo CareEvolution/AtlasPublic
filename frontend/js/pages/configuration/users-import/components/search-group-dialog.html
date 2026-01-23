@@ -1,0 +1,25 @@
+<atlas-modal params="{
+    showModal: open,
+    title: ko.i18n('configuration.userImport.findGroup', 'Find Group'),
+    data: {
+		importProvider: importProvider,
+		selectedRole: selectedRole,
+		searchResults: searchResults,
+		setGroupMapping: setGroupMapping,
+		closeModal: closeModal,
+		setButtonText: ko.i18n('common.set', 'Set'),
+		cancelButtonText: ko.i18n('common.cancel', 'Cancel')
+	}}">
+	<div class="paddedWrapper">
+		<ldap-groups params="provider: importProvider, role: selectedRole, searchResults: searchResults"></ldap-groups>
+		<div class="d-flex justify-content-end modal-footer">
+			<button class="btn btn-primary" data-bind="click: setGroupMapping">
+				<span data-bind="text: setButtonText"></span>
+			</button>
+	
+			<button class="btn btn-success" data-bind="click: closeModal">
+				<span data-bind="text: cancelButtonText"></span>
+			</button>
+		</div>
+	</div>
+</atlas-modal>

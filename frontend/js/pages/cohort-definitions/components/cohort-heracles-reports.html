@@ -1,0 +1,131 @@
+<div class="d-flex flex-column gap-3">
+	<div class="d-flex align-items-end">
+		<form class="row g-3">
+			<div style="min-width: 350px" class="col-md-6">
+				<label for="selectSource" class="form-label">Data Source</label>
+				<select class="form-select" id="selectSource"
+					data-bind="css : { invalid: $component.reportSourceKey()==undefined }, options: $component.cdmSources(), optionsValue:'sourceKey', optionsText:'sourceName', value:$component.reportSourceKey, optionsCaption: ko.i18n('dataSources.selectASource', 'Select a Source')">
+				</select>
+			</div>
+			<div style="min-width: 350px" class="col-md-6">
+				<label for="selectReport" class="form-label">Report</label>
+				<select class="form-select" id="selectReport"
+					data-bind="enable: showReportNameDropdown, options: reportingAvailableReports, optionsCaption:$component.reportOptionCaption, optionsText:'name', optionsValue:'name', value:$component.reportReportName"></select>
+			</div>
+		</form>
+		<div class="btn-group ms-auto">
+			<button class="btn btn-primary"
+				data-bind="enable: $component.generateReportsEnabled, css : {disabled:!$component.generateReportsEnabled()}, attr : {'disabled':!$component.generateReportsEnabled()}, click:$component.generateAllAnalyses">
+				<span
+					data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.panels.fullAnalysis', 'Full Analysis')"></span>
+			</button>
+			<button class="btn btn-outline-primary"
+				data-bind="enable: $component.generateReportsEnabled, css : {disabled:!$component.generateReportsEnabled()}, attr : {'disabled':!$component.generateReportsEnabled()}, click:$component.generateQuickAnalysis">
+				<span
+					data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.panels.quickAnalysis', 'Quick Analysis')"></span>
+			</button>
+			<button class="btn btn-outline-primary"
+				data-bind="enable: $component.generateReportsEnabled, css : {disabled:!$component.generateReportsEnabled()}, attr : {'disabled':!$component.generateReportsEnabled()}, click:$component.selectHealthcareAnalyses">
+				<span
+					data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.panels.utilization', 'Utilization')"></span>
+			</button>
+			<button class="btn btn-outline-primary"
+				data-bind="enable: $component.generateReportsEnabled, popover: { template: document.querySelector('#analysis-types-help').content, viewModel: $component }"><i
+					class="fa fa-question-circle"></i></button>
+		</div>
+	</div>
+
+	<!-- ko if: $component.reportingSourceStatusLoading() -->
+	<div class="loader">
+		<i class="fa fa-circle-o-notch fa-spin"></i> <span
+			data-bind="text: ko.i18n('common.loading', 'Loading')"></span>
+	</div>
+	<!-- /ko -->
+
+	<!-- ko if: $component.reportingState() == 'cohort_not_generated' -->
+	<div class="alert alert-danger">
+		<span
+			data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.cohortDefinitionManagerText_2', 'A cohort has not been generated for the selected data source. Return to the generation tab to generate a cohort before accessing reports.')"></span>
+	</div>
+	<!-- /ko -->
+
+	<!-- ko if: !$component.reportingSourceStatusLoading() && $component.reportingState() == 'reports_not_generated' -->
+	<div class="alert alert-warning">
+		<span
+			data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.cohortDefinitionManagerText_4', 'Reports have not yet been generated for this cohort. Click one of the analysis buttons to generate reports.')"></span>
+	</div>
+	<!-- /ko -->
+
+	<!-- ko if: !$component.reportingSourceStatusLoading() && $component.reportingState()=='generating_reports' -->
+	<div class="loader">
+		<i class="fa fa-circle-o-notch fa-spin"></i> <span
+			data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.cohortDefinitionManagerText_7', 'Generating Reports')"></span>
+	</div>
+	<div class="alert alert-info">
+		<table class="table table-sm">
+			<thead>
+				<th data-bind="text: ko.i18n('columns.jobName', 'Job Name')"></th>
+				<th data-bind="text: ko.i18n('columns.startDate', 'Start Date')"></th>
+				<th data-bind="text: ko.i18n('columns.duration', 'Duration')"></th>
+				<th data-bind="text: ko.i18n('columns.status', 'Status')"></th>
+			</thead>
+			<tbody>
+				<tr data-bind="with:$component.currentJob">
+					<td><i class="fa fa-tasks"></i> <span data-bind="html: name"></span></td>
+					<td data-bind="text: startDate"></td>
+					<td data-bind="text: duration"></td>
+					<td data-bind="html: status"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!-- /ko -->
+
+	<!-- ko if: !$component.reportingSourceStatusLoading() && $component.reportingState()=='unknown_cohort_report_state' -->
+	<div class="alert alert-danger">
+		<span
+			data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.cohortDefinitionManagerText_11', 'The reporting system has encountered an error. Provide the following details to your ATLAS administration team')">
+		</span>
+		<div data-bind="html:$component.reportingError"></div>
+	</div>
+	<!-- /ko -->
+
+	<!-- ko if: !$component.reportingSourceStatusLoading() && $component.createReportJobFailed -->
+	<div class="alert alert-danger">
+		<span
+			data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.cohortDefinitionManagerText_11', 'The reporting system has encountered an error. Provide the following details to your ATLAS administration team')">
+		</span>
+		<div data-bind="html:$component.createReportJobError"></div>
+	</div>
+	<!-- /ko -->
+
+	<loading params="status:'loading'"
+		data-bind="visible:$root.router.currentView() == 'loading' || $component.loadingReport()">
+	</loading>
+	<report-manager data-bind="visible:$component.reportingState()=='report_active' "
+		params="{reportSourceKey: reportSourceKey, loadingReport: loadingReport, reportReportName: reportReportName, reportCohortDefinitionId: reportCohortDefinitionId, reportTriggerRun: reportTriggerRun} ">
+	</report-manager>
+</div>
+
+<template id="analysis-types-help">
+	<b data-bind="text: ko.i18n('cohortDefinitions.cohort.modals.analysisTypes.bold_1', 'Quick Analysis')"></b>
+	<p
+		data-bind="text: ko.i18n('cohortDefinitions.cohort.modals.analysisTypes.text_1', 'Runs minimal analysis to provide a quick overview of this cohort\'s year of birth, demographics, drug eras and condition eras. (estimated: 10 minutes)')">
+	</p>
+	<b data-bind="text: ko.i18n('cohortDefinitions.cohort.modals.analysisTypes.bold_2', 'Utilization')"></b>
+	<p
+		data-bind="text: ko.i18n('cohortDefinitions.cohort.modals.analysisTypes.text_2', 'Runs analyses to provide Exposure, Visit and Drug Utilization reports. (estimated: 10 - 40 minutes)')">
+	</p>
+	<b data-bind="text: ko.i18n('cohortDefinitions.cohort.modals.analysisTypes.bold_3', 'Full Analysis')"></b>
+	<p
+		data-bind="text: ko.i18n('cohortDefinitions.cohort.modals.analysisTypes.text_3', 'Runs a complete set of characterization reports. (estimated: 60 minutes)')">
+	</p>
+</template>
+
+<modal-pick-options params="{
+		showModal: $component.showUtilizationToRunModal,
+		title: ko.i18n('cohortDefinitions.cohort.modals.configureReportsToRun.title', 'Configure reports to run'),
+		options: $component.utilReportOptions,
+		submitLabel: ko.i18n('cohortDefinitions.cohort.modals.configureReportsToRun.run', 'Run'),
+		submit: $component.generateHealthcareAnalyses,}">
+</modal-pick-options>

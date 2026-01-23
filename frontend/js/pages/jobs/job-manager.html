@@ -1,0 +1,32 @@
+<div class="d-flex flex-row align-items-center me-3">
+	<heading-title class="flex-grow-1" params="name: ko.i18n('navigation.jobs', 'Jobs'), icon: 'tasks'"></heading-title>
+	<div data-bind="if: canReadJobs">
+		<div data-bind="click: updateJobs, text: ko.i18n('jobs.refreshJobs', 'Refresh Jobs')" class="btn btn-sm btn-success pull-right">Refresh Jobs</div>
+	</div>
+</div>
+<div data-bind="if: canReadJobs">
+	<div id="wrapperJobs">
+		<div class="clear"></div>
+
+		<table class="conceptTable table table-sm table-hover table-borderless" data-bind="dataTable:{
+			data: jobs,
+			options: {
+				layout: layout,
+				buttons: [
+					'colvis', 'copyHtml5', 'csvHtml5'
+				],
+				pageLength: tableOptions.pageLength,
+				lengthMenu: tableOptions.lengthMenu,
+				orderClasses: false,
+				deferRender: true,
+				autoWidth: false,
+				ordering: true,
+				order: [[ 0, 'desc' ]],
+				columns: columns(),
+				language: ko.i18n('datatable.language')
+			}
+		}"></table>
+	</div>
+</div>
+
+<access-denied params="isAuthenticated: isAuthenticated, isPermitted: canReadJobs"></access-denied>

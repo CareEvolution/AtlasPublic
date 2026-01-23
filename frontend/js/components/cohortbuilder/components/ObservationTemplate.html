@@ -1,0 +1,130 @@
+<div class="criteriaSection" data-bind="with: Criteria">
+
+	<criterion-header params="criterionTitle: 'Observation of',
+				conceptSetInfo: {
+					conceptSetId: $component.Criteria.CodesetId,
+					conceptSets: $component.expression.ConceptSets,
+					defaultText: ko.i18n('components.conditionObservation.anyObservation', 'Any Observation')
+				},
+				hideClose: $component.hideClose,
+				addActions: $component.addActions,
+				removeCriteria: $component.removeCriteria,
+				criteria: $component.Criteria"></criterion-header>
+
+	<div class="criteriaAttributes">
+		<!-- ko if: DateAdjustment() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionObservation.conditionObservationText_20', 'with date adjustment:')"></span>
+			<date-adjustment params="DateAdjustment: DateAdjustment"></date-adjustment>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: First() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionObservation.conditionObservationText_2', 'for the first time in the person\'s history')"></span>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: OccurrenceStartDate() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionObservation.conditionObservationText_3', 'occurrence start is:')"></span>
+			<date-range params="Range: OccurrenceStartDate"></date-range>
+		</div>
+		<!-- /ko -->
+	
+		<!-- ko if: ObservationType() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionObservation.observationType', 'Observation Type')"></span>
+			<cycle-toggle-input class="me-1" 
+				params="{value: ObservationTypeExclude, options: $component.options.DomainTypeExcludeOptions}"></cycle-toggle-input>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Type Concept', DefaultQuery: ''}, ConceptList: ObservationType()"></concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: ValueAsNumber() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionObservation.conditionObservationText_4', 'with Value as Number')"></span>
+			<numeric-range params="Range: ValueAsNumber"></numeric-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: ValueAsString() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionObservation.conditionObservationText_5', 'with Value as String')"></span>
+			<text-filter-input params="Filter: ValueAsString"></text-filter-input>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: ValueAsConcept() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionObservation.conditionObservationText_6', 'with Value as Concept:')"></span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Meas Value'}, ConceptList: ValueAsConcept()"></concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: Qualifier() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionObservation.conditionObservationText_7', 'with Qualifier:')"></span>
+			<concept-list params="PickerParams: { DefaultDomain: 'Observation'}, ConceptList: Qualifier()"></concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: Unit() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionObservation.conditionObservationText_8', 'with Unit:')"></span>
+			<concept-list params="PickerParams: { DefaultDomain: 'Unit'}, ConceptList: Unit()"></concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: ObservationSourceConcept() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionObservation.conditionObservationText_9', 'Observation Source Concept is:')"></span>
+	
+			<conceptset-selector
+				params="conceptSetId: ObservationSourceConcept(), conceptSets: $component.expression.ConceptSets, 
+												defaultText: ko.i18n('components.conditionObservation.anyObservation', 'Any Observation')"></conceptset-selector>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: Age() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionObservation.conditionObservationText_10', 'with age')"></span>
+			<numeric-range params="Range: Age"></numeric-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: Gender() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionObservation.conditionObservationText_11', 'with a gender of:')"></span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Gender', DefaultQuery: ''}, ConceptList: Gender()"></concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: ProviderSpecialty() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionObservation.conditionObservationText_12', 'with a Provider Specialty of:')"></span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Provider', DefaultQuery: ''}, ConceptList: ProviderSpecialty()"></concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: VisitType() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionObservation.conditionObservationText_13', 'with a Visit occurrence of:')"></span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Visit', DefaultQuery: ''}, ConceptList: VisitType()"></concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: CorrelatedCriteria() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<criteria-group class="w-100"
+				params="{expression: $component.expression, group: CorrelatedCriteria, indexMessage: $component.indexMessage}"></criteria-group>
+		</div>
+		<!-- /ko -->
+	</div>
+</div>

@@ -1,0 +1,24 @@
+<div data-bind="modal: showModal, css: classes({ extra: ['modal', 'fade'] })" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header" data-bs-theme="dark">
+				<div class="modal-title"
+					data-bind="text: ko.i18n('cc.viewEdit.design.faParams.modal.title', 'Create new parameter')"></div>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form class="form-inline p-3">
+					<input
+						data-bind="value: $component.paramName, placeholder: ko.i18n('cc.viewEdit.design.faParams.modal.namePlaceholder', 'Name')"
+						type="text" class="form-control" />
+					<input
+						data-bind="value: $component.paramValue, placeholder: ko.i18n('cc.viewEdit.design.faParams.modal.valuePlaceholder', 'Value')"
+						type="text" class="form-control" />
+					<button
+						data-bind="click: $component.submitParam, text: ko.i18n('cc.viewEdit.design.faParams.modal.submit', 'Submit')"
+						type="button" class="btn btn-secondary"></button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

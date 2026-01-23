@@ -1,0 +1,16 @@
+@import url('vendor/font-awesome/css/font-awesome.css');
+@import url('../node_modules/bootstrap/dist/css/bootstrap.css');
+@import url( '../node_modules/datatables.net-bs5/css/dataTables.bootstrap5.css');
+@import url('../node_modules/datatables.net-buttons-bs5/css/buttons.bootstrap5.css');
+@import url('../node_modules/datatables.net-select-bs5/css/select.bootstrap5.css');
+@import url('vendor/jquery-ui/dist/themes/smoothness/jquery-ui.css');
+@import url('../node_modules/flatpickr/dist/flatpickr.css');
+@import url('../node_modules/slim-select/dist/slimselect.css');
+@import url('./tabs.css');
+@import url('./atlas.css');
+@import url('./chart.css');
+@import url('./achilles.css');
+@import url('./cartoon.css');
+@import url('../node_modules/prismjs/themes/prism.css');
+@import url('./browserWarning.css');
+@import url('./splash.css');

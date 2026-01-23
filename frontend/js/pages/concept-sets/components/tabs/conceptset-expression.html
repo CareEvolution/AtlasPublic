@@ -1,0 +1,106 @@
+<div class="paddedWrapper">
+	<!-- ko if: (conceptSetStore.current() != null) -->
+	<input type="text" class="form-control mb-3"
+		data-bind="textInput: conceptSetStore.current().description, 
+			attr: {disabled: !canEditCurrentConceptSet()}, 
+			placeholder: ko.i18n('components.conceptSet.descriptionPlaceholder', 'Enter the concept set description here')">
+	</input>
+	<!-- /ko -->
+	<table class="conceptSetTable table table-sm table-hover table-borderless" data-bind="dataTable:{
+        xssSafe: true,
+        data: data(),
+        options: {
+          language: datatableLanguage,
+          layout: layout,
+          colVis: {
+            buttonText: ko.i18n('datatable.language.buttons.changeColumns', 'Change Columns'),
+            align: 'right',
+            overlayFade: 0,
+            showAll: ko.i18n('datatable.language.buttons.showAllColumns', 'Show All Columns'),
+            restore: ko.i18n('datatable.language.buttons.resetColumns', 'Reset Columns')
+          },
+          rowCallback: commonUtils.contextSensitiveLinkColor,
+          pageLength: tableOptions.pageLength,
+          lengthMenu: tableOptions.lengthMenu,
+          orderClasses: false,
+          deferRender: true,
+          autoWidth: false,
+          order: [[3, 'desc']],
+          columns: columns,
+        }
+      }">
+		<thead>
+			<th>
+				<!-- ko if: canEditCurrentConceptSet -->
+				<span data-bind="
+              css: classes({
+                  element: 'checkmark',
+                  extra: `fa fa-check custom-check-box ${areAllConceptsCheckedForRemoval() ? 'selected' : ''}`
+              }),
+              click: toggleSelectedConceptsForRemoval
+            "></span>
+				<!-- /ko -->
+			</th>
+			<th data-bind="text: ko.i18n('columns.conceptId', 'Concept Id')"></th>
+			<th data-bind="text: ko.i18n('columns.conceptCode', 'Concept Code')"></th>
+			<th data-bind="text: ko.i18n('columns.conceptName', 'Concept Name')"></th>
+			<th data-bind="text: ko.i18n('columns.domain', 'Domain')"></th>
+			<th data-bind="text: ko.i18n('columns.standardConceptCode', 'Standard Concept Code')"></th>
+			<th data-bind="text: ko.i18n('columns.standardConceptCaption', 'Standard Concept Caption')"></th>
+			<th>
+				<!-- ko if: canEditCurrentConceptSet -->
+				<span data-bind="
+              css: classes({
+                  element: 'checkmark',
+                  extra: `fa fa-check custom-check-box ${allExcludedChecked() ? 'selected' : ''}`
+              }),
+              click: toggleExcluded
+            "></span>
+				<!-- /ko -->
+				<span data-bind="text: ko.i18n('columns.exclude', 'Exclude')"></span>
+			</th>
+			<th>
+				<!-- ko if: canEditCurrentConceptSet -->
+				<span data-bind="
+            css: classes({
+                element: 'checkmark',
+                extra: `fa fa-check custom-check-box ${allDescendantsChecked() ? 'selected' : ''}`
+            }),
+            click: toggleDescendants
+          "></span>
+				<!-- /ko -->
+				<span data-bind="text: ko.i18n('columns.descendants', 'Descendants')"></span>
+			</th>
+			<th>
+				<!-- ko if: canEditCurrentConceptSet -->
+				<span data-bind="
+              css: classes({
+                  element: 'checkmark',
+                  extra: `fa fa-check custom-check-box ${allMappedChecked() ? 'selected' : ''}`
+              }),
+              click: toggleMapped
+            "></span>
+				<!-- /ko -->
+				<span data-bind="text: ko.i18n('columns.mapped', 'Mapped')"></span>
+			</th>
+		</thead>
+	</table>
+
+	<concept-legend></concept-legend>
+
+	<!-- ko if: canEditCurrentConceptSet -->
+	<div class="d-flex">
+		<button class="btn btn-danger" data-bind="
+					title: buttonTooltip,
+					click: removeConceptsFromConceptSet,
+					css: { disabled: conceptsForRemovalLength() === 0 },
+					text: ko.i18n('components.conceptSet.removeSelected', 'Remove Selected')">
+		</button>
+		<button class="btn btn-success ms-1" data-bind="
+				title: buttonTooltip,
+				click: navigateToSearchPage,
+				text: ko.i18n('components.conceptSet.addConcepts', 'Add concepts')">
+		</button>
+	</div>
+	<!-- /ko -->
+</div>

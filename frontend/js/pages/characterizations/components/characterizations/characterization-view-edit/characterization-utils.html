@@ -1,0 +1,36 @@
+<div class="loading" data-bind="visible: loading(), text: ko.i18n('common.loading', 'Loading')"></div>
+
+<div data-bind="css: classes(), visible: !loading()">
+    <h2 data-bind="css: classes('title'), text: ko.i18n('cc.viewEdit.utilities.title', 'Utilities')" >
+    </h2>
+    <ul class="nav nav-pills">
+        <li role="presentation"
+			class="nav-item"
+            data-bind="click: setMode.bind(null, MODE_JSON)">
+            <a class="nav-link" data-bind="text: ko.i18n('common.export', 'Export'), css: classes({ extra: mode() == MODE_JSON ? 'active' : null })"></a>
+        </li>
+        <li role="presentation"
+			class="nav-item"
+            data-bind="click: setMode.bind(null, MODE_IMPORT)">
+            <a class="nav-link" data-bind="text: ko.i18n('common.import', 'Import'), css: classes({ extra: mode() == MODE_IMPORT ? 'active' : null })"></a>
+        </li>
+    </ul>
+    <div data-bind="if: mode() == MODE_JSON, css: classes('content')">
+        <export params="{
+            entityId: characterizationId,
+            isPermittedExport: isPermittedExport,
+            exportService: exportService,
+            dirtyFlag: dirtyFlag,
+            message: { entityName: 'characterization' }
+        }"></export>
+    </div>
+    <div data-bind="if: mode() == MODE_IMPORT, css: classes('content')">
+        <import params="{
+            entityId: characterizationId,
+            routeToUrl: '/cc/characterizations/',
+            isPermittedImport: isPermittedImport,
+            importService: importService,
+            afterImportSuccess: afterImportSuccess,
+        }"></import>
+    </div>
+</div>

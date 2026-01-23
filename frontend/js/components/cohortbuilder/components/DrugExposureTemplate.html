@@ -1,0 +1,180 @@
+<div class="criteriaSection" data-bind="with: Criteria">
+
+	<criterion-header params="criterionTitle: 'Drug Exposure of',
+		conceptSetInfo: {
+			conceptSetId: $component.Criteria.CodesetId,
+			conceptSets: $component.expression.ConceptSets,
+			defaultText: ko.i18n('components.conditionDrugExposure.anyDrug', 'Any Drug')
+		},
+		hideClose: $component.hideClose,
+		addActions: $component.addActions,
+		removeCriteria: $component.removeCriteria,
+		criteria: $component.Criteria"></criterion-header>
+
+	<div class="criteriaAttributes">
+
+		<!-- ko if: DateAdjustment() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionDrugExposure.conditionDrugExposureText_23', 'with date adjustment:')"></span>
+			<date-adjustment params="DateAdjustment: DateAdjustment"></date-adjustment>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: First() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionDrugExposure.conditionDrugExposureText_2', 'for the first time in the person\'s history')">
+			</span>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: OccurrenceStartDate() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionDrugExposure.conditionDrugExposureText_3', 'occurrence start is:')"></span>
+			<date-range params="Range: OccurrenceStartDate"></date-range>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: OccurrenceEndDate() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionDrugExposure.conditionDrugExposureText_4', 'occurrence end is:')"></span>
+			<date-range params="Range: OccurrenceEndDate"></date-range>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: DrugType() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1" data-bind="text: ko.i18n('components.conditionDrugExposure.drugType', 'Drug Type')"></span>
+			<cycle-toggle-input class="me-1" params="{value:  DrugTypeExclude, options: $component.options.DomainTypeExcludeOptions}">
+			</cycle-toggle-input>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Type Concept', DefaultQuery: ''}, ConceptList: DrugType()">
+			</concept-list>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: StopReason() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionDrugExposure.conditionDrugExposureText_5', 'with a Stop Reason')"></span>
+			<text-filter-input params="Filter: StopReason"></text-filter-input>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: Refills() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionDrugExposure.conditionDrugExposureText_6', 'with Refills')"></span>
+			<numeric-range params="Range: Refills"></numeric-range>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: Quantity() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionDrugExposure.conditionDrugExposureText_7', 'with Quantity')"></span>
+			<numeric-range params="Range: Quantity"></numeric-range>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: DaysSupply() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionDrugExposure.conditionDrugExposureText_8', 'with Days Supply')"></span>
+			<numeric-range params="Range: DaysSupply"></numeric-range>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: RouteConcept() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionDrugExposure.conditionDrugExposureText_9', 'Route Concept is:')"></span>
+			<concept-list params="PickerParams: { DefaultDomain: 'Route', DefaultQuery: ''}, ConceptList: RouteConcept()">
+			</concept-list>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: EffectiveDrugDose() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionDrugExposure.conditionDrugExposureText_10', 'with Effective Drug Dose')"></span>
+			<numeric-range params="Range: EffectiveDrugDose"></numeric-range>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: DoseUnit() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionDrugExposure.conditionDrugExposureText_11', 'Dose Unit is:')"></span>
+			<concept-list params="PickerParams: { DefaultDomain: 'Unit', DefaultQuery: ''}, ConceptList: DoseUnit()">
+			</concept-list>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: LotNumber() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionDrugExposure.conditionDrugExposureText_12', 'with a Lot Number')"></span>
+			<text-filter-input params="Filter: LotNumber"></text-filter-input>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: DrugSourceConcept() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionDrugExposure.conditionDrugExposureText_13', 'Drug Source Concept is:')"></span>
+			<conceptset-selector
+				params="conceptSetId: DrugSourceConcept(), conceptSets: $component.expression.ConceptSets, defaultText: ko.i18n('components.conditionDrugExposure.anyDrug', 'Any Drug')">
+			</conceptset-selector>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: Age() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionDrugExposure.conditionDrugExposureText_14', 'with age')"></span>
+			<numeric-range params="Range: Age"></numeric-range>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: Gender() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionDrugExposure.conditionDrugExposureText_15', 'with a gender of:')"></span>
+			<concept-list params="PickerParams: { DefaultDomain: 'Gender', DefaultQuery: ''}, ConceptList: Gender()">
+			</concept-list>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: ProviderSpecialty() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionDrugExposure.conditionDrugExposureText_16', 'with a Provider Specialty of:')"></span>
+			<concept-list
+				params="PickerParams: { DefaultDomain: 'Provider', DefaultQuery: ''}, ConceptList: ProviderSpecialty()">
+			</concept-list>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: VisitType() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionDrugExposure.conditionDrugExposureText_17', 'with a Visit occurrence of:')"></span>
+			<concept-list params="PickerParams: { DefaultDomain: 'Visit', DefaultQuery: ''}, ConceptList: VisitType()">
+			</concept-list>
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if: CorrelatedCriteria() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<criteria-group class="w-100"
+				params="{expression: $component.expression, group: CorrelatedCriteria, indexMessage: $component.indexMessage}">
+			</criteria-group>
+		</div>
+		<!-- /ko -->
+
+	</div>
+</div>

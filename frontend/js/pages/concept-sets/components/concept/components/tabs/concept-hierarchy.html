@@ -1,0 +1,144 @@
+<div id="wrapperConceptHierarchy">
+	<access-denied params="isAuthenticated: isAuthenticated, isPermitted: hasInfoAccess"></access-denied>
+
+	<!-- ko if: hasInfoAccess() -->
+		<loading data-bind="css: classes('loading-panel'), visible: isLoading()" params="status: ko.i18n('cs.manager.concept.tabs.hierarchy.loading', 'Loading Hierarchy...')"></loading>
+
+		<div data-bind="visible:!isLoading()">
+			<!-- ko if: currentConcept().STANDARD_CONCEPT == 'N' -->
+				<div data-bind="text: ko.i18n('cs.manager.concept.tabs.hierarchy.noHierarchyFoundMessage', 'No hierarchy found for non-standard concepts.')"></div>
+			<!-- /ko -->
+			<!-- ko ifnot: currentConcept().STANDARD_CONCEPT == 'N' -->
+				<div class="mb-2">
+					<div class="d-flex justify-content-start">
+						<span class="me-2" data-bind="css: classes('filter-view'), text: ko.i18n('cs.manager.concept.tabs.hierarchy.view', 'View:')"></span>
+						<div>
+							<ul class="nav nav-pills">
+								<li role="presentation"
+									class="nav-item"
+									data-bind="click: function() {$component.hierarchyPillMode('all') };">
+									<a class="nav-link" data-bind="css: {active: $component.hierarchyPillMode() == 'all' }, text: ko.i18n('cs.manager.concept.tabs.hierarchy.fullHierarchy', 'Full Hierarchy')"></a>
+								</li>
+								<li role="presentation"
+									class="nav-item"
+									data-bind="click: function() {$component.hierarchyPillMode('parents') };">
+									<a class="nav-link" data-bind="css: {active: $component.hierarchyPillMode() == 'parents' }, text: ko.i18n('cs.manager.concept.tabs.hierarchy.parents', 'Parents')"></a>
+								</li>
+								<li role="presentation"
+									class="nav-item"
+									data-bind="click: function() {$component.hierarchyPillMode('current') };">
+									<a class="nav-link" data-bind="css: {active: $component.hierarchyPillMode() == 'current' }, text: ko.i18n('cs.manager.concept.tabs.hierarchy.currentConcept', 'Current Concept')"></a>
+								</li>
+								<li role="presentation"
+									class="nav-item"
+									data-bind="click: function() {$component.hierarchyPillMode('children') };">
+									<a class="nav-link" data-bind="css: {active: $component.hierarchyPillMode() == 'children' }, text: ko.i18n('cs.manager.concept.tabs.hierarchy.children', 'Children')"></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div id="wrapperParents" class="mb-2" data-bind="visible: ['all', 'parents'].includes($component.hierarchyPillMode())">
+					<div class="card card-default">
+						<div class="card-header">
+							<i class="fa fa-arrow-up"></i> <span data-bind="text: ko.i18n('cs.manager.concept.tabs.hierarchy.parents', 'Parents')"></span>
+						</div>
+						<div class="card-body">
+							<!-- ko if: $component.metarchy.parents().length == 0 -->
+							<div data-bind="text: ko.i18n('cs.manager.concept.tabs.hierarchy.noParentConceptsFound', 'No parent concepts found')"></div>
+							<!-- /ko -->
+							<!-- ko if: $component.metarchy.parents().length > 0 -->
+							<faceted-datatable params="{
+								pageLength: tableOptions.pageLength,
+								lengthMenu: tableOptions.lengthMenu,
+								orderClasses: false,
+								ordering: true,
+								order: [[ 8, 'desc' ]],
+								columns: relatedConceptsColumns,
+								options: hierarchyConceptsOptions,
+								reference: $component.metarchy.parents,
+								rowCallback: commonUtils.contextSensitiveLinkColor,
+								deferRender: true,
+								language: ko.i18n('datatable.language')
+							}"></faceted-datatable>
+							<!-- /ko -->
+						</div>
+							<!-- ko if: $component.metarchy.parents().length > 0 -->
+							<div class="card-footer">
+								<concept-add-box params="{
+									canSelectSource: true,
+									isActive: () => metarchy.parents().filter(c => c.isSelected()).length > 0,
+									concepts: () => getSelectedConcepts($component.metarchy.parents),
+								}"></concept-add-box>
+							</div>
+							<!-- /ko -->
+					</div>
+				</div>
+				<div id="wrapperHierarchyAnchor" class="mb-2" data-bind="visible: ['all', 'current'].includes($component.hierarchyPillMode())">
+					<div class="card card-default">
+						<div class="card-header">
+							<i class="fa fa-arrow-right"></i> <span data-bind="text: ko.i18n('cs.manager.concept.tabs.hierarchy.currentConcept', 'Current Concept')"></span>
+						</div>
+						<div class="card-body">
+								<faceted-datatable params="{
+									pageLength: tableOptions.pageLength,
+									lengthMenu: tableOptions.lengthMenu,
+									orderClasses: false,
+									ordering: true,
+									buttons: [],
+									layout: layout,
+									order: [[ 6, 'desc' ]],
+									columns: relatedConceptsColumns,
+									reference: $component.currentConceptArray,
+									deferRender: true,
+									language: ko.i18n('datatable.language')
+								}"></faceted-datatable>
+						</div>
+						<div class="card-footer">
+							<concept-add-box params="{
+								canSelectSource: true,
+								isActive: () => currentConceptArray().filter(c => c.isSelected()).length > 0,
+								concepts: ko.observableArray([$component.currentConcept()]),
+							}"></concept-add-box>
+						</div>
+					</div>
+				</div>
+				<div id="wrapperChildren" class="mb-2" data-bind="visible: ['all', 'children'].includes($component.hierarchyPillMode())">
+						<div class="card card-default">
+							<div class="card-header">
+								<i class="fa fa-arrow-down"></i> <span data-bind="text: ko.i18n('cs.manager.concept.tabs.hierarchy.children', 'Children')"></span>
+							</div>
+							<div class="card-body">
+								<!-- ko if: $component.metarchy.children().length == 0 -->
+								<div data-bind="text: ko.i18n('cs.manager.concept.tabs.hierarchy.noChildConceptsFound', 'No child concepts found')"></div>
+								<!-- /ko -->
+								<!-- ko if: $component.metarchy.children().length > 0 -->
+								<faceted-datatable params="{
+									orderClasses: false,
+									ordering: true,
+									pageLength: tableOptions.pageLength,
+									lengthMenu: tableOptions.lengthMenu,
+									order: [[ 6, 'desc' ]],
+									columns: relatedConceptsColumns,
+									reference: $component.metarchy.children,
+									options: hierarchyConceptsOptions,
+									deferRender: true,
+									language: ko.i18n('datatable.language')
+								}"></faceted-datatable>
+								<!-- /ko -->
+							</div>
+							<!-- ko if: $component.metarchy.children().length > 0 -->
+							<div class="card-footer">
+								<concept-add-box params="{
+									canSelectSource: true,
+									isActive: () => metarchy.children().filter(c => c.isSelected()).length > 0,
+									concepts: () => getSelectedConcepts($component.metarchy.children),
+								}"></concept-add-box>
+							</div>
+							<!-- /ko -->
+						</div>
+				</div>
+			<!-- /ko -->
+		</div>
+	<!-- /ko -->
+</div>

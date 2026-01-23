@@ -1,0 +1,60 @@
+<!-- ko if: !isLoading() -->
+<h3 class="mb-3" data-bind="text: title"></h3>
+
+<div class="mb-3">
+	<div class="card">
+		<div class="card-header h5 mb-0"
+			data-bind="text: ko.i18n('dataSources.personReport.yearOfBirth', 'Year of Birth')">
+		</div>
+		<div class="card-body">
+			<histogram
+				params="data: yearHistogramData, format: chartFormats.yearHistogram, reportName: name, chartName: 'Year of Birth'">
+			</histogram>
+		</div>
+		<div class="card-footer">
+			<div data-bind="css: classes('ds-title'), text: source() && source().sourceName"></div>
+			<span
+				data-bind="text: ko.i18n('dataSources.personReport.yearOfBirthFooter', 'The number of people in this cohort shown with respect to their year of birth.')"></span>
+		</div>
+	</div>
+</div>
+
+<div class="d-flex gap-3 mb-3">
+	<div class="card flex-grow-1 flex-basis-equal">
+		<div class="card-header h5 mb-0" data-bind="text: ko.i18n('dataSources.personReport.gender', 'Gender')"></div>
+		<div class="card-body">
+			<donut params="data: genderData, reportName: name, chartName: 'Gender'"></donut>
+		</div>
+		<div class="card-footer">
+			<div data-bind="css: classes('ds-title'), text: source() && source().sourceName"></div>
+			<span
+				data-bind="text: ko.i18n('dataSources.personReport.genderFooter', 'The number of people in this cohort stratified by gender.')"></span>
+		</div>
+	</div>
+
+	<div class="card flex-grow-1 flex-basis-equal">
+		<div class="card-header h5 mb-0" data-bind="text: ko.i18n('dataSources.personReport.race', 'Race')"></div>
+		<div class="card-body">
+			<donut params="data: raceData, reportName: name, chartName: 'Race'"></donut>
+		</div>
+		<div class="card-footer">
+			<div data-bind="css: classes('ds-title'), text: source() && source().sourceName"></div>
+			<span
+				data-bind="text: ko.i18n('dataSources.personReport.raceFooter', 'The number of people in this cohort stratified by race.')"></span>
+		</div>
+	</div>
+
+
+	<div class="card flex-grow-1 flex-basis-equal">
+		<div class="card-header h5 mb-0" data-bind="text: ko.i18n('dataSources.personReport.ethnicity', 'Ethnicity')"></div>
+		<div class="card-body">
+			<donut params="data: ethnicityData, reportName: name, chartName: 'Ethnicity'"></donut>
+		</div>
+		<div class="card-footer">
+			<div data-bind="css: classes('ds-title'), text: source() && source().sourceName"></div>
+			<span
+				data-bind="text: ko.i18n('dataSources.personReport.ethnicityFooter', 'The number of people in this cohort stratified by ethnicity.')"></span>
+		</div>
+	</div>
+</div>
+<!--/ko-->

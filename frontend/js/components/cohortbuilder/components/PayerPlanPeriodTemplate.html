@@ -1,0 +1,148 @@
+<div class="criteriaSection" data-bind="with: Criteria">
+
+	<criterion-header params="criterionTitle: 'Payer Plan Period',
+						hideClose: $component.hideClose,
+						addActions: $component.addActions,
+						removeCriteria: $component.removeCriteria,
+						criteria: $component.Criteria"></criterion-header>
+
+	<div class="criteriaAttributes">
+		<!-- ko if: DateAdjustment() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionPayerPlanPeriod.conditionPayerPlanText_26', 'with date adjustment:')"></span>
+			<date-adjustment params="DateAdjustment: DateAdjustment"></date-adjustment>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: First() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionPayerPlanPeriod.conditionPayerPlanText_2', 'limited to the patients first payer plan period')"></span>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: AgeAtStart() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionPayerPlanPeriod.conditionPayerPlanText_3', 'with age at period start')"></span>
+			<numeric-range params="Range: AgeAtStart"></numeric-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: AgeAtEnd() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionPayerPlanPeriod.conditionPayerPlanText_4', 'with age at period end')"></span>
+			<numeric-range params="Range: AgeAtEnd"></numeric-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: PeriodLength() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionPayerPlanPeriod.conditionPayerPlanText_5', 'with period duration')"></span>
+			<numeric-range params="Range: PeriodLength"></numeric-range> days.
+		</div>
+		<!-- /ko -->
+		<!-- ko if: Gender() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionPayerPlanPeriod.conditionPayerPlanText_6', 'with a gender of:')"></span>
+			<concept-list params="PickerParams: { DefaultDomain: 'Gender', DefaultQuery: ''}, ConceptList: Gender()">
+			</concept-list>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: UserDefinedPeriod() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionPayerPlanPeriod.conditionPayerPlanText_7', 'using specified period:')"></span>
+			<period-input params="Period: UserDefinedPeriod"></period-input>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: PeriodStartDate() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionPayerPlanPeriod.conditionPayerPlanText_8', 'payer plan period start is:')"></span>
+			<date-range params="Range: PeriodStartDate"></date-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: PeriodEndDate() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionPayerPlanPeriod.conditionPayerPlanText_9', 'payer plan period end is:')"></span>
+			<date-range params="Range: PeriodEndDate"></date-range>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: PayerConcept() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionPayerPlanPeriod.conditionPayerPlanText_10', 'Payer Concept is')"></span>
+			<conceptset-selector params="conceptSetId: PayerConcept(), conceptSets: $component.expression.ConceptSets, defaultText: 
+												ko.i18n('components.conditionPayerPlanPeriod.anyPayer', 'Any Payer')"></conceptset-selector>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: PlanConcept() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionPayerPlanPeriod.conditionPayerPlanText_11', 'Plan Concept is')"></span>
+			<conceptset-selector params="conceptSetId: PlanConcept(), conceptSets: $component.expression.ConceptSets, defaultText: 
+												ko.i18n('components.conditionPayerPlanPeriod.anyPlan', 'Any Plan')"></conceptset-selector>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: SponsorConcept() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionPayerPlanPeriod.conditionPayerPlanText_12', 'Sponsor Concept is')"></span>
+			<conceptset-selector params="conceptSetId: SponsorConcept(), conceptSets: $component.expression.ConceptSets, defaultText: 
+												ko.i18n('components.conditionPayerPlanPeriod.anySponsor', 'Any Sponsor')"></conceptset-selector>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: StopReasonConcept() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionPayerPlanPeriod.conditionPayerPlanText_13', 'Stop Reason Concept is')"></span>
+			<conceptset-selector params="conceptSetId: StopReasonConcept(), conceptSets: $component.expression.ConceptSets, defaultText: 
+												ko.i18n('components.conditionPayerPlanPeriod.anyStopReason', 'Any Stop Reason')"></conceptset-selector>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: PayerSourceConcept() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionPayerPlanPeriod.conditionPayerPlanText_14', 'Payer Source Concept is')"></span>
+			<conceptset-selector params="conceptSetId: PayerSourceConcept(), conceptSets: $component.expression.ConceptSets, defaultText: 
+												ko.i18n('components.conditionPayerPlanPeriod.anyPayerSource', 'Any Payer Source')"></conceptset-selector>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: PlanSourceConcept() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionPayerPlanPeriod.conditionPayerPlanText_15', 'Plan Source Concept is')"></span>
+			<conceptset-selector params="conceptSetId: PlanSourceConcept(), conceptSets: $component.expression.ConceptSets, defaultText: 
+												ko.i18n('components.conditionPayerPlanPeriod.anyPlanSource', 'Any Plan Source')"></conceptset-selector>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: SponsorSourceConcept() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionPayerPlanPeriod.conditionPayerPlanText_16', 'Sponsor Source Concept is')"></span>
+			<conceptset-selector
+				params="conceptSetId: SponsorSourceConcept(), conceptSets: $component.expression.ConceptSets, defaultText: 
+												ko.i18n('components.conditionPayerPlanPeriod.anySponsorSource', 'Any Sponsor Source')"></conceptset-selector>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: StopReasonSourceConcept() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<span class="me-1"
+				data-bind="text: ko.i18n('components.conditionPayerPlanPeriod.conditionPayerPlanText_17', 'Stop Reason Source Concept is')"></span>
+			<conceptset-selector
+				params="conceptSetId: StopReasonSourceConcept(), conceptSets: $component.expression.ConceptSets, defaultText: 
+												ko.i18n('components.conditionPayerPlanPeriod.anyStopReasonSource', 'Any Stop Reason Source')"></conceptset-selector>
+		</div>
+		<!-- /ko -->
+		<!-- ko if: CorrelatedCriteria() != null -->
+		<div class="d-flex align-items-center mb-3">
+			<criteria-group class="w-100"
+				params="{expression: $component.expression, group: CorrelatedCriteria, indexMessage: $component.indexMessage}"></criteria-group>
+		</div>
+		<!-- /ko -->
+	
+	
+	</div>
+</div>

@@ -1,0 +1,23 @@
+<div>
+    <table width="100%" class="table table-sm table-hover table-borderless" data-bind="dataTable:{
+            data: $component.permissionItems,
+            options: {
+                        layout: layout,
+                        pageLength: tableOptions.pageLength,
+                        lengthMenu: tableOptions.lengthMenu,
+                        orderClasses: false,
+                        deferRender: true,
+                        autoWidth: false,
+                        ordering: true,
+                        columnDefs: [
+                                { targets: 0, width: '80px', orderable: false },
+                        ],
+                        columns: [
+                                { title: ko.i18n('columns.included', 'Included'), class:'text-center', render: function() { return renderCheckbox('isRolePermission', $component.canEditRole()); } },
+                                { title: ko.i18n('columns.permission', 'Permission'), data: 'permission' },
+                                { title: ko.i18n('columns.description', 'Description'), data: 'description' }
+                        ],
+                        language: ko.i18n('datatable.language')
+                }
+        }"></table>
+</div>

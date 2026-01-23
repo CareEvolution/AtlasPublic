@@ -1,0 +1,111 @@
+<!-- ko if: !isLoading() -->
+<h3 class="mb-3" data-bind="text: title"></h3>
+
+<div class="d-flex gap-3 mb-3">
+	<div class="card flex-grow-1 flex-basis-two-thirds">
+		<div class="card-header h5 mb-0"
+			data-bind="text: ko.i18n('dataSources.observationPeriodReport.ageAtFirstObservation', 'Age at First Observation')">
+		</div>
+		<div class="card-body">
+			<histogram class="evidenceVisualization"
+				params="data: ageAtFirstObservationData, format: chartFormats.ageAtFirstObservation, reportName: name, chartName: 'Age at First Observation'">
+			</histogram>
+		</div>
+	</div>
+
+	<div class="card flex-grow-1 flex-basis-one-third">
+		<div class="card-header h5 mb-0"
+			data-bind="text: ko.i18n('dataSources.observationPeriodReport.ageByGender', 'Age by Gender')"></div>
+		<div class="card-body">
+			<boxplot class="evidenceVisualization"
+				params="data: ageByGenderData, format: chartFormats.ageByGender, reportName: name, chartName: 'Age by Gender'">
+			</boxplot>
+		</div>
+	</div>
+</div>
+
+<div class="d-flex gap-3 mb-3">
+	<div class="card flex-grow-1 flex-basis-two-thirds">
+		<div class="card-header h5 mb-0"
+			data-bind="text: ko.i18n('dataSources.observationPeriodReport.observationLength', 'Observation Length')">
+		</div>
+		<div class="card-body">
+			<histogram class="evidenceVisualization"
+				params="data: observationLengthData, format: chartFormats.observationLength, reportName: name, chartName: 'Observation Length'">
+			</histogram>
+		</div>
+	</div>
+
+	<div class="card flex-grow-1 flex-basis-one-third">
+		<div class="card-header h5 mb-0"
+			data-bind="text: ko.i18n('dataSources.observationPeriodReport.durationByGender', 'Duration By Gender')">
+		</div>
+		<div class="card-body">
+			<boxplot class="evidenceVisualization"
+				params="data: durationByGenderData, format: chartFormats.durationByGender, reportName: name, chartName: 'Duration By Gender'">
+			</boxplot>
+		</div>
+	</div>
+</div>
+
+<div class="d-flex gap-3 mb-3">
+	<div class="card flex-grow-1 flex-basis-equal">
+		<div class="card-header h5 mb-0"
+			data-bind="text: ko.i18n('dataSources.observationPeriodReport.cumulativeObservation', 'Cumulative Observation')">
+		</div>
+		<div class="card-body">
+			<atlasline class="evidenceVisualization"
+				params="data: cumulativeObservationData, format: chartFormats.cumulativeObservation, reportName: name, chartName: 'Cumulative Observation'">
+			</atlasline>
+		</div>
+	</div>
+
+	<div class="card flex-grow-1 flex-basis-equal">
+		<div class="card-header h5 mb-0"
+			data-bind="text: ko.i18n('dataSources.observationPeriodReport.durationByAgeDecile', 'Duration By Age Decile')">
+		</div>
+		<div class="card-body">
+			<boxplot class="evidenceVisualization"
+				params="data: durationByAgeDecileData, format: chartFormats.durationByAgeDecile, reportName: name, chartName: 'Duration By Age Decile'">
+			</boxplot>
+		</div>
+	</div>
+</div>
+
+<div class="d-flex gap-3 mb-3">
+	<div class="card flex-grow-1 flex-basis-two-thirds">
+		<div class="card-header h5 mb-0"
+			data-bind="text: ko.i18n('dataSources.observationPeriodReport.personsWithContinuousObservationByYear', 'Persons With Continuous Observation By Year')">
+		</div>
+		<div class="card-body">
+			<histogram class="evidenceVisualization"
+				params="data: personsWithContinuousObservationsByYearData, format: chartFormats.personsWithContinuousObservationsByYear, reportName: name, chartName: 'Persons With Continuous Observation By Year'">
+			</histogram>
+		</div>
+	</div>
+
+	<div class="card flex-grow-1 flex-basis-one-third">
+		<div class="card-header h5 mb-0"
+			data-bind="text: ko.i18n('dataSources.observationPeriodReport.observationPeriodsPerPerson', 'Observation Periods per Person')">
+		</div>
+		<div class="card-body">
+			<donut
+				params="data: observationPeriodsPerPersonData, reportName: name, chartName: 'Observation Periods per Person'">
+			</donut>
+		</div>
+	</div>
+</div>
+
+<div class="mb-3">
+	<div class="card">
+		<div class="card-header h5 mb-0"
+			data-bind="text: ko.i18n('dataSources.observationPeriodReport.personsWithContinuousObservationByMonth', 'Persons With Continuous Observation By Month')">
+		</div>
+		<div class="card-body">
+			<atlasline class="evidenceVisualization"
+				params="data: personsWithContinuousObservationByMonthData, format: chartFormats.personsWithContinuousObservationByMonth, reportName: name, chartName: 'Persons With Continuous Observation By Month'">
+			</atlasline>
+		</div>
+	</div>
+</div>
+<!--/ko-->

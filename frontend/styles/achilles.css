@@ -1,0 +1,31 @@
+/* Report Styles */
+
+.reportTitle {
+	font-size: 14px;
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+#wrapper {
+	padding: 5px;
+	width: 98%;
+}
+.clear {
+	clear: both;
+}
+
+.report table {
+	width: 100%;
+}
+
+#condition_table tr {
+	cursor: pointer;
+}
+th.data-sources {
+	white-space: nowrap;
+}
+.numeric {
+	text-align: right;
+}
+#report .evidenceVisualization circle {
+    fill: #333;
+}

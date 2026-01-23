@@ -1,0 +1,81 @@
+<div class="wrapperHeader">
+	<!-- ko if: loading -->
+		<div data-bind="css: classes('loading')">
+			<i class="fa fa-circle-notch fa-spin"></i>
+		</div>
+	<!-- /ko -->
+	<!-- ko ifnot: loading -->
+	<!-- for notifications, job completion, etc. -->
+	<div class="d-flex justify-content-end align-items-center h-100">
+		<span class="me-4"><a class="text-decoration-none" target="_new" href="https://commondatamodel.docs.careevolution.com/atlas/"><i class="fa fa-book me-1" aria-hidden="true"></i>Atlas User Guide</a></span>
+
+		<!-- ko if: availableLocales().length > 1 -->
+		<select class="me-4" data-bind="css: classes('locale'), foreach:availableLocales, value: locale">
+			<option data-bind="value: $data.code, text:$data.name"></option>
+		</select>
+		<!-- /ko -->
+
+		<!-- ko if: isLoggedIn -->
+		<div class="clickable" data-bind="click: function () { $component.jobModalOpened(true) }, title: !!jobNotificationsPending() ? 'Jobs pending - click to see jobs' : 'No jobs pending - click to see jobs'"><i data-bind="css: {'job-pending': jobNotificationsPending}" class="fa fa-bell me-4"></i></div>
+		<!-- /ko -->
+
+		<div class="me-4" data-bind="if: appConfig.userAuthenticationEnabled === true">
+			<div data-bind="title: ko.i18n('components.userBar.signin', 'Sign In'), if: !isLoggedIn() || tokenExpired()">
+				<span class="pipe me-4">|</span><span class="clickable" data-bind="click: function () { $component.signInOpened(true) }"><i class="fa fa-sign-in me-2"></i><span data-bind="text: ko.i18n('components.userBar.signin', 'Sign In')"></span></span>
+			</div>
+			<div data-bind="title: ko.i18n('components.userBar.signout', 'Sign Out'), if: isLoggedIn() && !tokenExpired()">
+				<span class="pipe me-4">|</span><span class="clickable" data-bind="click: function () { $component.signInOpened(true) }"><strong class="me-2" data-bind="text: fullName"></strong><i class="fa fa-user-circle fa-lg" aria-hidden="true"></i></span>
+			</div>
+		</div>
+	</div>
+	<!-- /ko -->
+</div>
+
+<atlas-modal params="{
+		if:appConfig.userAuthenticationEnabled === true,
+		showModal: signInOpened,
+		modifiers: ['sm'],
+		iconClass: 'fa fa-sign-in',
+		title: ko.i18n('components.userBar.signin', 'Sign In'),
+}">
+	<welcome></welcome>
+</atlas-modal>
+
+<atlas-modal params="{
+		showModal: jobModalOpened,
+		title: ko.i18nformat('notifications.title', 'Notifications (last <%=length%>)', {length: $component.jobsCount()}),
+		templateWrapperClass: {},
+		data: {
+			tabs: $component.tabs,
+			userJobParams: $component.userJobParams,
+			allJobParams: $component.allJobParams,
+			selectedTabKey: $component.selectedTabKey,
+			selectTab: $component.selectTab,
+			jobModalOpened: $component.jobModalOpened,
+			toggleCompletedFilter: $component.toggleCompletedFilter,
+			hideCompleted: $component.hideCompleted(),
+			isRefreshing: $component.isRefreshing(),
+			classes: $component.classes
+		}
+}">
+	<div data-bind="css: classes('jobs-modal-content')">
+		<tabs params="
+			selectedTabKey: selectedTabKey,
+			selectTab: selectTab,
+			tabs: tabs,
+			">
+		</tabs>
+
+		<div data-bind="css: classes({ element: 'filter-button', extra: ['btn-group', 'pull-right'] })">
+			<button type="button" class="btn btn-sm btn-primary" data-bind="click: toggleCompletedFilter">
+				<!-- ko if: hideCompleted -->
+				<span data-bind="text: ko.i18n('notifications.showCompletedJobsButton', 'Show completed jobs')"></span>
+				<!-- /ko -->
+				<!-- ko ifnot: hideCompleted -->
+				<span data-bind="text: ko.i18n('notifications.hideCompletedJobsButton', 'Hide completed jobs')"></span>
+				<!-- /ko -->
+				<i data-bind="visible: isRefreshing, css: classes({ element: 'action-ico', extra: ['fa fa-spinner fa-spin']})"></i>
+			</button>
+		</div>
+	</div>
+</atlas-modal>

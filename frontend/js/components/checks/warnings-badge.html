@@ -1,0 +1,8 @@
+<!-- ko if: isDiagnosticsRunning()-->
+<span><i class="fa fa-circle-o-notch fa-spin"></i></span>
+<!-- /ko -->
+ <!-- ko if: !isDiagnosticsRunning() && warningsTotal() > 0 -->
+<div data-bind="css: classes()">
+	<span data-bind="attr: { class: warningClass }, text: warningsTotal"></span>
+</div>
+<!-- /ko -->

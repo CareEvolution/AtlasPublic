@@ -1,0 +1,236 @@
+<loading data-bind="visible: $component.isLoading()"></loading>
+<access-denied params="isAuthenticated: isAuthenticated, isPermitted: hasAccess"></access-denied>
+
+<!-- ko if: hasAccess -->
+<div data-bind="if: currentCohortDefinition() && $root.router.currentView() == 'cohort-definition-manager' && !$component.isLoading()" class="flexed">
+	<div class="atlas-closeable-heading">
+		<editable-heading params="name: currentCohortDefinition().name,
+					canEdit: canEdit(),
+					fieldId: 'txtCohortName',
+					meta: cohortDefinitionCaption(),
+					authorship: getAuthorship(),
+					description: canEdit() ? '' : ko.i18n('common.readOnly', '(Read only)'),
+					icon: 'users',
+					tags: currentCohortDefinition().tags">
+		</editable-heading>
+		<button class="btn btn-secondary"
+			data-bind="title: ko.i18n('cohortDefinitions.cohortDefinitionManager.closeCohortTitle', 'Close cohort definition'), click: close, css: { disabled: isProcessing() }"><i
+				class="fa fa-times"></i></button>
+	</div>
+	<div class="asset-heading">
+		<name-validation params="
+			hasEmptyName: !isNameFilled(),
+			hasInvalidCharacters: isNameFilled() && !isNameCharactersValid(),
+			hasInvalidLength: isNameFilled() && !isNameLengthValid(),
+			hasDefaultName: isDefaultName(),
+			analysisName: ko.i18n('components.nameValidation.cohortDefinition', 'cohort definition'),
+		"></name-validation>
+	</div>
+
+	<div data-bind="currentCohortDefinition() != null">
+		<div class="asset-heading">
+			<div class="atlas-button-group">
+				<button class="btn"
+					data-bind="
+						title: !previewVersion() ? ko.i18n('common.save', 'Save') : ko.i18n('common.saveAsCurrentVersion', 'Save as current version'), 
+						click: save, 
+						enable: canSave() && !isProcessing(),
+						css: { disabled: !canSave() || isProcessing(), 'btn-light': !canSave() || isProcessing(), 'btn-success': canSave() && !isProcessing() }">
+					<i class="fa fa-save"></i>
+					<span data-bind="
+						text: !previewVersion() ? ko.i18n('common.save', 'Save') : ko.i18n('common.saveAsCurrentVersion', 'Save as current version')"></span>
+				</button>
+
+				<button class="btn btn-light"
+					data-bind="visible: previewVersion(), title: ko.i18n('common.backToCurrent', 'Back to current version'), click: backToCurrentVersion">
+					<i class="fa fa-undo"></i>
+					<span data-bind="text: ko.i18n('common.backToCurrent', 'Back to current version')">Undo</span>
+				</button>
+
+				<!-- ko if: currentCohortDefinition().id() != null && currentCohortDefinition().id() != 0 -->
+				<button class="btn btn-light"
+					data-bind="visible: !previewVersion(), title: ko.i18n('cohortDefinitions.cohortDefinitionManager.createCopyCohortTitle', 'Create a copy of this cohort definition'), click: copy, enable: canCopy() && !isProcessing()">
+					<i class="fa fa-copy"></i>
+					<span data-bind="text: ko.i18n('common.copy', 'Copy')"></span>
+				</button>
+
+				<button class="btn btn-light"
+					data-bind="title: ko.i18n('common.tags', 'Tags'), visible: canEdit() && !previewVersion(), click: () => isTagsModalShown(!isTagsModalShown()), css: { disabled: isProcessing() }">
+					<i class="fa fa-tags"></i>
+					 <span data-bind="text: ko.i18n('common.tags', 'Tags')"></span>
+				</button>
+
+				<button class="btn btn-light"
+					data-bind="visible: !previewVersion(), title: ko.i18n('cohortDefinitions.cohortDefinitionManager.getLinkCohortTitle', 'Get a link to this cohort definition'), enable: !dirtyFlag().isDirty() && !isProcessing(), click: function () { $component.cohortLinkModalOpened(true) }">
+					<i class="fa fa-link"></i>
+					<span>Link</span>
+				</button>
+				
+				<!-- ko if: enablePermissionManagement -->
+				<button class="btn btn-light"
+					data-bind="title: ko.i18n('common.configureAccess', 'Configure access'), visible: isOwner() && !previewVersion(), click: () => isAccessModalShown(!isAccessModalShown())">
+					<i class="fa fa-lock"></i>
+					<span data-bind="text: ko.i18n('common.configureAccess', 'Configure access')"></span>
+				</button>
+				<!-- /ko -->
+				
+				<!-- ko if: !isRunning() -->
+				<button class="btn btn-light"
+					data-bind="visible: !previewVersion(), title: ko.i18n('common.delete', 'Delete'), click: $component.delete, enable: canDelete() && !isProcessing()">
+					<i class="fa fa-trash"></i>
+					<span data-bind="text:ko.i18n('common.delete', 'Delete')"></span>
+				</button>
+				<!-- /ko -->
+				<!-- /ko -->
+			</div>
+		</div>
+
+		<ul class="nav nav-tabs">
+			<li role="presentation"
+				class="nav-tab"
+				data-bind="click: function() { $component.selectTab('definition'); }">
+				<a class="nav-link active" data-bind="css: { active: $component.tabMode() == 'definition' }, text: ko.i18n('cohortDefinitions.cohortDefinitionManager.tabs.definition', 'Definition')"></a>
+			</li>
+
+			<li role="presentation"
+				class="nav-tab"
+				data-bind="click: function() { $component.selectTab('conceptsets'); }">
+				<a class="nav-link" data-bind="css: { active: $component.tabMode() == 'conceptsets' }, text: ko.i18n('cohortDefinitions.cohortDefinitionManager.tabs.conceptSets', 'Concept Sets')"></a>
+			</li>
+
+			<li role="presentation"
+				class="nav-tab"
+				data-bind="visible: !previewVersion(), click: function() { $component.selectTab('generation'); }">
+				<a class="nav-link" data-bind="css: { active: $component.tabMode() == 'generation' }, text: ko.i18n('cohortDefinitions.cohortDefinitionManager.tabs.generation', 'Generation')"></a>
+			</li>
+
+			<li role="presentation"
+				class="nav-tab"
+				data-bind="visible: !previewVersion(), click: function() { $component.selectTab('samples'); }">
+				<a class="nav-link" data-bind="css: { active: $component.tabMode() == 'samples' }, text: ko.i18n('cohortDefinitions.cohortDefinitionManager.tabs.samples', 'Samples')"></a>
+			</li>
+
+			<li role="presentation"
+				class="nav-tab"
+				data-bind="visible: !previewVersion(), click: function() { $component.selectTab('reporting'); }">
+				<a class="nav-link" data-bind="css: { active: $component.tabMode() == 'reporting' }, text: ko.i18n('cohortDefinitions.cohortDefinitionManager.tabs.reporting', 'Reporting')"></a>
+			</li>
+			<li role="presentation"
+				class="nav-tab"
+				data-bind="visible: !previewVersion(), click: () => { $component.selectTab('export'); }">
+				<a class="nav-link" data-bind="css: { active: $component.tabMode() == 'export' }, text: ko.i18n('cohortDefinitions.cohortDefinitionManager.tabs.export', 'Export')"></a>
+			</li>
+			<li role="presentation"
+				class="nav-tab"
+				data-bind="click: () => { $component.selectTab('versions'); }">
+				<a class="nav-link" data-bind="css: { active: $component.tabMode() == 'versions' }, text: ko.i18n('cohortDefinitions.cohortDefinitionManager.tabs.versions', 'Versions')"></a>
+			</li>
+			<li role="presentation" 
+				class="nav-tab"
+				data-bind="click: function(){ $component.selectTab('warnings'); } ">
+				<a class="nav-link" data-bind="css: { active: $component.tabMode() === 'warnings' }">
+					<span data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.tabs.messages', 'Messages')"></span>
+					<!-- ko component: { name: 'warnings-badge', params: warningParams() } --> <!-- /ko -->
+				</a>
+			</li>
+		</ul>
+		<div class="tab-content">
+			<div role="tabpanel" data-bind="css: { active: $component.tabMode() == 'definition' }" class="tab-pane">
+				<!-- ko if: $component.tabMode() == 'definition' -->
+				<atlas.cohort-editor params="canEditCurrentCohortDefinition: canEdit, loadConceptSet: loadConceptSet">
+				</atlas.cohort-editor>
+				<!-- /ko -->
+			</div>
+			<div role="tabpanel" data-bind="css: { active: $component.tabMode() == 'conceptsets' }" class="tab-pane">
+				<!-- ko if: $component.tabMode() == 'conceptsets' -->
+				<conceptset-list params="{
+					conceptSets: conceptSets(),
+					conceptSetStore: conceptSetStore,
+					canEdit: canEdit,
+					exportConceptSets: exportConceptSetsCSV
+					}">
+				</conceptset-list>
+				<!-- /ko -->
+			</div>
+			<div role="tabpanel" data-bind="css: { active: $component.tabMode() == 'export' }" class="tab-pane">
+				<!-- ko if: $component.tabMode() == 'export'-->
+				<cohort-definition-exporter params="{cohortDefinition: currentCohortDefinition, hasAccess: hasAccess}"></cohort-definition-exporter>
+				<!-- /ko -->
+			</div>
+			<div role="tabpanel" data-bind="css: { active: $component.tabMode() == 'generation' }" class="tab-pane">
+				<!-- ko if: $component.tabMode() == 'generation' -->
+				<cohort-generator params="{ cohortDefinition: currentCohortDefinition, 
+					isNew: isNew,
+					criticalCount: criticalCount,
+				}"></cohort-generator>
+				<!-- /ko -->
+			</div>
+			<div role="tabpanel" data-bind="css: { active: $component.tabMode() == 'reporting' }" class="tab-pane">
+				<!-- ko if: $component.tabMode() == 'reporting' -->
+				<cohort-heracles-reports params="{ cohortDefinition: currentCohortDefinition, 
+					cdmSources: cdmSources,
+					selectedSourceKey: selectedSourceKey,
+				}"></cohort-heracles-reports>
+				<!-- /ko -->
+			</div>
+			<div role="tabpanel" data-bind="css: { active: $component.tabMode() == 'versions' }" class="tab-pane">
+				<!-- ko if: $component.tabMode() == 'versions' -->
+				<div data-bind="component: { name: 'versions', params: $component.versionsParams }"></div>
+				<!-- /ko -->
+			</div>
+			<div role="tabpanel" data-bind="css: { active: $component.tabMode() === 'warnings' }" class="tab-pane">
+				<!-- ko if: $component.tabMode() === 'warnings' -->
+				<div data-bind="component: { name: 'warnings', params: $component.warningParams }"></div>
+				<!-- /ko -->
+			</div>
+			<div role="tabpanel" data-bind="css: { active: $component.tabMode() == 'samples' }" class="tab-pane">
+				<!-- ko if: $component.tabMode() == 'samples' -->
+				 <cohort-samples params="{cohortDefinition: currentCohortDefinition, 
+					cdmSources: cdmSources,
+					selectedSourceKey: selectedSourceKey,
+					selectedSampleId: selectedSampleId,
+				 }"></cohort-samples>
+				<!-- /ko -->
+			</div>
+		</div>
+	</div>
+</div>
+
+<atlas-modal params="{
+		showModal: cohortLinkModalOpened,
+		iconClass: 'fa fa-group',
+		title: ko.i18n('cohortDefinitions.cohort.modals.linkToCohortDefinition.title', 'Link to Cohort Definition'),
+		templateWrapperClass: {},
+		data: {
+			cohortDefinitionLink: $component.cohortDefinitionLink,
+		}
+	}">
+	<div data-bind="css: $parent.classes({ element: 'modal-body', extra: 'modal-body' })">
+		<input readonly data-bind="value: cohortDefinitionLink" type="text" class="form-control text-cursor">
+	</div>
+	<div
+		data-bind="text: ko.i18n('cohortDefinitions.cohort.modals.linkToCohortDefinition.text_1', 'This link can be used to access this cohort definition directly from the WebAPI from other tools like R as well as for importing across ATLAS instances.'), css: $parent.classes({ element: 'modal-footer', extra: 'modal-footer' })">
+	</div>
+</atlas-modal>
+	
+<configure-access-modal params="
+	isModalShown: $component.isAccessModalShown,
+	isOwnerFn: $component.isOwnerFn,
+	loadAccessListFn: $component.loadAccessList,
+	grantAccessFn: $component.grantAccess,
+	revokeAccessFn: $component.revokeAccess,
+	loadRoleSuggestionsFn: $component.loadAccessRoleSuggestions
+"></configure-access-modal>
+
+<tags-modal params="
+	isModalShown: $component.isTagsModalShown,
+	tagsList: $component.tagsList,
+	assignTagFn: $component.assignTag,
+	unassignTagFn: $component.unassignTag,
+	createNewTagFn: $component.createNewTag,
+	loadAvailableTagsFn: $component.loadAvailableTags,
+	checkAssignPermissionFn: $component.checkAssignPermission,
+	checkUnassignPermissionFn: $component.checkUnassignPermission
+"></tags-modal>
+
+<!-- /ko -->

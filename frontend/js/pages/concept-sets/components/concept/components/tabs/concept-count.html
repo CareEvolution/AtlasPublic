@@ -1,0 +1,34 @@
+<div class="paddedWrapper">
+	<access-denied params="isAuthenticated: isAuthenticated, isPermitted: hasInfoAccess"></access-denied>
+
+	<!-- ko if: hasInfoAccess() -->
+	<loading data-bind="css: classes('loading-panel'), visible: isLoading()" params="status: ko.i18n('cs.manager.concept.tabs.recordCounts.loading', 'Loading Record Counts...')"></loading>
+
+		<div data-bind="visible:!isLoading()">
+
+			<div class="card card-primary" data-bind="if: hasInfoAccess()">
+				<div class="card-header" data-bind="text: ko.i18n('cs.manager.concept.tabs.recordCounts.recordCountsAcrossSources', 'Record Counts across Sources')"></div>
+				<div class="card-body">
+					<table width="100%" class="conceptTable table table-sm table-hover table-borderless" data-bind="dataTable:{
+								data: sourceCounts(),
+								options: {
+									layout: layout,
+									language: ko.i18n('datatable.language'),
+									pageLength: tableOptions.pageLength,
+									lengthMenu: tableOptions.lengthMenu,
+									orderClasses: false,
+									ordering: true,
+									order: [[ 2, 'desc' ]],
+									columns: [
+											{ title: ko.i18n('columns.sourceName', 'Source Name'), data: 'sourceName', width: '50%'},
+											{ title: ko.i18n('columns.rc', 'RC'), data: 'recordCount'},
+											{ title: ko.i18n('columns.drc', 'DRC'), data: 'descendantRecordCount'}
+									]
+							}
+						}">
+					</table>
+				</div>
+			</div>
+		</div>
+	<!-- /ko -->
+</div>

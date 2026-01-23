@@ -1,0 +1,79 @@
+<!-- ko if:loading -->
+<div class="m-3">
+	<i class="fa fa-circle-o-notch fa-spin"></i> <span
+		data-bind="text: ko.i18n('common.loadingWithDots', 'Loading...')"></span>
+</div>
+<!-- /ko -->
+<!-- ko ifnot:loading -->
+<!--<heading-title params="name: roleCaption(), icon: 'cogs'"></heading-title>-->
+<div class="atlas-closeable-heading">
+	<editable-heading params="
+		name: $component.roleName,
+		canEdit: canEditRole(),
+		fieldId: 'txtRoleName',
+		meta: roleCaption(),
+		icon: 'cogs'"></editable-heading>
+	<button type="button" class="btn btn-secondary"
+		data-bind="click:$component.close, title: ko.i18n('common.close', 'Close')"><i class="fa fa-times"></i>
+</div>
+<div class="asset-heading">
+	<div data-bind="visible: !$component.roleName()" class="empty-name-error">
+		<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+		<label data-bind="text: ko.i18n('configuration.roles.nameIsEmpty', 'Role name is empty.')"></label>
+	</div>
+</div>
+<!-- /ko -->
+<div data-bind="ifnot:loading">
+	<div class="asset-heading">
+		<div class="atlas-button-group">
+			<button type="button" class="btn" data-bind="
+							click:$component.save, 
+							css: { disabled: !dirtyFlag().isDirty() || !canSave(), 'btn-light': !dirtyFlag().isDirty() || !canSave(), 'btn-success': dirtyFlag().isDirty() && canSave() }, 
+							title: ko.i18n('common.save', 'Save')">
+				<i class="fa fa-save"></i>
+				<span data-bind="text: ko.i18n('common.save', 'Save')"></span>
+			</button>
+			<button type="button" class="btn btn-light"
+				data-bind="click:$component.copy, css: { disabled: !canCreate()}, title: ko.i18n('common.createACopy', 'Create a copy')">
+				<i class="fa fa-copy"></i>
+				<span data-bind="text: ko.i18n('common.copy', 'Copy')"></span>
+			</button>
+			</button>
+			<button type="button" class="btn btn-light"
+				data-bind="click: $component.export, title: ko.i18n('common.export', 'Export')">
+				<i class="fa fa-download"></i>
+				<span data-bind="text: ko.i18n('common.export', 'Export')"></span>
+			</button>
+			<button type="button" class="btn btn-light"
+				data-bind="click: $component.delete, css: { disabled: !canDelete()}, title: ko.i18n('common.delete', 'Delete')">
+				<i class="fa fa-trash"></i>
+				<span data-bind="text: ko.i18n('common.delete', 'Delete')"></span>
+			</button>
+		</div>
+	</div>
+	
+	<tabs data-bind="visible: !$component.loading()" params="
+				selectedTabKey: $component.selectedTabKey,
+				selectTab: $component.selectTab,
+				tabs: [
+					{
+						title: ko.i18n('configuration.roles.tabs.users', 'Users'),
+						key: 'users',
+						componentName: 'users',
+						componentParams: $component.componentParams,
+					},
+					{
+						title: ko.i18n('configuration.roles.tabs.permissions', 'Permissions'),
+						key: 'permissions',
+						componentName: 'permissions',
+						componentParams: $component.componentParams,
+					},
+					{
+						title: ko.i18n('configuration.roles.tabs.utilities', 'Utilities'),
+						key: 'utilities',
+						componentName: 'utilities',
+						componentParams: $component.componentParams,
+					}
+				]">
+	</tabs>
+</div>

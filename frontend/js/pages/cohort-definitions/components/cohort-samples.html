@@ -1,0 +1,196 @@
+<div class="d-flex flex-column gap-3">
+	<div class="d-flex align-items-end gap-3">
+		<div class="row g-3">
+			<div style="min-width: 350px" class="col-md-6">
+				<label class="form-label" for="selectSource">Data Source</label>
+				<select class="form-select" id="selectSource"
+					data-bind="
+						css :{ invalid: !$component.sampleSourceKey() },
+						options: $component.cdmSources(),
+						optionsValue:'sourceKey', optionsText:'sourceName',
+						value:$component.sampleSourceKey,
+						optionsCaption: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.selectASource', 'Select a Source')">
+				</select>
+			</div>
+		</div>
+		<div data-bind="visible: !$component.isLoadingSampleData() && $component.sampleSourceKey()">
+			<button type="button" class="btn btn-primary"
+				data-bind="click: addNewSample, text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.addNewSample', 'Add new sample')"></button>
+		</div>
+	</div>
+
+	<!--  samples list table -->
+	<!-- ko if: $component.sampleSourceKey() && $component.isCohortGenerated() && !$component.isLoadingSampleData()  -->
+	<faceted-datatable params="{
+				reference: sampleList,
+				columns: sampleListCols,
+				order: [[0,'asc']],
+				pageLength: tableOptions.pageLength,
+				lengthMenu: tableOptions.lengthMenu,
+				rowClick: $component.onSampleListRowClick,
+				language: ko.i18n('datatable.language')
+			}"></faceted-datatable>
+	<!-- /ko -->
+
+	<!-- A sample data table -->
+	<div
+		data-bind="visible: $component.sampleSourceKey() && $component.selectedSampleId() && !$component.sampleDataLoading()">
+		<faceted-datatable params="{
+			reference: sampleData,
+			columns: sampleCols,
+			order: [[0,'asc']],
+			pageLength: 15,
+			rowClick: $component.onSampleDataClick,
+			language: ko.i18n('datatable.language')
+		}"></faceted-datatable>
+	</div>
+
+	<loading data-bind="visible: $component.sampleDataLoading() || $component.isLoadingSampleData()"></loading>
+
+	<!-- Cohort not generated -->
+	<!-- ko if: $component.sampleSourceKey() && !$component.isCohortGenerated() -->
+	<div class="alert alert-danger">
+		<span
+			data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.cohortDefinitionManagerText_2', 'A cohort has not been generated for the selected data source. Return to the generation tab to generate a cohort before accessing reports.')"></span>
+	</div>
+	<!-- /ko -->
+</div>
+
+
+<atlas-modal params="{
+	showModal: showSampleCreatingModal,
+	title: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.title', 'Create new sample'),
+	data: {
+		sampleName: sampleName,
+		sampleNameError: sampleNameError,
+		patientCount: patientCount,
+		patientCountError: patientCountError,
+		sampleAgeType: sampleAgeType,
+		isAgeRange: isAgeRange,
+		isAgeRangeError: isAgeRangeError,
+		firstAge: firstAge,
+		firstAgeError: firstAgeError,
+		secondAge: secondAge,
+		isMaleSample: isMaleSample,
+		isFeMaleSample: isFeMaleSample,
+		isOtherGenderSample: isOtherGenderSample,
+		createNewSample: $component.createNewSample,
+		newSampleCreatingLoader: newSampleCreatingLoader,
+		isSampleFormValid: isSampleFormValid
+	}
+}">
+	<form data-bind="submit: createNewSample" class="sampleCreatingForm" novalidate>
+		<div class="mb-3">
+			<div class="form-text"
+				data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.mandatoryFields', '* Mandatory fields')">
+			</div>
+		</div>
+		<div class="mb-3"
+			data-bind="css: {'has-error': sampleNameError()==true, 'has-success': sampleNameError()==false}">
+			<label for="sampleCreatingName" class="form-label"
+				data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.sampleName', '* Sample name')"></label>
+			<input required
+				data-bind="textInput: sampleName, placeholder: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.sampleNamePlaceholder', 'Enter sample name')"
+				type="text" id="sampleCreatingName" class="form-control">
+			<small class="form-text"
+				data-bind="visible: sampleNameError(), text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.sampleNameEmpty', 'Sample name cannot be empty')"></small>
+		</div>
+		<div class="mb-3" data-bind="css: {'has-error': patientCountError(), 'has-success': !patientCountError()}">
+			<label class="form-label"
+				data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.numberOfPatients', '* Number of patients')"></label>
+			<input step="1"
+				data-bind="textInput: patientCount.numeric(), placeholder: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.numberOfPatientsPlaceholder', 'Enter a number')"
+				type="number" class="form-control">
+			<small class="form-text"
+				data-bind="visible: patientCountError(), text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.numberOfPatientsEmpty', 'Number of patients must be a positive integer')"></small>
+		</div>
+
+		<div class="mb-3 ageRange">
+			<label class="form-label"
+				data-bind="value: sampleAgeType, css: {myCustomTextError: isAgeRangeError() || firstAgeError(), myCustomTextSuccess: !isAgeRangeError()}, text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.selectAgeCriteria', 'Select age criteria')"
+				for="sampleCreatingAge">
+			</label>
+			<div class="row">
+				<div class="col-sm-7" style="padding-left: 0">
+					<select
+						data-bind="value: sampleAgeType, css: {myCustomInputError: isAgeRangeError() || firstAgeError(), myCustomInputSuccess: !isAgeRangeError()}"
+						id="sampleCreatingAge" class="form-control">
+						<option value="lessThan"
+							data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.lessThan', 'Less than')">
+						</option>
+						<option value="lessThanOrEqual"
+							data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.lessOrEqualTo', 'Less or equal to')">
+						</option>
+						<option value="equalTo"
+							data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.equalTo', 'Equal to')">
+						</option>
+						<option value="greaterThan"
+							data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.greaterThan', 'Greater than')">
+						</option>
+						<option value="greaterThanOrEqual"
+							data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.greaterOrEqualTo', 'Greater or equal to')">
+						</option>
+						<option value="between"
+							data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.between', 'Between')">
+						</option>
+						<option value="notBetween"
+							data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.notBetween', 'Not between')">
+						</option>
+					</select>
+				</div>
+				<div data-bind="css: {'col-sm-2':isAgeRange(), 'col-sm-5':!isAgeRange()}">
+					<input
+						data-bind="textInput: firstAge.numeric(), css: {myCustomInputError: isAgeRangeError() || firstAgeError(), myCustomInputSuccess: !(isAgeRangeError() || firstAgeError())}, placeholder: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.agePlaceholder', 'Enter a number')"
+						type="text" class="form-control">
+					<span
+						data-bind="visible: !isAgeRange() && firstAgeError(), css: {myCustomTextError: firstAgeError(), myCustomTextSuccess: !firstAgeError()}, text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.ageError', 'Age must be a non-negative integer')"></span>
+				</div>
+				<div class="col-sm-1" data-bind="visible: isAgeRange">
+					<div style="margin-top: .5em; text-align: center" data-bind="text: ko.i18n('common.and', 'and')">
+					</div>
+				</div>
+				<div class="col-sm-2" data-bind="visible: isAgeRange">
+					<input
+						data-bind="textInput: secondAge.numeric(), css: {myCustomInputError: isAgeRangeError, myCustomInputSuccess: !isAgeRangeError()}, placeholder: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.agePlaceholder', 'Enter a number')"
+						type="text" class="form-control">
+				</div>
+				<span
+					data-bind="visible: isAgeRangeError(), css: {myCustomTextError: isAgeRangeError(), myCustomTextSuccess: !isAgeRangeError()}, text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.ageError2', 'First and second age must be non-negative integers and not equal')"></span>
+			</div>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label"
+				data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.indicateGender', 'Indicate gender (leave empty to select all gender)')"></label>
+			<div class="form-check">
+				<input class="form-check-input" type="checkbox" data-bind="checked: isMaleSample" id="male" />
+				<label for="male" class="form-check-label"
+					data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.male', 'Male')">
+				</label>
+			</div>
+			<div class="form-check">
+				<input class="form-check-input" type="checkbox" data-bind="checked: isFeMaleSample" id="female" />
+				<label for="female" class="form-check-label"
+					data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.female', 'Female')">
+				</label>
+			</div>
+			<div class="form-check">
+				<input class="form-check-input" type="checkbox" data-bind="checked: isOtherGenderSample" id="other" />
+				<label for="other" class="form-check-label"
+					data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.other', 'Other')">
+				</label>
+			</div>
+		</div>
+		<!-- ko if: !newSampleCreatingLoader() -->
+		<button type="submit" class="btn btn-primary"
+			data-bind="enable: isSampleFormValid(), text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.submit', 'Submit')"></button>
+		<!-- /ko -->
+		<!-- ko if: newSampleCreatingLoader() -->
+		<button class="btn btn-primary" type="button" disabled>
+			<i class="fa fa-spinner fa-spin"></i>
+			<span
+				data-bind="text: ko.i18n('cohortDefinitions.cohortDefinitionManager.samples.modal.creatingSample', 'Creating sample...')"></span>
+		</button>
+		<!-- /ko -->
+	</form>
+</atlas-modal>
