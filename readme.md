@@ -1,3 +1,9 @@
+# Disclaimner
+
+This software is based on the [OHDSI Atlas Project](https://github.com/OHDSI/Atlas) and [OHDSI WebAPI Project](https://github.com/OHDSI/WebAPI). It is an archived snapshot, provided AS-IS, and is not actively maintained.
+
+This software uses the OHDSI Atlas and OHDSI WebAPI code as a starting point, and upgrades it to current versions (as of 12/1/2025) of all dependencies, including as Java, Spring Boot, Knockout, Bootstrap, and D3. It extensively reworks the authentication and authorization code to make use of Spring Boot libraries.
+
 # Atlas
 
 Atlas is a WYSIWYG web app that makes it easier for researchers to create cohorts from and run analyses against their OMOP CDMs. It provides a graphical user interface to various Java packages that generate SQL queries for selecting cohorts and characterizing their healthcare data. These packages have been developed by the OHDSI organization. Atlas was originally developed as open source software by OHDSI. 
