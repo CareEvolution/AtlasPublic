@@ -1,4 +1,4 @@
-# Disclaimner
+# Disclaimer
 
 This software is based on the [OHDSI Atlas Project](https://github.com/OHDSI/Atlas) and [OHDSI WebAPI Project](https://github.com/OHDSI/WebAPI). It is an archived snapshot, provided AS-IS, and is not actively maintained.
 
