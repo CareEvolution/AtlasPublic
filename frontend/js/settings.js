@@ -110,7 +110,7 @@ const settingsObject = {
 		crossfilter: '../node_modules/crossfilter2/crossfilter',
 		director: '../node_modules/director/build/director',
 		atlascharts:
-			'../node_modules/@ohdsi/atlascharts/dist/atlascharts',
+			'../node_modules/atlascharts/atlascharts',
 		jnj_chart: 'assets/jnj.chart', // scatterplot is not ported to separate library
 		appConfig: 'config',
 		prism: '../node_modules/prismjs/prism',

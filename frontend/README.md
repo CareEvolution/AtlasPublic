@@ -1,6 +1,8 @@
 # NOTE -- BEFORE TRYING TO BUILD AND RUN
 
-Atlas depends on the AtlasVisualizations library, which is available at npmjs.com. It must be updated using the code in the - [AtlasVisualizationsPublic](https://github.com/CareEvolution/AtlasVisualizationsPublic "AtlasVisualizationsPublic") repository, and the package.json file in this repository should be updated to reference the correct version. 
+Atlas depends on the AtlasVisualizations library, which is available at npmjs.com (via the @ohdsi/atlascharts npm package). 
+
+In this repository, we have replaced the reference to that library with a reference to our [AtlasVisualizationsPublic code](htts://github.com/CareEvolution/AtlasVisualizationsPublic), which we have assumed to be located adjacent to this repository in your file system. See the package.json and js/settings.js files. Our updated AtlasVisualizations code is upgraded to use the latest version of D3.
 
 
 # ATLAS

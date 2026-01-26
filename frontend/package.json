@@ -32,7 +32,7 @@
     "vite": "^7.1.12"
   },
   "dependencies": {
-    "@ohdsi/atlascharts": "^2.1.0",
+    "atlascharts": "file:../../AtlasVisualizationsPublic/dist",
     "@ohdsi/visibilityjs": "2.0.2",
     "@upsetjs/venn.js": "^2.0.0",
     "ajv": "6.12.5",
