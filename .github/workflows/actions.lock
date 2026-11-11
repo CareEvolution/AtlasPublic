@@ -6,7 +6,7 @@ workflows:
     '.github/workflows/build-docker.yaml':
         - 'actions/cache@v4.3.0'
         - 'actions/checkout@v4.3.0'
-        - 'actions/setup-java@v4.7.1'
+        - 'actions/setup-java@v6.2.0'
         - 'actions/setup-node@v4.4.0'
         - 'docker/build-push-action@v6.18.0'
         - 'docker/metadata-action@v5.7.0'
@@ -30,9 +30,9 @@ dependencies:
         commit: 'sha1-3d3c42e5aac5ba805825da76410c181273ba90b1'
         owner_id: 44036562
         repo_id: 197814629
-    'actions/setup-java@v4.7.1':
-        ref: 'v4.7.1'
-        commit: 'sha1-c5195efecf7bdfc987ee8bae7a71cb8b11521c00'
+    'actions/setup-java@v6.2.0':
+        ref: 'v6.2.0'
+        commit: 'sha1-77dd5b2ce225ea11469928ac317850245a74ae78'
         owner_id: 44036562
         repo_id: 196057608
     'actions/setup-node@v4.4.0':
