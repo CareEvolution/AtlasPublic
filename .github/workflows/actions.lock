@@ -5,7 +5,7 @@ version: 'v0.0.3'
 workflows:
     '.github/workflows/build-docker.yaml':
         - 'actions/cache@v4.3.0'
-        - 'actions/checkout@v4.3.0'
+        - 'actions/checkout@v7.0.1'
         - 'actions/setup-java@v4.7.1'
         - 'actions/setup-node@v4.4.0'
         - 'docker/build-push-action@v6.18.0'
@@ -20,11 +20,6 @@ dependencies:
         commit: 'sha1-0057852bfaa89a56745cba8c7296529d2fc39830'
         owner_id: 44036562
         repo_id: 215566462
-    'actions/checkout@v4.3.0':
-        ref: 'v4.3.0'
-        commit: 'sha1-08eba0b27e820071cde6df949e0beb9ba4906955'
-        owner_id: 44036562
-        repo_id: 197814629
     'actions/checkout@v7.0.1':
         ref: 'v7.0.1'
         commit: 'sha1-3d3c42e5aac5ba805825da76410c181273ba90b1'
