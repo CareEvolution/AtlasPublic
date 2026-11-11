@@ -77,7 +77,7 @@ jobs:
 
       - name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v6.18.0
+        uses: docker/build-push-action@v7.4.0
         with:
           context: ./
           file: ./backend/Dockerfile
@@ -140,7 +140,7 @@ jobs:
 
       - name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v6.18.0
+        uses: docker/build-push-action@v7.4.0
         with:
           context: ./frontend
           cache-from: type=gha
